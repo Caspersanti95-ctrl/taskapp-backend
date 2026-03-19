@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const API_URL = "https://taskapp-backend-production-3da5.up.railway.app";
+
 const api = axios.create({
-    baseURL: "http://localhost:4000"
+    baseURL: 
+    API_URL
 });
 
 api.interceptors.request.use((config) => {
