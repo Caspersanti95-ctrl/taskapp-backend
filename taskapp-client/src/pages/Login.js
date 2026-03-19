@@ -5,7 +5,7 @@ import "./Login.css";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
-export default function Login() {
+export default function Login({ onFlip}) {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
@@ -46,7 +46,7 @@ export default function Login() {
 
       localStorage.setItem("token",res.data.token);
       localStorage.setItem("role",res.data.user.role);
-      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("username", res.data.user.name);
 
       setButtonState("success");
    
@@ -78,22 +78,6 @@ export default function Login() {
   };
 
   return (
-
-  <div className={`login-wrapper ${darkMode ? "dark" : "light"} ${fadeOut ? "fade-out" : ""}`}
-            onKeyDown={(e) => {
-                if (e.key === "Enter") handleLogin(e);
-            }}
-         >
-
-    {/* Dark / Light toggle */}
-    <div className="theme-toggle">
-      <button onClick={toggleTheme}>
-        {darkMode ? "☀️ Light" : "🌙 Dark"}
-      </button>
-    </div>
-
-    {/* particles */}
-    <div className="particles"></div>
 
     <div className={`login-card ${shake ? "shake" : ""}`}>
 
@@ -153,13 +137,18 @@ export default function Login() {
         {buttonState === "success" && " ✓ "}
       </button>
    </div>
+
+   <p className="link" onClick={onFlip}>
+    Opret Konto
+   </p>
+
       <p className="copyright">
         © 2026 CASSA
       </p>
 
     </div>
 
-  </div>
+
 
   );
 }

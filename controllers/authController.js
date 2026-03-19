@@ -26,21 +26,34 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Tillad kun admin hvis det præcis er "admin"
-        const userRole = role === "admin" ? "admin" : "monitor";
+        const userRole = "monitor";
 
-        await db.query(
+        const [result] = await db.query(
             "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-            [name, email, hashedPassword, "admin"]
+            [name, email, hashedPassword, userRole]
         );
 
         const userId = result.insertId;
 
         await db.query(
-            "UPDATE users SET orginazation_id = ? WHERE id = ?",
+            "UPDATE users SET organization_id = ? WHERE id = ?",
             [userId, userId]
         );
 
-        res.status(201).json({ message: "Bruger oprettet" });
+        const token = jwt.sign(
+            { id: userId, role: userRole }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '7d' }
+        );
+
+        res.status(201).json({ 
+            token,
+            user: {
+                id: userId,
+                email,
+                role: userId
+            }
+        });
 
     } catch (err) {
         console.error("REGISTER ERROR:", err)
@@ -115,8 +128,8 @@ exports.createMonitor = async (req, res) => {
         const role = "monitor";
 
         const [result] = await db.query(
-            "INSERT INTO users (name, email, password, role, orginazation_id) VALUES (?, ?, ?, ?)",
-            [name, email, hashedPassword, role, req.user.organization_id]
+            "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?)",
+            [name, email, hashedPassword, userRole, req.user.organization_id]
         );
 
         res.json({

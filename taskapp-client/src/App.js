@@ -5,6 +5,7 @@ import ServiceReportPage from './pages/ServiceReportPage';
 import Login from "./pages/Login";
 import { io } from "socket.io-client";
 import Sidebar from './components/Sidebar';
+import AuthPage from "./pages/AuthPage";
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -810,7 +811,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<AuthPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
