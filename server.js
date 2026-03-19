@@ -12,7 +12,9 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://taskapp-client-xi.vercel.app"],
+  origin: ["http://localhost:3000", "https://taskapp-client-xi.vercel.app",
+    "https://taskapp-client-r5ugwa74g-caspersanti95-6943s-projects.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
