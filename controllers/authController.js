@@ -57,7 +57,8 @@ exports.register = async (req, res) => {
 
     } catch (err) {
         console.error("REGISTER ERROR:", err)
-        return res.status(500).json({ error: err.message });
+        return res.status(500).json({ 
+            error: err.message || JSON.stringify(err) });
     }
 };
 

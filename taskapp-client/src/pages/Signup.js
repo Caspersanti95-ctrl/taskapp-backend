@@ -32,7 +32,9 @@ export default function Signup({ onFlip }) {
             localStorage.setItem("role", res.data.user.role);
 
             navigate("/dashboard");
+
         } catch (err) {
+            console.log("BACKEND ERROR:", err.response?.data);
             setError("Signup fejlede");
         }
     };
