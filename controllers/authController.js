@@ -35,10 +35,10 @@ exports.register = async (req, res) => {
 
         const userId = result.insertId;
 
-        await db.query(
-            "UPDATE users SET organization_id = ? WHERE id = ?",
-            [userId, userId]
-        );
+       // await db.query(
+       //     "UPDATE users SET organization_id = ? WHERE id = ?",
+       //     [userId, userId]
+       // );
 
         const token = jwt.sign(
             { id: userId, role: userRole }, 
