@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
             user: {
                 id: userId,
                 email,
-                role: userId
+                role: userRole
             }
         });
 
