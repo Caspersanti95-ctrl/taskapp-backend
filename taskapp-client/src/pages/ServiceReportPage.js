@@ -83,8 +83,13 @@ function ServiceReportPage() {
         console.log("CLICKED SAVE", formData);
         try{
 
+            const payload = {
+                ...formData,
+                control_points: JSON.stringify(controlPoints)
+            };
+
         if (!id || id === "new") {
-             const res = await api.post("/tasks", formData);
+             const res = await api.post("/tasks", payload);
 
                 console.log("Opgave Oprettet", res.data);
 
@@ -94,7 +99,7 @@ function ServiceReportPage() {
             
         } else {
             
-            await api.put(`/tasks/${id}`, formData);
+            await api.put(`/tasks/${id}`, payload);
             
         }
         
@@ -220,10 +225,7 @@ function ServiceReportPage() {
         clearTimeout(saveTimeout.current);
 
         saveTimeout.current = setTimeout(() => {
-            saveTask({
-                ...formData,
-                controlPoints
-            });
+            saveTask();
         }, 1000);
 
         return () => clearTimeout(saveTimeout.current);
