@@ -166,10 +166,16 @@ function ServiceReportPage() {
         // Hvis det er NEW -> hent ikke noget
         if (id === "new") {
             setFormData({
-                title: "",
-                description: "",
-                location: "",
-                assigned_to: null
+                customer: "",
+                address: "",
+                date: "",
+                type: "",
+                fabrikat: "",
+                serienr: "",
+                approved: 0,
+                remarks: "",
+                technician: "",
+                equipment_approved: "no"
             });
             return;
         }
@@ -666,7 +672,10 @@ function ServiceReportPage() {
             {(!id || id === "new") && (
             <button 
                 type="button"
-                onClick={saveTask}
+                onClick={() => {
+                    console.log("BUTTON CLICKED");
+                    saveTask();
+                }}
                 style={{
                     padding: "10px 16px",
                     background: "#3498db",
