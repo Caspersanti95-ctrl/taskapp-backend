@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Tillad kun admin hvis det præcis er "admin"
-        const userRole = "monitor";
+        const userRole = "admin";
 
         const [result] = await db.query(
             "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
