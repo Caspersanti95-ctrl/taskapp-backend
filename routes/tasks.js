@@ -220,7 +220,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
     const [rows] = await db.query(
         "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-        [id]
+        [id, req.user.organization_id]
     );
 
     if (!rows.length) {
