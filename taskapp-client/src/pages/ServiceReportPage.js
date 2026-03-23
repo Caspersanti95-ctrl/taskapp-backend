@@ -208,7 +208,7 @@ function ServiceReportPage() {
 
     useEffect (() => {
 
-        if (!id) return;
+        if (!id || id === "new") return;
 
         const fetchTasks = async () => {
 
