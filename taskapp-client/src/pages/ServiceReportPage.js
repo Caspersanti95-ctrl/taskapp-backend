@@ -81,7 +81,7 @@ function ServiceReportPage() {
 
     const saveTask = async () => {
 
-        console.log("CLICKED SAVE", formData);
+        
         try{
             const data = formData;
 
@@ -90,7 +90,7 @@ function ServiceReportPage() {
                 equipment_approved: formData.equipment_approved || "",
                 control_points: JSON.stringify(controlPoints)
             };
-
+console.log("CLICKED SAVE", payload);
         if (!id || id === "new") {
              const res = await api.post("/tasks", payload);
 
