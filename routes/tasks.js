@@ -191,7 +191,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.remarks || "",
         req.body.technician || "",
         req.body.control_points || JSON.stringify([]),
-        req.body.equipment_approved === "yes" ? 1 : 0,
+        req.body.equipment_approved || "no",
         "Oprettet",
         req.user.organization_id 
       ]
