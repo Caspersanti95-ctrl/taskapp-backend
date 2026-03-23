@@ -164,6 +164,12 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     try {
 
         console.log("BODY:", req.body);
+
+        const rawDate = req.body.date;
+        const formattedDate = rawDate && rawDate !== "" 
+            ? new Date(rawDate).toISOString().split("T")[0] 
+            : new Date().toISOString().split("T")[0];
+
     const [result] = await db.query(
       `INSERT INTO tasks( 
                 customer, 
@@ -182,9 +188,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
       [ 
         req.body.customer || "", 
         req.body.address || "", 
-        req.body.date 
-            ? new Date(req.body.date).toISOString().split("T")[0] 
-            : null,
+        formattedDate,
         req.body.type || "",
         req.body.fabrikat || "" ,
         req.body.serienr || "",
@@ -200,7 +204,12 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     io.emit('taskUpdated');
 
     res.json({ id: result.insertId });
+
   } catch (err) {
+    console.error("SERVER ERROR FULL:", err);
+    console.error("SERVER ERROR MESSAGE:", err.message);
+    console.error("SQL:", err.sql);
+    console.error("SQL MESSAGE:", err.sqlMessage);
     console.error(err);
     res.status(500).json({ error: "Kunne ikke oprette opgave" });
   }

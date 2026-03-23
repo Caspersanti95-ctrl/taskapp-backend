@@ -29,7 +29,7 @@ function ServiceReportPage() {
         approved: 0,
         remarks:"",
         technician:"",
-        equipment_approved: null
+        equipment_approved: "no"
     });
 
     const mapTask = (task) => ({
@@ -85,6 +85,11 @@ function ServiceReportPage() {
 
             const payload = {
                 ...formData,
+                customer: formData.customer || null,
+                address: formData.address || null,
+                    date: formData.date || null,
+                    type: formData.type || null,
+                    equipment_approved: formData.equipment_approved || "no",
                 control_points: JSON.stringify(controlPoints)
             };
 
