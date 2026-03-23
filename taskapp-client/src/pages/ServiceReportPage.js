@@ -70,14 +70,14 @@ function ServiceReportPage() {
         setControlPoints(updated);
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
-        
+
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    };
+    }, []);
 
     const saveTask = async () => {
 
@@ -238,7 +238,7 @@ function ServiceReportPage() {
         }, 500);
 
         return () => clearTimeout(saveTimeout.current);
-    }, [formData, controlPoints, id, isApproved,isSavingDisabled]);
+    }, [controlPoints, id, isApproved,isSavingDisabled]);
 
 
     if (!formData) return <div>loader...</div>;
