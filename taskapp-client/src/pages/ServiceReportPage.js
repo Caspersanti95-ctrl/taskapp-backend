@@ -70,21 +70,23 @@ function ServiceReportPage() {
         setControlPoints(updated);
     };
 
-    const handleInputChange = useCallback((e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
+        
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    }, []);
+    };
 
     const saveTask = async () => {
 
         console.log("CLICKED SAVE", formData);
         try{
+            const data = formData;
 
             const payload = {
-                ...formData,
+                ...data,
                 equipment_approved: formData.equipment_approved || "",
                 control_points: JSON.stringify(controlPoints)
             };
@@ -233,7 +235,7 @@ function ServiceReportPage() {
 
         saveTimeout.current = setTimeout(() => {
             saveTask();
-        }, 1000);
+        }, 500);
 
         return () => clearTimeout(saveTimeout.current);
     }, [formData, controlPoints, id, isApproved,isSavingDisabled]);
