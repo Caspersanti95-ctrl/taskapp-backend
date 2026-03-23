@@ -182,7 +182,9 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
       [ 
         req.body.customer || "", 
         req.body.address || "", 
-        req.body.date || null,
+        req.body.date 
+            ? new Date(req.body.date).toISOString().split("T")[0] 
+            : null,
         req.body.type || "",
         req.body.fabrikat || "" ,
         req.body.serienr || "",
