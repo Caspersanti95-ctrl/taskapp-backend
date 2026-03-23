@@ -159,7 +159,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     });
 
   router.post('/', authMiddleware, async (req, res) => {
-    
+    console.log("REQ.USER:", req.user);
 
     try {
 
