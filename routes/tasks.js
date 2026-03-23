@@ -165,7 +165,19 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
         console.log("BODY:", req.body);
     const [result] = await db.query(
-      `INSERT INTO tasks( customer, address, service_date, equipment_type, fabrikat, serienr, remarks, technician, control_points, equipment_approved, status, organization_id)
+      `INSERT INTO tasks( 
+                customer, 
+                address, 
+                service_date, 
+                equipment_type, 
+                fabrikat, 
+                serienr, 
+                remarks, 
+                technician, 
+                control_points, 
+                equipment_approved, 
+                status, 
+                organization_id)
        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [ 
         req.body.customer || "", 
@@ -177,7 +189,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.remarks || "",
         req.body.technician || "",
         req.body.control_points || JSON.stringify([]),
-        req.body.equipment_approved || "no",
+        req.body.equipment_approved || "yes" ? 1 : 0,
         "Oprettet",
         req.user.organization_id 
       ]
