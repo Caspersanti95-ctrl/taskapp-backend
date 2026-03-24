@@ -69,7 +69,7 @@ function ServiceReportPage() {
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
-
+        console.log("INPUT CHANGE:", name, value); 
         setFormData(prev => ({
             ...prev,
             [name]: value
