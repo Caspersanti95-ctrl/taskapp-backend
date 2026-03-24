@@ -303,8 +303,13 @@ console.log("CLICKED SAVE", payload);
                             <span>{formData.customer}</span>
                         ) : (
                         <input name="customer"
-                               value={formData.customer}
-                               onChange={handleInputChange}
+                               value={formData.customer || ""}
+                               onChange={(e) => { 
+                                setFormData(prev => ({
+                                    ...prev,
+                                    customer: e.target.value
+                                }));
+                               }}
                                style={{ border: "none",
                                         borderBottom: "1px solid black",
                                         width: "350px", 
@@ -340,8 +345,13 @@ console.log("CLICKED SAVE", payload);
                         <span>{formData.address}</span>
                     ) : (
                         <input name="address"
-                               value={formData.address}
-                               onChange={handleInputChange}
+                               value={formData.address || ""}
+                               onChange={(e) => { 
+                                setFormData(prev => ({
+                                    ...prev,
+                                    address: e.target.value
+                                }));
+                               }}
                                style={{
                                         border: "none",
                                         borderBottom: "1px solid black",
