@@ -194,7 +194,11 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.serienr || "",
         req.body.remarks || "",
         req.body.technician || "",
-        req.body.control_points || JSON.stringify([]),
+
+        typeof req.body.control_points === "string"
+        ? req.body.control_points
+        : JSON.stringify(req.body.control_points || []),
+        
         req.body.equipment_approved || "no",
         "Oprettet",
         id
@@ -258,7 +262,11 @@ console.log("equipment approved:", req.body.equipment_approved);
         req.body.serienr ?? null,
         req.body.remarks ?? null,
         req.body.technician ?? null,
-        req.body.control_points || JSON.stringify([]),
+
+        typeof req.body.control_points === "string" 
+        ? req.body.control_points
+        :JSON.stringify(req.body.control_points || []),
+
         req.body.equipment_approved ?? null,
         id,
     ]);
