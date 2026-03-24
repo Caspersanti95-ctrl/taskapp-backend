@@ -83,9 +83,16 @@ function ServiceReportPage() {
             const data = formData;
 
             const payload = {
-                ...data,
+                customer: formData.customer || "",
+                address: formData.address || "",
+                date: formData.date || "",
+                type: formData.type || "",
+                fabrikat: formData.fabrikat || "",
+                serienr: formData.serienr || "",
+                remarks: formData.remarks || "",
+                technician: formData.technician || "",
                 equipment_approved: formData.equipment_approved || "",
-                control_points: JSON.stringify(controlPoints)
+                control_points: JSON.stringify(controlPoints || [])
             };
 console.log("CLICKED SAVE", payload);
         if (!id || id === "new") {
