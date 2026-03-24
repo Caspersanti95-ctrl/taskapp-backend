@@ -197,7 +197,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.control_points || JSON.stringify([]),
         req.body.equipment_approved || "no",
         "Oprettet",
-        req.user.organization_id 
+        id
       ]
     );
 
@@ -248,7 +248,7 @@ console.log("equipment approved:", req.body.equipment_approved);
             technician = ?,
             control_points = ?,
             equipment_approved = ?
-        WHERE id = ? AND organization_id = ?`,
+        WHERE id = ?`,
     [
         req.body.customer ?? null,
         req.body.address ?? null,
@@ -261,7 +261,6 @@ console.log("equipment approved:", req.body.equipment_approved);
         req.body.control_points || JSON.stringify([]),
         req.body.equipment_approved ?? null,
         id,
-        req.user.organization_id
     ]);
 
     res.json({ success: true });
