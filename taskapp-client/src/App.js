@@ -202,6 +202,7 @@ function Dashboard() {
 
     return () => {
       socket.disconnect();
+      console.log("SOCKET URL:", import.meta.env.VITE_API_URL);
     };
   }, []);
 
