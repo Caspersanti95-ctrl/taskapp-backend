@@ -93,7 +93,7 @@ console.log("CLICKED SAVE", payload);
 
                 console.log("Opgave Oprettet", res.data);
 
-            navigate("/dashboard");
+            navigate(`/tasks/${res.data.id}`);
 
             
             
