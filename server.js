@@ -13,8 +13,9 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 app.use(cors({
   origin: ["http://localhost:5173",
-    "https://taskapp-client-niu3a7m7s-caspersanti95-6943s-projects.vercel.app"
+    "https://taskapp-client-cel5iv1sf-caspersanti95-6943s-projects.vercel.app/login"
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
