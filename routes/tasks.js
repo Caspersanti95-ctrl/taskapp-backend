@@ -250,7 +250,7 @@ console.log("equipment approved:", req.body.equipment_approved);
             equipment_approved = ?
         WHERE id = ?`,
     [
-        req.body.customer ?? null,
+        req.body.customer || "",
         req.body.address ?? null,
         formattedDate,
         req.body.type ?? null,
