@@ -198,7 +198,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         typeof req.body.control_points === "string"
         ? req.body.control_points
         : JSON.stringify(req.body.control_points || []),
-        
+
         req.body.equipment_approved || "no",
         "Oprettet",
         id
@@ -239,7 +239,7 @@ console.log("equipment approved:", req.body.equipment_approved);
     const formattedDate = req.body.date
         ? new Date(req.body.date).toISOString().split("T")[0]
         : null;
-
+        console.log("BODY:", req.body);
     await db.query(
         `UPDATE tasks SET
             customer = ?,
@@ -272,6 +272,9 @@ console.log("equipment approved:", req.body.equipment_approved);
     ]);
 
     res.json({ success: true });
+
+    console.error("DB ERROR:", err);
+
   });
 
   router.put('/:id/start', authMiddleware, async (req, res) => {
