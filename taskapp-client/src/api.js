@@ -1,10 +1,10 @@
 import axios from "axios";
 
 
-console.log("API URL:", import.meta.env.VITE_API_URL);
+
 const api = axios.create({
     baseURL: 
-   import.meta.env.VITE_API_URL
+   "https://taskapp-backend-production-3da5.up.railway.app"
 });
 
 api.interceptors.request.use((config) => {
