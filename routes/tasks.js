@@ -201,7 +201,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
         req.body.equipment_approved || "no",
         "Oprettet",
-        id
+        req.user.organization_id 
       ]
     );
 
@@ -282,7 +282,7 @@ console.log("equipment approved:", req.body.equipment_approved);
 
         const [rows] = await db.query(
             "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-            [taskId]
+            [taskId, req.user.organization_id]
         );
 
         if(!rows.length) {
@@ -307,7 +307,7 @@ console.log("equipment approved:", req.body.equipment_approved);
 
         const [rows] = await db.query(
             "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-            [taskId]
+            [taskId, req.user.organization_id]
         );
 
         if(!rows.length) {
@@ -343,7 +343,7 @@ console.log("equipment approved:", req.body.equipment_approved);
 
             const [rows] = await db.query(
                 "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-                [taskId]
+                [taskId, req.user.organization_id]
             );
 
             if(!rows.length) {
@@ -396,7 +396,7 @@ console.log("equipment approved:", req.body.equipment_approved);
 
                 const [rows] = await db.query(
                     "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-                    [taskId]
+                    [taskId, req.user.organization_id]
                 );
     
                 if(!rows.length) {

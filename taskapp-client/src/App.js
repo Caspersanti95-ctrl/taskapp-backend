@@ -192,7 +192,7 @@ function Dashboard() {
   }, [selectedYear, token]);
 
   useEffect(() => {
-    const socket = io("http://localhost:4000");
+    const socket = io(import.meta.env.VITE_API_URL);
 
     socket.on("taskUpdated", () => {
       console.log("Realtime update modtaget");
@@ -621,7 +621,7 @@ function Dashboard() {
                 onClick={(e) => {
                   e.stopPropagation(); //VIGTIGT
                   window.open(
-                    `http://localhost:4000/tasks/${task.id}/pdf`,
+                    `${import.meta.env.VITE_API_URL}/tasks/${task.id}/pdf`,
                     "_blank"
                   );
                 }}
