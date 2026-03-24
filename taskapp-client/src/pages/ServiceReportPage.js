@@ -12,10 +12,7 @@ function ServiceReportPage() {
     const isAdmin = getRole() === "admin";
     const [isSavingDisabled, setIsSavingDisabled] = useState(false);
     const saveTimeout = useRef(null);
-    const [customer, setCustomer] = useState("");
-    const [address, setAddress] = useState("");
-    const [date, setDate] = useState("");
-    const [type, setType] = useState("");
+
     
     
 
@@ -217,10 +214,6 @@ console.log("CLICKED SAVE", payload);
 
             const res = await api.get(`/tasks/${id}`);
 
-            setCustomer(res.data.customer);
-            setAddress(res.data.address);
-            setDate(res.data.date);
-            setType(res.data.type);
         };
 
         fetchTasks();
@@ -238,7 +231,7 @@ console.log("CLICKED SAVE", payload);
         }, 500);
 
         return () => clearTimeout(saveTimeout.current);
-    }, [controlPoints, id, isApproved,isSavingDisabled]);
+    }, [formData, controlPoints, id, isApproved,isSavingDisabled]);
 
 
     if (!formData) return <div>loader...</div>;
@@ -304,12 +297,7 @@ console.log("CLICKED SAVE", payload);
                         ) : (
                         <input name="customer"
                                value={formData.customer || ""}
-                               onChange={(e) => { 
-                                setFormData(prev => ({
-                                    ...prev,
-                                    customer: e.target.value
-                                }));
-                               }}
+                               onChange={handleInputChange}
                                style={{ border: "none",
                                         borderBottom: "1px solid black",
                                         width: "350px", 
@@ -346,12 +334,7 @@ console.log("CLICKED SAVE", payload);
                     ) : (
                         <input name="address"
                                value={formData.address || ""}
-                               onChange={(e) => { 
-                                setFormData(prev => ({
-                                    ...prev,
-                                    address: e.target.value
-                                }));
-                               }}
+                               onChange={handleInputChange}
                                style={{
                                         border: "none",
                                         borderBottom: "1px solid black",
