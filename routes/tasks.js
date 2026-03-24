@@ -166,7 +166,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         console.log("BODY:", req.body);
 
         const rawDate = req.body.date;
-        const formattedDate = rawDate && rawDate !== "" 
+        const formattedDate = req.body.date && req.body.date !== "" 
             ? new Date(rawDate).toISOString().split("T")[0] 
             : new Date().toISOString().split("T")[0];
 
