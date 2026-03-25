@@ -29,21 +29,24 @@ exports.register = async (req, res) => {
         const userRole = "admin";
 
         const [result] = await db.query(
-            "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-            [name, email, hashedPassword, userRole]
+            "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?)",
+            [name, email, hashedPassword, userRole, req.body.organization_id]
         );
 
         const userId = result.insertId;
 
-       // await db.query(
-       //     "UPDATE users SET organization_id = ? WHERE id = ?",
-       //     [userId, userId]
-       // );
+       await db.query(
+            "UPDATE users SET organization_id = ? WHERE id = ?",
+            [userId, userId, req.body.organization_id]
+        );
 
         const token = jwt.sign(
-            { id: userId, role: userRole }, 
+            { 
+                id: userId, 
+                role: userRole,
+                organization_id: user.organization_id || user.id }, 
             process.env.JWT_SECRET, 
-            { expiresIn: '7d' }
+            { expiresIn: '8h' }
         );
 
         res.status(201).json({ 
