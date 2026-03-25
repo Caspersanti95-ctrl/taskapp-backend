@@ -220,6 +220,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 });
 
   router.put('/:id', authMiddleware, async (req, res) => {
+   try {
     const { id } = req.params;
 
     const [rows] = await db.query(
@@ -272,8 +273,10 @@ console.log("equipment approved:", req.body.equipment_approved);
     ]);
 
     res.json({ success: true });
-
+    } catch (err) {
     console.error("DB ERROR:", err);
+    res.status(500).json({ error: "Kunne ikke opdatere opgave" });
+    }
 
   });
 

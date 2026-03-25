@@ -4,7 +4,7 @@ import axios from "axios";
 
 const api = axios.create({
     baseURL: 
-   "https://taskapp-backend-production-3da5.up.railway.app"
+   import.meta.env.VITE_API_URL 
 });
 
 api.interceptors.request.use((config) => {
