@@ -103,8 +103,16 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         }
 
         if (rows[0].control_points) {
-            rows[0].controlPoints = JSON.parse(rows[0].control_points);
+            try {
+                rows[0].controlPoints = 
+                typeof rows[0].control_points === "string"
+                ? JSON.parse(rows[0].control_points)
+                : rows[0].control_points;
+            } catch (e) {
+                rows[0].controlPoints = [];
         }
+     }
+
 
         res.json(rows[0]);
 
