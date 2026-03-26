@@ -39,10 +39,16 @@ export default function Login({ onFlip}) {
 
     try {
 
-      const res = await api.post("/auth/login",{
-        email,
-        password
-      });
+      const res = await fetch(
+        "https://taskapp-backend-production-3da5.up.railway.app/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        }
+      );
 
       localStorage.setItem("token",res.data.token);
       localStorage.setItem("role",res.data.user.role);
