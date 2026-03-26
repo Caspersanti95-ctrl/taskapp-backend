@@ -42,7 +42,8 @@ exports.register = async (req, res) => {
             { 
                 id: userId, 
                 role: userRole,
-                organization_id: orgId || userId }, 
+                organization_id: orgId
+            }, 
             process.env.JWT_SECRET, 
             { expiresIn: '8h' }
         );
