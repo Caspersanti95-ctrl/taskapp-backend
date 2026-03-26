@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "https://taskapp-client-xi.vercel.app",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
 });
@@ -23,13 +23,7 @@ app.use(cors({
 
 }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://taskapp-client-xi.vercel.app");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
+app.options('*', cors());
 app.use(express.json());
 
 app.use('/tasks', require('./routes/tasks')(io))
