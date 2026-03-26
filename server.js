@@ -8,18 +8,24 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const app = express();
+
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-const corsOptions = {
+app.use(cors({
   origin: "https://taskapp-client-xi.vercel.app",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-};
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+}));
+
+app.options('*', cors());
 
 app.use(express.json());
 
