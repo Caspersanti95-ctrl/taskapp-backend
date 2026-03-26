@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from "./api";
 import { BrowserRouter, Routes, Route, useNavigate, Navigate, Outlet } from 'react-router-dom';
 import ServiceReportPage from './pages/ServiceReportPage';
-import Login from "./pages/Login";
+import Login from './pages/Login';
 import { io } from "socket.io-client";
 import Sidebar from './components/Sidebar';
 import AuthPage from "./pages/AuthPage";
