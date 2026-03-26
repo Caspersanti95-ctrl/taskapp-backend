@@ -88,7 +88,7 @@ exports.login = async (req, res) => {
         const user = users[0];
 
         console.log("BODY:", req.body);
-        console.log("USER FROM DB:", user);
+        console.log(user);
 
         const validPassword = await bcrypt.compare(password, user.password);
 
