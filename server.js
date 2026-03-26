@@ -23,7 +23,7 @@ app.use(cors({
 
 }));
 
-app.options('*', cors());
+
 app.use(express.json());
 
 app.use('/tasks', require('./routes/tasks')(io))
