@@ -11,10 +11,15 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-app.use(cors({
-  origin: "http://taskapp-client-xi.vercel.app",
-  credentials: true
-}));
+const corsOptions = {
+  origin: "https://taskapp-client-xi.vercel.app",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
