@@ -343,7 +343,7 @@ console.log("equipment approved:", req.body.equipment_approved);
     }
   });
 
-  router.put('/:id/approve', authMiddleware, async (req, res) => {
+  router.post('/:id/approve', authMiddleware, async (req, res) => {
         try {
             const taskId = req.params.id;
             const userId = req.user.id;

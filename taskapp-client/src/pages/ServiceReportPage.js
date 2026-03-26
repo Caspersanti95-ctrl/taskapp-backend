@@ -123,7 +123,7 @@ console.log("CLICKED SAVE", payload);
 
         const today = new Date().toISOString().split("T")[0];
             
-        await api.put(`/tasks/${id}/approve`, {
+        await api.post(`/tasks/${id}/approve`, {
             approved: 1,
             date: formData.date ? formData.date.split("T")[0] : today,
             type: formData.type
