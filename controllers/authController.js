@@ -27,17 +27,18 @@ exports.register = async (req, res) => {
 
         // Tillad kun admin hvis det præcis er "admin"
         const userRole = "admin";
-
+        const orgId =  req.body.organization_id || 1; 
+        
         const [result] = await db.query(
-            "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?)",
-            [name, email, hashedPassword, userRole, req.body.organization_id]
+            "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?, ?)",
+            [name, email, hashedPassword, userRole, orgId]
         );
 
         const userId = result.insertId;
 
        await db.query(
             "UPDATE users SET organization_id = ? WHERE id = ?",
-            [userId, userId, req.body.organization_id]
+            [orgId, userId]
         );
 
         const token = jwt.sign(
