@@ -193,7 +193,11 @@ console.log("CLICKED SAVE", payload);
             setFormData(mapTask(res.data));
 
             if (res.data.control_points && res.data.control_points !== "[]") {
-                setControlPoints(JSON.parse(res.data.control_points));
+                setControlPoints(
+                    typeof res.data.control_points === "string"
+                    ? JSON.parse(res.data.control_points)
+                    : res.data.control_points
+                );
             } else {
                 setControlPoints(
                     controlPointsList.map(point => ({
