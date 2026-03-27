@@ -742,7 +742,7 @@ const pageStyle = {
     backgroundColor: "white",
     width: "210mm",
     minHeight: "297mm",
-    padding: "20mm",
+    padding: "5mm 15mm",
     fontFamily: "Times New Roman, serif",
     fontSize: "15px",
     lineHeight: "1.8",
