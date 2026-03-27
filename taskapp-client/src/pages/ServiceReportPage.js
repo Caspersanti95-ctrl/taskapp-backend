@@ -320,7 +320,7 @@ console.log("CLICKED SAVE", payload);
                                     )}
                     </div>
 
-                    <div style={{ display: "flex", alignItems:"center", gap: "10px", marginLeft: "355px" }}>
+                    <div style={{ display: "flex", alignItems:"center", gap: "10px", marginLeft: "300px" }}>
                     <span>Dato:</span>
 
                     {isApproved ? (
@@ -679,9 +679,10 @@ console.log("CLICKED SAVE", payload);
             {(!id || id === "new") && (
             <button 
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                     console.log("BUTTON CLICKED");
-                    saveTask();
+                    await saveTask();
+                    navigate("/dashboard");
                 }}
                 style={{
                     padding: "10px 16px",
