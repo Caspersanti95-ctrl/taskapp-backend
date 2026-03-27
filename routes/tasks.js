@@ -191,8 +191,10 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
                 control_points, 
                 equipment_approved, 
                 status, 
-                organization_id)
-       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                organization_id,
+                approved_by
+                )
+       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [ 
         req.body.customer || "", 
         req.body.address || "", 
@@ -209,7 +211,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
         req.body.equipment_approved || "no",
         "Oprettet",
-        req.user.organization_id 
+        req.user.organization_id,
+        req.user.id 
       ]
     );
 
