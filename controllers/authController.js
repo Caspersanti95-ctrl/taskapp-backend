@@ -136,7 +136,7 @@ exports.createMonitor = async (req, res) => {
 
           const [result] = await db.query(
             "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?, ?)",
-            [name, email, hashedPassword, userRole, SOME_ID]
+            [name, email, hashedPassword, userRole, req.user.organization_id]
         );
 
         res.json({
