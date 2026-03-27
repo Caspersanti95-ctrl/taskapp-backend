@@ -283,7 +283,7 @@ console.log("CLICKED SAVE", payload);
 
             <h1 style={{
                     textAlign: "center",
-                    marginBottom: "60px",
+                    marginBottom: "10px",
                     fontSize: "24px",
                     fontWeight: "600"
                     }}>
