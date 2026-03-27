@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Login from "./Login";
-
+import Signup from "./Signup";
 import "./auth.css";
 
 export default function AuthPage() {
-    
+    const [isFlipped, setIsFlipped] = useState(false);
     const [darkMode, setDarkMode] = useState(
         localStorage.getItem("theme") === "light" ? false : true
     );
@@ -26,7 +26,17 @@ export default function AuthPage() {
 
             <div className="particles"></div>
 
-            <Login />
+            <div className={`card ${isFlipped ? "flipped" : ""}`}>
+                <div className="card-inner">
+                    
+                    <div className="card-front">
+                        <Login onFlip={() => setIsFlipped(true)} />
+                    </div>
+                    <div className="card-back">
+                        <Signup onFlip={() => setIsFlipped(false)} />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
