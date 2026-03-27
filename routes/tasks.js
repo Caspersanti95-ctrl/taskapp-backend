@@ -212,7 +212,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.equipment_approved || "no",
         "Oprettet",
         req.user.organization_id,
-        req.user.id 
+        null 
       ]
     );
 
