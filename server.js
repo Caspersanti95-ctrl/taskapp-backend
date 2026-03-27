@@ -31,7 +31,7 @@ app.use(cors({
   origin:  [ 
     "https://taskapp-client-xi.vercel.app",
     "https://www.lucache.com",
-    "https://lucache.com",
+    "https://lucache.com"
   ],
   credentials: true,
 
