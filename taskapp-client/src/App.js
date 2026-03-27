@@ -3,6 +3,7 @@ import api from "./api";
 import { BrowserRouter, Routes, Route, useNavigate, Navigate, Outlet } from 'react-router-dom';
 import ServiceReportPage from './pages/ServiceReportPage';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import { io } from "socket.io-client";
 import Sidebar from './components/Sidebar';
 import AuthPage from "./pages/AuthPage";
@@ -813,6 +814,7 @@ function App() {
 
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/signup" element={<Signup />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
