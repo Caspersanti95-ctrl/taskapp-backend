@@ -320,7 +320,7 @@ console.log("CLICKED SAVE", payload);
                                     )}
                     </div>
 
-                    <div style={{ display: "flex", alignItems:"center", gap: "10px", marginLeft: "300px" }}>
+                    <div style={{ display: "flex", alignItems:"center", gap: "10px", marginLeft: "200px" }}>
                     <span>Dato:</span>
 
                     {isApproved ? (
