@@ -814,7 +814,7 @@ function App() {
 
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<AuthPage />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<AuthPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
