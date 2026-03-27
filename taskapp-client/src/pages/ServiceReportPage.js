@@ -278,7 +278,7 @@ console.log("CLICKED SAVE", payload);
             <div id="pdf-content" style={documentStyle}>
 
                 <div style={{ textAlign: "center", marginBottom: "20px"}}>
-                    <img src="/logo.png" style={{ height: "100px"}} />
+                    <img src={window.location.origin + "/logo.png"} style={{ height: "100px"}} />
                 </div>
 
             <h1 style={{
