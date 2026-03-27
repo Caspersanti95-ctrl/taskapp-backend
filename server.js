@@ -16,6 +16,16 @@ const io = new Server(server, {
     credentials: true
   }
 });
+const db = require('./db');
+
+(async () => {
+  try {
+    const [rows] = await db.query("SHOW COLUMNS FROM tasks LIKE 'approved_by'");
+    console.log("CHECK COLUMN:", rows);
+  } catch (err) {
+    console.error("CHECK ERROR:", err);
+  }
+} )();
 
 app.use(cors({
   origin: "https://taskapp-client-xi.vercel.app",
