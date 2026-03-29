@@ -56,8 +56,8 @@ export default function Login({ onFlip}) {
 
       const data = await res.json();
       localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
-      localStorage.setItem("username", data.user.name);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("username", data.name);
 
       setButtonState("success");
    
