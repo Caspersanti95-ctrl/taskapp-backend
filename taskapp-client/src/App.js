@@ -71,7 +71,8 @@ function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
-  
+  const [user, setUser] = useState(null);
+
   console.log("ROLE:", role);
 
   const [username, setUsername] = useState(localStorage.getItem("username"));
