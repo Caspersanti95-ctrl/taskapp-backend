@@ -98,7 +98,8 @@ function Dashboard() {
   const [newRole, setNewRole] = useState("");
   const [showUserModal, setShowUserModal] = useState(false);
   const [showUsersModal, setShowUsersModal] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState(null);
  
   const navigate = useNavigate();
 
@@ -357,6 +358,13 @@ function Dashboard() {
 
           <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
           </span>
+
+          {role === "admin" && (
+            <button onClick={() => setShowSettings(true)}>
+              ⚙️ Indstillinger
+            </button> 
+          )}
+          
           <button
                 onClick={() => setDarkMode(!darkMode)}
                 style={{
@@ -378,8 +386,11 @@ function Dashboard() {
         </div>
       </div> 
 
-{role === "admin" && (
+{role === "admin" && showSettings && (
 
+<div className="modal-overlay">
+  <div className="modal">
+      <h2>Indstillinger</h2>
       <div style={{
         display: "flex",
         gap: "10px",
@@ -387,9 +398,29 @@ function Dashboard() {
         position: "relative"
       }}>
 
-          {/* Opret Bruger */}
+          
+          {! activeTab && ( 
+            <>
             <button
-                  onClick={() => setShowUserModal(true)}
+              onClick={() => setActiveTab("logo")}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+              style={{
+                padding: "6px 14px",
+                borderRadius: "6px",
+                border: "none",
+                cursor: "pointer",
+                background: "#3498db",
+                color: "white",
+                marginBottom: "20px",
+                transition: "0.2s"
+              }}
+            >
+              Logo
+            </button>
+          
+            <button
+                  onClick={() => setActiveTab("createUser")}
                   onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
                   onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                   style={{
@@ -409,7 +440,7 @@ function Dashboard() {
                 
       {/* Brugere Dropdown */}
           <button
-              onClick={() => setShowUsersModal(true)}
+              onClick={() => setActiveTab("users")}
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
               onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
               style={{
@@ -425,88 +456,61 @@ function Dashboard() {
             >
               👥 Brugere
             </button>
-            
-          {/* Popup Menu */}
-            {showUsersModal && (
-                <div
-                    style={{
-                      position: "fixed",
-                      left: 0,
-                      top: 0,
-                      width: "100%",
-                      height: "100%",
-                      background: "rgba(0,0,0,0.5)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      zIndex: 1000
-                    }}
-                  >
+            </>
+          )}  
 
-                <div 
-                    style={{
-                      background: theme.cardBg,
-                      padding: "30px",
-                      borderRadius: "12px",
-                      width:"400px",
-                      boxShadow: theme.shadow
-                    }}
-                  >
+          {activeTab === "logo" && (
+            <div>
+              <h3>Logo</h3>
+              
+              {user?.logo && (
+                <img src={user.logo} style ={{ width: "100" }} /> 
+              )} 
+              <input type="file" 
+              onChange={(e) => handleLogoUpload(e.target.files[0])}
+              />
 
-                <h3>Brugere</h3>
-
-          {users.map(user => (
-              <div key={user.id}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBottom: "10px"
-                    }}
-                    >
-
-                      <span>
-                        {user.username} ({user.role})
-                      </span>
-
-                    {user.role !== "admin" && (
-                      <button
-                          onClick={() => deleteUser(user.id)}
-                          onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                          onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                          style={{
-                            background: "#e74c3c",
-                            border: "none",
-                            color: "white",
-                            padding: "4px 8px",
-                            borderRadius: "4px"
-                          }}
-                        >
-                          Slet
-                        </button>
-                      )}            
-                  </div>
-                ))}  
-
-                <button
-                  onClick={() => setShowUsersModal(false)}
-                  style={{
-                    marginTop: "15px",
-                    padding: "8px 14px",
-                    border: "none",
-                    borderRadius: "6px",
-                    background: "#ccc"
-                  }}
-                >
-                    Luk
-                </button> 
-                </div>        
+              <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
           )}
-      </div>
-    )}
 
+          {activeTab === "createUser" && (
+            <div>
+              <h3>Opret ny bruger</h3>
+              
+              <button onClick={() => navigate("/signup")}>
+                Opret bruger
+              </button>
+
+              <button onClick={() => setActiveTab(null)}>Tilbage</button>
+            </div>
+          )}
+
+          {activeTab === "users" && (
+             <div>
+              <h3>Brugere</h3>
+
+              {users.map((u) => (
+                <div key={u.id}>
+                  {u.email} - {u.role}
+                </div>
+              ))} 
+              <button onClick={() => setActiveTab(null)}>Tilbage</button>
+            </div>
+          )}
+
+          <button onClick={() => {
+            setShowSettings(false); 
+                setActiveTab(null);
+          }}>
+            Luk
+          </button>
         
-
+        </div>
+      </div>
+</div>
+)}    
+   
       {/* Statistik*/}
       <div style={statsGrid}>
         <StatCard title="Total" value={total} theme={theme} color="#6366f1" onClick={() => setStatusFilter("Alle")} />
