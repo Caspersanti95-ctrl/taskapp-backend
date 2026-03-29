@@ -89,6 +89,12 @@ function Dashboard() {
       
   });
 
+  const handleLogoUpload = async (file) => {
+    console.log("UPLOADING LOGO:", file);
+  };
+
+    
+
   const theme = darkMode ? darkTheme : lightTheme;
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
