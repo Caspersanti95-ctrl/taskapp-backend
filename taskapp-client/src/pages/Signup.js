@@ -12,9 +12,11 @@ export default function Signup({ onFlip }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [logo, setLogo] = useState(null);
 
     const handleSignup = async (e) => {
         e.preventDefault();
+
 
         if (password !== confirmPassword) {
             setError("Adgangskoderne matcher ikke");
@@ -22,10 +24,26 @@ export default function Signup({ onFlip }) {
         }
 
         try {
+
+            let logoUrl =  "";
+
+            if (logo) {
+                const formData = new FormData();
+                formData.append("logo", logo);
+                const uploadRes = await api.fetch("http://localhost5000/api/upload-logo", {
+                    method: "POST",
+                    body:formData,
+                });
+                const data = await uploadRes.json();
+                logoUrl = data.url;
+            }
+
+                
            const res = await api.post("/auth/register", {
                 name,
                 email,
-                password
+                password,
+                logo: logoUrl
             });
 
             localStorage.setItem("token", res.data.token);
@@ -81,6 +99,11 @@ export default function Signup({ onFlip }) {
                  />
                     <label>Gentag Adgangskode</label>
         </div>
+
+        <input type="file" accept="image/*" 
+                onChange={(e) => setLogo(e.target.files[0])} 
+                style={{ marginBottom: "20px" }}
+            />
 
         <button className="login-button" onClick={handleSignup}>
             Opret Konto
