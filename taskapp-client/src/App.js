@@ -70,7 +70,7 @@ function Dashboard() {
   // useState
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role"));
+  const role = useState(localStorage.getItem("role"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -364,7 +364,7 @@ function Dashboard() {
               ⚙️ Indstillinger
             </button> 
           )}
-          
+
           <button
                 onClick={() => setDarkMode(!darkMode)}
                 style={{
@@ -399,7 +399,7 @@ function Dashboard() {
       }}>
 
           
-          {! activeTab && ( 
+          {activeTab === null && ( 
             <>
             <button
               onClick={() => setActiveTab("logo")}
@@ -438,7 +438,7 @@ function Dashboard() {
                 </button>
         
                 
-      {/* Brugere Dropdown */}
+      
           <button
               onClick={() => setActiveTab("users")}
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
