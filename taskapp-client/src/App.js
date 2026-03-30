@@ -72,6 +72,7 @@ function Dashboard() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
+  const [logo, setLogo] = useState(localStorage.getItem("logo"));
 
   console.log("ROLE:", role);
 
@@ -90,7 +91,16 @@ function Dashboard() {
   });
 
   const handleLogoUpload = async (file) => {
-    console.log("UPLOADING LOGO:", file);
+    const formData = new FormData();
+    formData.append("logo", file);
+      try {
+        const res = await api.post("/company/logo", formData);
+        setLogo(res.data.logo);
+        localStorage.setItem("logo", res.data.logo);
+
+      } catch (err) {
+        console.error(err);
+      }
   };
 
     
@@ -365,6 +375,15 @@ function Dashboard() {
                 Velkommen {username ? `- ${username}` : ""} 👋
               </h2>
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+        
+        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {logo && (
+            <img 
+              src={logo} 
+              alt="Logo"
+              style={{ height: "45px" }} />
+          )}
+        </div>
 
           <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
           </span>

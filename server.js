@@ -26,6 +26,8 @@ const db = require('./db');
     console.error("CHECK ERROR:", err);
   }
 } )();
+const uploadRoute = require("./uploadRoute");
+const authMiddleware = require("./middleware/authMiddleware");
 
 app.use(cors({
   origin:  [ 
@@ -39,6 +41,8 @@ app.use(cors({
 
 
 app.use(express.json());
+
+app.use("/company", authMiddleware, uploadRoute);
 
 app.use('/tasks', require('./routes/tasks')(io))
 app.use('/auth', require('./routes/authRoutes'));
