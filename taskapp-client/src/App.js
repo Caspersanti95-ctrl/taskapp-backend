@@ -204,6 +204,24 @@ function Dashboard() {
   }, [token]);
 
   useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const res = await api.get("/auth/me");
+        setUser(res.data);
+        setRole(res.data.role);
+        setUsername(res.data.name);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("username", res.data.name);
+      } catch (err) {
+        console.error("FETCH ME ERROR:", err);
+      }
+    };
+
+    if (token) 
+      fetchMe();
+    }, [token]);
+
+  useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
