@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const cloudinary = require("./cloudinary");
+const db = require("./db");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/upload", upload.single("logo"), async (req, res) => {
+router.post("/logo", upload.single("logo"), async (req, res) => {
     try {
         
-        const steam = cloudinary.uploader.upload_stream(
+        const stream = cloudinary.uploader.upload_stream(
             { folder: "logos" },
             async (error, result) => {
                 if (error) return res.status(500).json(error);
@@ -24,7 +25,7 @@ router.post("/upload", upload.single("logo"), async (req, res) => {
             }
         );
 
-        steam.end(req.file.buffer);
+        stream.end(req.file.buffer);
 
     } catch (err) {
         console.error(err);
