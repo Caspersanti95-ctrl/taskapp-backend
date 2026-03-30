@@ -366,24 +366,26 @@ function Dashboard() {
         {/* Topbar */}
       <div style={topbarStyle}>
 
+      <div style={{ justifyContent: "start" }}>
         <h2 style={{
-                opacity: username ? 1 : 0,
-                transform: username ? "translateY(0)" : "translateY(-10px)",
-                transition: "all 0.5s ease"
+                margin: 0,
               }}
              >
                 Velkommen {username ? `- ${username}` : ""} 👋
               </h2>
-        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+        </div>
         
-        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        <div style ={{ justifyContent: "center" }}>
           {logo && (
             <img 
               src={logo} 
               alt="Logo"
-              style={{ height: "45px" }} />
+              style={{ height: "40px", objectFit: "contain" }} 
+            />
           )}
         </div>
+
+        <div style={{ justifyContent: "end", display: "flex", alignItems: "center", gap: "12px" }}>
 
           <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
           </span>
@@ -409,9 +411,11 @@ function Dashboard() {
               >
                 {darkMode ? "☀️ Light" : "🌙 Dark"}
           </button>
+
           <button onClick={logout} style={logoutButton}>
             Log ud
-          </button>  
+          </button>
+             
         </div>
       </div> 
 

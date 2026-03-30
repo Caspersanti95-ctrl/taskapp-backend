@@ -5,7 +5,7 @@ const cloudinary = require("./cloudinary");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/upload", upload.single("file"), async (req, res) => {
+router.post("/upload", upload.single("logo"), async (req, res) => {
     try {
         
         const steam = cloudinary.uploader.upload_stream(
