@@ -37,7 +37,7 @@ router.delete(
 router.get("/me", authMiddleware, async (req, res) => {
     try {
         const [rows] = await db.query(
-            "SELECT id, name AS username, email, role, logo FROM users WHERE id = ?",
+            "SELECT id, name, email, role, logo FROM users WHERE id = ?",
             [req.user.id]
         );
 
