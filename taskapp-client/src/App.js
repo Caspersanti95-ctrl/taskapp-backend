@@ -72,7 +72,7 @@ function Dashboard() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
-  const [logo, setLogo] = useState(localStorage.getItem("logo"));
+  const [logo, setLogo] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
 
   console.log("ROLE:", role);
@@ -211,9 +211,11 @@ function Dashboard() {
         setUser(res.data);
         setRole(res.data.role);
         setUsername(res.data.name);
+
         setLogo(res.data.logo);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("username", res.data.name);
+        localStorage.setItem("logo", res.data.logo);
       } catch (err) {
         console.error("FETCH ME ERROR:", err);
       }
