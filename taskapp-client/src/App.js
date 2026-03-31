@@ -73,6 +73,7 @@ function Dashboard() {
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
   const [logo, setLogo] = useState(localStorage.getItem("logo"));
+  const [selectedLogo, setSelectedLogo] = useState(null);
 
   console.log("ROLE:", role);
 
@@ -210,6 +211,7 @@ function Dashboard() {
         setUser(res.data);
         setRole(res.data.role);
         setUsername(res.data.name);
+        setLogo(res.data.logo);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("username", res.data.name);
       } catch (err) {
@@ -220,6 +222,13 @@ function Dashboard() {
     if (token) 
       fetchMe();
     }, [token]);
+
+    useEffect(() => {
+      if (selectedLogo) {
+        const preview = URL.createObjectURL(selectedLogo);
+        setLogo(preview);
+      }
+    }, [selectedLogo]);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -518,8 +527,23 @@ function Dashboard() {
                 <img src={user.logo} style ={{ width: "100" }} /> 
               )} 
               <input type="file" 
-              onChange={(e) => handleLogoUpload(e.target.files[0])}
+              onChange={(e) => setSelectedLogo(e.target.files[0])}
               />
+
+              <button onClick={() => handleLogoUpload(selectedLogo)}
+                disabled={!selectedLogo}
+                style={{
+                  marginTop: "10px",
+                  padding: "6px 12px",
+                  borderRadius: "6px",
+                  border: "none",
+                  background: "#2ecc71",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+              >
+                Gem Logo
+              </button>
 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
