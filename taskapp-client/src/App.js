@@ -393,7 +393,7 @@ function Dashboard() {
         {/* Topbar */}
       <div style={topbarStyle}>
 
-      <div style={{ justifyContent: "start" }}>
+      <div style={{ flex: 1, justifyContent: "start" }}>
         <h2 style={{
                 margin: 0,
               }}
@@ -402,17 +402,17 @@ function Dashboard() {
               </h2>
         </div>
         
-        <div style ={{ justifyContent: "center" }}>
+        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
           {logo && (
             <img 
               src={logo} 
               alt="Logo"
-              style={{ height: "40px", objectFit: "contain" }} 
+              style={{ height: "60px", objectFit: "contain" }} 
             />
           )}
         </div>
 
-        <div style={{ justifyContent: "end", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center", gap: "12px" }}>
 
           <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
           </span>
