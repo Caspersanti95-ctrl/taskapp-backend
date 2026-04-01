@@ -135,18 +135,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         let query = "";
         let params = [];
 
-            if (req.user.role === "admin" || req.user.role === "monitor") {
-                // Admin og monitor ser alt
-                query = 
-                'SELECT * FROM tasks WHERE organization_id = ?';
-                params =
-                [req.user.organization_id];
-            } else {
-                // Almindelige brugere ser kun deres egne opgaver
-                query = 
-                'SELECT * FROM tasks WHERE assigned_to = ? AND organization_id = ?';
-                params = [req.user.id, req.user.organization_id];
-            }
+            query = 'SELECT * FROM tasks WHERE assigned_to = ?';
+            params = [req.user.id]; 
 
                 // Filtering på status for både admin og almindelige brugere
         if (status) {
@@ -192,9 +182,10 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
                 equipment_approved, 
                 status, 
                 organization_id,
-                approved_by
+                approved_by,
+                assigned_to
                 )
-       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [ 
         req.body.customer || "", 
         req.body.address || "", 
@@ -212,7 +203,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         req.body.equipment_approved || "no",
         "Oprettet",
         req.user.organization_id,
-        null 
+        null,
+        req.user.id 
       ]
     );
 
