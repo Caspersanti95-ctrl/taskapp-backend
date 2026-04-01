@@ -445,7 +445,41 @@ console.log("equipment approved:", req.body.equipment_approved);
             }
         });
 
-  
+        
+        //Opret Task
+        router.post('/tasks', authMiddleware, async (req, res) => {
+            try {
+                const { title } = req.body;
+
+                await db.query(
+                    "INSERT INTO tasks (title, user_id) VALUES (?, ?)",
+                    [title, req.user.id]
+                );
+
+                res.json({ success: true });
+            } catch (err) {
+                console.error("CREATE TASK ERROR:", err);
+                res.status(500).json({ error: "Kunne ikke oprette opgave" });
+            }
+        }
+        );
+
+        //Hent Task (kun brugerens egne)
+        router.get('/tasks', authMiddleware, async (req, res) => {
+            try {
+                const tasks = await db.query(
+                    "SELECT * FROM tasks WHERE user_id = ?",
+                    [req.user.id]
+                );
+
+                res.json(tasks);
+            } catch (err) {
+                console.error("FETCH TASKS ERROR:", err);
+                res.status(500).json({ error: "Kunne ikke hente opgaver" });
+            }
+        }
+        );
+
 
   return router;
 };
