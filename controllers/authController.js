@@ -25,9 +25,16 @@ exports.register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const [orgResult] = await db.query(
+            "INSERT INTO organizations (name) VALUES (?)",
+            [`${name}'s virksomhed`]
+        );
+
+        const orgId = orgResult.insertId;
+
         // Tillad kun admin hvis det præcis er "admin"
         const userRole = "admin";
-        const orgId =  req.body.organization_id || 1; 
+       
 
         const [result] = await db.query(
             "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?, ?)",
