@@ -409,7 +409,7 @@ function Dashboard() {
             <img 
               src={logo} 
               alt="Logo"
-              style={{ height: "60px", objectFit: "contain" }} 
+              style={{ height: "100px", objectFit: "contain" }} 
             />
           )}
         </div>

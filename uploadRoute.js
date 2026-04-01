@@ -9,6 +9,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.post("/logo", authMiddleware, upload.single("logo"), async (req, res) => {
     try {
+
+        console.log("UPLOAD FILE:", req.file);
+        console.log("USER ID:", req.user);
         if (!req.file) {
             return res.status(400).json({ error: "Ingen fil uploadet" });
         }
