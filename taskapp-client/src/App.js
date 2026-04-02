@@ -226,7 +226,7 @@ function Dashboard() {
         if (res.data.logo) {
         localStorage.setItem("role", res.data.role);
         }
-        
+
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("logo", res.data.logo);
       } catch (err) {
@@ -568,7 +568,12 @@ function Dashboard() {
             <div>
               <h3>Opret ny bruger</h3>
               
-              <button onClick={() => navigate("/signup")}>
+              <button 
+                  onClick={createMonitor}
+                  disabled={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword}
+                  opacity={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "0.5" : "1"}
+                  cursor={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "not-allowed" : "pointer"}
+                  >
                 Opret bruger
               </button>
 

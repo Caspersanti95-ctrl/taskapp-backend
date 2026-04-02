@@ -19,8 +19,7 @@ router.post(
 );
 
 // Hent Bruger
-router.get(
-    "/users",
+router.get("/users",
     authMiddleware,
     roleMiddleware("admin"),
     authController.getUsers
