@@ -96,7 +96,14 @@ function Dashboard() {
     formData.append("logo", file);
       try {
         const res = await api.post("/company/logo", formData);
+        
         setLogo(res.data.logo);
+
+        setUser(prev => ({ 
+          ...prev, 
+          logo: res.data.logo 
+        }));
+
         localStorage.setItem("logo", res.data.logo);
 
       } catch (err) {
@@ -212,8 +219,14 @@ function Dashboard() {
         setRole(res.data.role);
         setUsername(res.data.name);
 
-        setLogo(res.data.logo);
+        if (res.data.logo) {
+          setLogo(res.data.logo);
+        }
+      
+        if (res.data.logo) {
         localStorage.setItem("role", res.data.role);
+        }
+        
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("logo", res.data.logo);
       } catch (err) {

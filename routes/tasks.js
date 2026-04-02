@@ -57,7 +57,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     router.get('/stats', async (req, res) => {
         try {
             const [rows] = await db.query(
-                'SELECT status, COUNT(*) as count FROM tasks WHERE organization_id = ? GROUP BY status'
+                'SELECT status, COUNT(*) as count FROM tasks WHERE organization_id = ? GROUP BY status',
+                [req.user.organization_id]
             );
 
             res.json(rows);
