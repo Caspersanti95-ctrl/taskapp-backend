@@ -65,6 +65,30 @@ const StatCard = ({ title, value, theme, color, icon, onClick }) => (
     shadow: "0 4px 12px rgba(0,0,0,0.4)"
   };
 
+  const overlayStyle = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.7)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 999
+  };
+
+  const modalStyle = {
+    background: "white",
+    padding: "30px",
+    borderRadius: "12px",
+    width: "400px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    boxShadow: "0 20px 50px rgba(0,0,0,0.5)"
+  };
+
 function Dashboard() {
 
   // useState
@@ -565,21 +589,38 @@ function Dashboard() {
           )}
 
           {activeTab === "createUser" && (
-            <div>
+            <div style={overlayStyle}>
+              <div style={modalStyle}>
               <h3>Opret ny bruger</h3>
 
               <input
-              text="text"
+              type="text"
               placeholder="Navn"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
+              style={{ 
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #334155",
+                background: "#0f172a",
+                color: "white"
+              }
+            }
               />
-              
+
               <input
               type="email"
               placeholder="E-mailadresse"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
+              style={{ 
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #334155",
+                background: "#0f172a",
+                color: "white"
+              }
+            }
               />   
 
               <input   
@@ -587,6 +628,14 @@ function Dashboard() {
               placeholder="Adgangskode"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
+              style={{ 
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #334155",
+                background: "#0f172a",
+                color: "white"
+              }
+            }
               />
 
               <input
@@ -594,6 +643,14 @@ function Dashboard() {
               placeholder="Gentag adgangskode"
               value={repeatPassword}
               onChange={(e) => setRepeatPassword(e.target.value)}
+              style={{ 
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #334155",
+                background: "#0f172a",
+                color: "white"
+              }
+            }
               />
 
               <select value={newRole} onChange={(e) => setNewRole(e.target.value)}>
@@ -612,6 +669,8 @@ function Dashboard() {
 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
+            </div>
+
           )}
 
           {activeTab === "users" && (
@@ -637,6 +696,7 @@ function Dashboard() {
         </div>
       </div>
 </div>
+
 )}    
    
       {/* Statistik*/}
