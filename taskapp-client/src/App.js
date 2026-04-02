@@ -567,7 +567,40 @@ function Dashboard() {
           {activeTab === "createUser" && (
             <div>
               <h3>Opret ny bruger</h3>
+
+              <input
+              text="text"
+              placeholder="Navn"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              />
               
+              <input
+              type="email"
+              placeholder="E-mailadresse"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+              />   
+
+              <input   
+              type="password"
+              placeholder="Adgangskode"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              />
+
+              <input
+              type="password"
+              placeholder="Gentag adgangskode"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              />
+
+              <select value={newRole} onChange={(e) => setNewRole(e.target.value)}>
+                <option value="monitor">Monitor</option>
+                <option value="admin">Admin</option>
+              </select>
+
               <button 
                   onClick={createMonitor}
                   disabled={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword}
