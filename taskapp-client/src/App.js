@@ -75,18 +75,19 @@ const StatCard = ({ title, value, theme, color, icon, onClick }) => (
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 999
+    zIndex: 1000
   };
 
   const modalStyle = {
-    background: "#0f172a",
+    background: "linear-gradient(145deg, #0f172a, #020617)",
     padding: "30px",
-    borderRadius: "12px",
+    borderRadius: "16px",
     width: "400px",
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.5)"
+    gap: "12px",
+    boxShadow: "0 25px 80px rgba(0,0,0,0.6)",
+    border: "1px solid #1e293b"
   };
 
 function Dashboard() {
@@ -606,11 +607,13 @@ function Dashboard() {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               style={{ 
-                padding: "10px",
-                borderRadius: "6px",
+                padding: "12px",
+                borderRadius: "8px",
                 border: "1px solid #334155",
-                background: "#0f172a",
-                color: "white"
+                background: "#020617",
+                color: "white",
+                width: "100%",
+                outline: "none"
               }
             }
               />
@@ -621,11 +624,13 @@ function Dashboard() {
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               style={{ 
-                padding: "10px",
-                borderRadius: "6px",
+                padding: "12px",
+                borderRadius: "8px",
                 border: "1px solid #334155",
-                background: "#0f172a",
-                color: "white"
+                background: "#020617",
+                color: "white",
+                width: "100%",
+                outline: "none"
               }
             }
               />   
@@ -636,11 +641,13 @@ function Dashboard() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               style={{ 
-                padding: "10px",
-                borderRadius: "6px",
+                ppadding: "12px",
+                borderRadius: "8px",
                 border: "1px solid #334155",
-                background: "#0f172a",
-                color: "white"
+                background: "#020617",
+                color: "white",
+                width: "100%",
+                outline: "none"
               }
             }
               />
@@ -651,21 +658,41 @@ function Dashboard() {
               value={repeatPassword}
               onChange={(e) => setRepeatPassword(e.target.value)}
               style={{ 
-                padding: "10px",
-                borderRadius: "6px",
+                padding: "12px",
+                borderRadius: "8px",
                 border: "1px solid #334155",
-                background: "#0f172a",
-                color: "white"
+                background: "#020617",
+                color: "white",
+                width: "100%",
+                outline: "none"
               }
             }
               />
 
-              <select value={newRole} onChange={(e) => setNewRole(e.target.value)}>
+              <select value={newRole} onChange={(e) => setNewRole(e.target.value)}
+                style={{
+                  padding: "12px",
+                  borderRadius: "8px",
+                  border: "1px solid #334155",
+                  background: "#020617",
+                  color: "white",
+                  width: "100%"
+                }}
+                >
                 <option value="monitor">Monitor</option>
                 <option value="admin">Admin</option>
               </select>
 
-              <select value={position} onChange={(e) => setPosition(e.target.value)}>
+              <select value={position} onChange={(e) => setPosition(e.target.value)}
+                style={{
+                  padding: "12px",
+                  borderRadius: "8px",
+                  border: "1px solid #334155",
+                  background: "#020617",
+                  color: "white",
+                  width: "100%"
+                }}
+                >
                 <option value="direktør">Direktør</option>
                 <option value="leder">Leder</option>
                 <option value="chef">Chef</option>
@@ -682,12 +709,16 @@ function Dashboard() {
                   style={{
                     background: "#22c55e",
                     color: "white",
-                    padding: "10px",
-                    borderRadius: "6px",
+                    padding: "12px",
+                    borderRadius: "8px",
                     border: "none",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    transition: "0.2s",
                   }
                 }
+                onMouseOver={(e) => e.target.style.background = "#16a34a"}
+                onMouseOut={(e) => e.target.style.background = "#22c55e"}
                   >
                 Opret bruger
               </button>

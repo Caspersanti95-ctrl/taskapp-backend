@@ -52,7 +52,7 @@ exports.register = async (req, res) => {
                 organization_id: orgId
             }, 
             process.env.JWT_SECRET, 
-            { expiresIn: '8h' }
+            { expiresIn: '7d' }
         );
 
         res.status(201).json({ 
@@ -133,13 +133,13 @@ exports.login = async (req, res) => {
 };
 
 exports.createMonitor = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role} = req.body;
 
     try {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const userRole = "monitor";
+        const userRole = role || "monitor";
 
           const [result] = await db.query(
             "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?, ?)",
