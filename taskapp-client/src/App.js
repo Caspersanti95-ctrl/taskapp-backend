@@ -681,8 +681,8 @@ function Dashboard() {
               <button 
                   onClick={() => setActiveTab(null)}
                   style={{
-                    background: "#334155",
-                    color: "white",
+                    background: "white",
+                    color: "black",
                     padding: "10px",
                     borderRadius: "6px",
                     border: "none",
