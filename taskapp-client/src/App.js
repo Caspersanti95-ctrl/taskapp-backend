@@ -285,17 +285,17 @@ function Dashboard() {
         const res = await api.get("/auth/me");
         setUser(res.data);
         setRole(res.data.role);
-        setUsername(res.data.name);
-        setLogo(res.data.logo);        
+        setUsername(res.data.name);       
 
-        localStorage.setItem("username", res.data.name);
-        localStorage.setItem("logo", res.data.logo);
-
-        if (res.data.logo) {
+        if (res.data.logo && res.data.logo !== "null") {
+          setLogo(res.data.logo);
           localStorage.setItem("logo", res.data.logo);
         } else {
+          setLogo(null);
           localStorage.removeItem("logo");
         }
+
+          localStorage.setItem("username", res.data.name);
 
       } catch (err) {
         console.error("FETCH ME ERROR:", err);
