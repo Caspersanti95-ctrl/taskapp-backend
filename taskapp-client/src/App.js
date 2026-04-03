@@ -79,7 +79,7 @@ const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   };
 
   const modalStyle = {
-    background: "white",
+    background: "#0f172a",
     padding: "30px",
     borderRadius: "12px",
     width: "400px",
@@ -663,11 +663,31 @@ function Dashboard() {
                   disabled={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword}
                   opacity={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "0.5" : "1"}
                   cursor={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "not-allowed" : "pointer"}
+                  style={{
+                    background: "#22c55e",
+                    color: "white",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "none",
+                    cursor: "pointer"
+                  }}
                   >
                 Opret bruger
               </button>
 
-              <button onClick={() => setActiveTab(null)}>Tilbage</button>
+              <button 
+                  onClick={() => setActiveTab(null)}
+                  style={{
+                    background: "#334155",
+                    color: "white",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    border: "none",
+                    cursor: "pointer"
+                    }}
+                  >
+                    Tilbage
+              </button>
             </div>
             </div>
 
