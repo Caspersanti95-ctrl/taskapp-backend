@@ -148,6 +148,7 @@ function Dashboard() {
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [newRole, setNewRole] = useState("");
+  const [position, setPosition] = useState("");
   const [showUserModal, setShowUserModal] = useState(false);
   const [showUsersModal, setShowUsersModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -399,7 +400,7 @@ function Dashboard() {
       name: newName,
       email:newEmail,
       password: newPassword,
-      role: newRole
+      role: newRole,
     });
 
     setNewName("");
@@ -658,6 +659,15 @@ function Dashboard() {
               <select value={newRole} onChange={(e) => setNewRole(e.target.value)}>
                 <option value="monitor">Monitor</option>
                 <option value="admin">Admin</option>
+              </select>
+
+              <select value={position} onChange={(e) => setPosition(e.target.value)}>
+                <option value="direktør">Direktør</option>
+                <option value="leder">Leder</option>
+                <option value="chef">Chef</option>
+                <option value="administrator">Administrator</option>
+                <option value="sælger">Sælger</option>
+                <option value="tekniker">Tekniker</option>
               </select>
 
               <button 
