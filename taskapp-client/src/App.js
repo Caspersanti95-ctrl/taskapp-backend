@@ -119,7 +119,11 @@ function Dashboard() {
     const formData = new FormData();
     formData.append("logo", file);
       try {
-        const res = await api.post("/company/logo", formData);
+        const res = await api.post("/auth/upload-logo", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
         
         setLogo(res.data.logo);
 
@@ -407,7 +411,7 @@ function Dashboard() {
     setNewEmail("");
     setNewPassword("");
     setRepeatPassword("");
-    setNewRole("monitor");
+    setNewRole("");
 
     setShowUserModal(false);
 
