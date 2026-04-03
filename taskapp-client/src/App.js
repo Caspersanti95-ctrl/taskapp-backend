@@ -286,17 +286,17 @@ function Dashboard() {
         setUser(res.data);
         setRole(res.data.role);
         setUsername(res.data.name);
-
-        if (res.data.logo) {
-          setLogo(res.data.logo);
-        }
-      
-        if (res.data.logo) {
-        localStorage.setItem("role", res.data.role);
-        }
+        setLogo(res.data.logo);        
 
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("logo", res.data.logo);
+
+        if (res.data.logo) {
+          localStorage.setItem("logo", res.data.logo);
+        } else {
+          localStorage.removeItem("logo");
+        }
+        
       } catch (err) {
         console.error("FETCH ME ERROR:", err);
       }
