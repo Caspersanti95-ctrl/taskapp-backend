@@ -652,7 +652,7 @@ function Dashboard() {
               </button>
 
               <button
-                onClick={deleteLogo}
+                onClick={() => deleteLogo(selectedLogo)}
                 style={{
                   padding: "10px",
                   borderRadius: "6px",
