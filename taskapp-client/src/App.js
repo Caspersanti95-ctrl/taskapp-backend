@@ -559,7 +559,8 @@ function Dashboard() {
           )}  
 
           {activeTab === "logo" && (
-            <div>
+            <div style={overlayStyle}>
+              <div style={modalStyle}>
               <h3>Logo</h3>
               
               {user?.logo && (
@@ -585,6 +586,7 @@ function Dashboard() {
               </button>
 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
+            </div>
             </div>
           )}
 
@@ -670,7 +672,8 @@ function Dashboard() {
                     borderRadius: "6px",
                     border: "none",
                     cursor: "pointer"
-                  }}
+                  }
+                }
                   >
                 Opret bruger
               </button>
@@ -684,7 +687,8 @@ function Dashboard() {
                     borderRadius: "6px",
                     border: "none",
                     cursor: "pointer"
-                    }}
+                    }
+                  }
                   >
                     Tilbage
               </button>
@@ -694,7 +698,8 @@ function Dashboard() {
           )}
 
           {activeTab === "users" && (
-             <div>
+             <div style={overlayStyle}>
+              <div style={modalStyle}>
               <h3>Brugere</h3>
 
               {users.map((u) => (
@@ -703,6 +708,7 @@ function Dashboard() {
                 </div>
               ))} 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
+            </div>
             </div>
           )}
 
