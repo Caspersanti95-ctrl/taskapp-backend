@@ -95,9 +95,9 @@ function Dashboard() {
   // useState
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  //const [role, setRole] = useState(localStorage.getItem("role"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
-  const role = user?.role;
+  //const role = user?.role;
   const [logo, setLogo] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
   
