@@ -296,7 +296,7 @@ function Dashboard() {
         } else {
           localStorage.removeItem("logo");
         }
-        
+
       } catch (err) {
         console.error("FETCH ME ERROR:", err);
       }
@@ -651,6 +651,20 @@ function Dashboard() {
                 Gem Logo
               </button>
 
+              <button
+                onClick={deleteLogo}
+                style={{
+                  padding: "10px",
+                  borderRadius: "6px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "#ef4444",
+                  color: "white",
+                }}
+                >
+                  Slet Logo
+                </button>
+
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
             </div>
@@ -783,21 +797,6 @@ function Dashboard() {
                 Opret bruger
               </button>
 
-            
-              <button
-                onClick={deleteLogo}
-                style={{
-                  padding: "10px",
-                  borderRadius: "6px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: "#ef4444",
-                  color: "white",
-                }}
-                >
-                  Slet Logo
-                </button>
-           
 
               <button 
                   onClick={() => setActiveTab(null)}
