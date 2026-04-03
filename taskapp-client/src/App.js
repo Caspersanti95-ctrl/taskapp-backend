@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate, Outlet } from 'rea
 import ServiceReportPage from './pages/ServiceReportPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { io } from "socket.io-client";
+import { io, Manager } from "socket.io-client";
 import Sidebar from './components/Sidebar';
 import AuthPage from "./pages/AuthPage";
 
@@ -95,12 +95,14 @@ function Dashboard() {
   // useState
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role"));
+  //const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
+  const role = user?.role;
   const [logo, setLogo] = useState(null);
   const [selectedLogo, setSelectedLogo] = useState(null);
+  
 
-  console.log("ROLE:", role);
+  
 
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [loading, setLoading] = useState(false);
@@ -140,6 +142,27 @@ function Dashboard() {
       }
   };
 
+  const permissions = {
+    monitor: {
+      canCreateTask: false,
+      canCreateUser: false,
+      canViewSettings: false
+    },
+
+    manager: {
+      canCreateTask: true,
+      canCreateUser: false,
+      canViewSettings: true
+    },
+
+    admin: {
+      canCreateTask: true,
+      canCreateUser: true,
+      canViewSettings: true
+    },
+
+  };
+
     
 
   const theme = darkMode ? darkTheme : lightTheme;
@@ -160,7 +183,7 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState(null);
  
   const navigate = useNavigate();
-
+  const userPermissions = permissions[role] || {};
   // Styling Objects
   const dashboardWrapper = {
     
@@ -430,6 +453,27 @@ function Dashboard() {
     fetchUsers();
   };
 
+  if (!user) {
+    return (
+      <div style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#0f172a"
+      }}>
+        <div style={{
+          width: "40px",
+          height: "40px",
+          border: "4px solid #334155",
+          borderTop: "4px solid #22c55e",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite"
+        }} />
+      </div>
+    );
+  }
+  
     return (
 
      
@@ -491,7 +535,7 @@ function Dashboard() {
         </div>
       </div> 
 
-{role === "admin" && showSettings && (
+{userPermissions.canViewSettings && showSettings && (
 
 <div className="modal-overlay">
   <div className="modal">
@@ -524,6 +568,7 @@ function Dashboard() {
               Logo
             </button>
           
+          {userPermissions.canCreateUser && (
             <button
                   onClick={() => setActiveTab("createUser")}
                   onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
@@ -541,7 +586,7 @@ function Dashboard() {
                 >
                   + Opret bruger
                 </button>
-        
+          )}
                 
       
           <button
@@ -790,6 +835,7 @@ function Dashboard() {
       {role === "admin" && (
         <div style={{ marginBottom: "30px" }}>
           
+          {userPermissions.canCreateTask && (
           <button onClick={openNewTask} 
             style={{ 
             padding: "8px 14px",
@@ -801,8 +847,10 @@ function Dashboard() {
               }}>
             ➕ Opret Opgave
           </button>
+          )}
         </div>
       )}
+
       
       <div style={{ marginBottom: "30px"}}>
 
