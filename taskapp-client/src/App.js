@@ -783,7 +783,7 @@ function Dashboard() {
                 Opret bruger
               </button>
 
-            {logo && (
+            
               <button
                 onClick={deleteLogo}
                 style={{
@@ -797,8 +797,8 @@ function Dashboard() {
                 >
                   Slet Logo
                 </button>
-            )}
-            
+           
+
               <button 
                   onClick={() => setActiveTab(null)}
                   style={{
