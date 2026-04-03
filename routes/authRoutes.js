@@ -34,15 +34,27 @@ router.delete(
 );
 
 router.delete(
-    "/company/logo",
+    "/delete-logo",
     authMiddleware,
     async (req, res) => {
         try {
+            const [rows] = await db.query(
+                "SELECT logo FROM users WHERE id = ?",
+                [req.user.id]
+            );
+
+            const logo = rows[0].logo;
+
+            if (logo) {
+                const publicId = logo.split("/").pop[0].split(".")[0];
+                await cloudinary.uploader.destroy(`logos/${publicId}`);
+            }
+
             await db.query(
                 "UPDATE users SET logo = NULL WHERE id = ?",
                 [req.user.id]
             );
-            
+
             res.json({ message: "Logo slettet" });
         } catch (err) {
             console.error(err);

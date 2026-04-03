@@ -144,7 +144,7 @@ function Dashboard() {
 
   const deleteLogo = async () => {
     try {
-      await api.delete("/auth/delete-logo");
+      await api.delete("/delete-logo");
       setLogo(null);
       setUser(prev => ({
         ...prev,
