@@ -506,15 +506,17 @@ function Dashboard() {
               </h2>
         </div>
         
-        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        
           {logo && (
+            <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
             <img 
-              src={logo} 
+              src={logo}  
               alt="Logo"
               style={{ height: "100px", objectFit: "contain" }} 
             />
+            </div>
           )}
-        </div>
+       
 
         <div style={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center", gap: "12px" }}>
 
