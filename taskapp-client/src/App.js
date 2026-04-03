@@ -142,6 +142,21 @@ function Dashboard() {
       }
   };
 
+  const deleteLogo = async () => {
+    try {
+      await api.delete("/auth/delete-logo");
+      setLogo(null);
+      setUser(prev => ({
+        ...prev,
+        logo: null
+      }));
+      localStorage.removeItem("logo");
+      alert("Logo slettet");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const permissions = {
     monitor: {
       canCreateTask: false,
@@ -473,7 +488,7 @@ function Dashboard() {
       </div>
     );
   }
-  
+
     return (
 
      
@@ -768,6 +783,22 @@ function Dashboard() {
                 Opret bruger
               </button>
 
+            {logo && (
+              <button
+                onClick={deleteLogo}
+                style={{
+                  padding: "10px",
+                  borderRadius: "6px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "#ef4444",
+                  color: "white",
+                }}
+                >
+                  Slet Logo
+                </button>
+            )}
+            
               <button 
                   onClick={() => setActiveTab(null)}
                   style={{

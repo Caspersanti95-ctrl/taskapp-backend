@@ -33,6 +33,24 @@ router.delete(
     authController.deleteUser
 );
 
+router.delete(
+    "/company/logo",
+    authMiddleware,
+    async (req, res) => {
+        try {
+            await db.query(
+                "UPDATE users SET logo = NULL WHERE id = ?",
+                [req.user.id]
+            );
+            
+            res.json({ message: "Logo slettet" });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "Kunne ikke slette logo" });
+        }
+    }
+)
+
 router.get("/me", authMiddleware, async (req, res) => {
     try {
         const [rows] = await db.query(
