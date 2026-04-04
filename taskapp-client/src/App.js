@@ -546,13 +546,26 @@ function Dashboard() {
           </span>
 
           {role === "admin" && (
-            <button onClick={() => setShowSettings(true)}>
+            <button onClick={() => setShowSettings(true)}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+              style={{
+                padding: "8px 12px",
+                background: "#3498db",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}
+            >
               ⚙️ Indstillinger
             </button> 
           )}
 
           <button
                 onClick={() => setDarkMode(!darkMode)}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                 style={{
                   marginRight: "10px",
                   padding: "6px 12px",
@@ -567,7 +580,10 @@ function Dashboard() {
                 {darkMode ? "☀️ Light" : "🌙 Dark"}
           </button>
 
-          <button onClick={logout} style={logoutButton}>
+          <button onClick={logout} style={logoutButton}
+          onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+          onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+          >
             Log ud
           </button>
              
