@@ -271,6 +271,17 @@ function Dashboard() {
     Godkendt: "#2ecc71" 
   };
 
+  const inputStyle = {
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #334155",
+    background: "#020617",
+    color: "white",
+    width: "100%",
+    outline: "none",
+    boxSizing: "border-box"
+  }; 
+
 
   useEffect(() => {
     console.log("TOKEN IN DASHBOARD:", token);
@@ -724,16 +735,7 @@ function Dashboard() {
               placeholder="Navn"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              style={{ 
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #334155",
-                background: "#020617",
-                color: "white",
-                width: "100%",
-                outline: "none"
-              }
-            }
+              style={{inputStyle}}
               />
 
               <input
@@ -741,16 +743,7 @@ function Dashboard() {
               placeholder="E-mailadresse"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              style={{ 
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #334155",
-                background: "#020617",
-                color: "white",
-                width: "100%",
-                outline: "none"
-              }
-            }
+              style={{inputStyle}}
               />   
 
               <input   
@@ -758,16 +751,7 @@ function Dashboard() {
               placeholder="Adgangskode"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              style={{ 
-                ppadding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #334155",
-                background: "#020617",
-                color: "white",
-                width: "100%",
-                outline: "none"
-              }
-            }
+              style={{inputStyle}}
               />
 
               <input
@@ -775,16 +759,7 @@ function Dashboard() {
               placeholder="Gentag adgangskode"
               value={repeatPassword}
               onChange={(e) => setRepeatPassword(e.target.value)}
-              style={{ 
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #334155",
-                background: "#020617",
-                color: "white",
-                width: "100%",
-                outline: "none"
-              }
-            }
+              style={{inputStyle}}
               />
 
               <select value={newRole} onChange={(e) => setNewRole(e.target.value)}
