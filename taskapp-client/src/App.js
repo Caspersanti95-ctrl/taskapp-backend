@@ -192,11 +192,19 @@ function Dashboard() {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [newRole, setNewRole] = useState("");
   const [position, setPosition] = useState("");
+  const [phone, setPhone] = useState("");
   const [showUserModal, setShowUserModal] = useState(false);
   const [showUsersModal, setShowUsersModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
- 
+  const [editingUser, setEditingUser] = useState(null);
+  const [editedName, setEditedName] = useState("");
+  const [editedEmail, setEditedEmail] = useState("");
+  const [editedRole, setEditedRole] = useState("");
+  const [editedPosition, setEditedPosition] = useState("");
+  const [editedPassword, setEditedPassword] = useState("");
+  
+
   const navigate = useNavigate();
   const userPermissions = permissions[role] || {};
   // Styling Objects
@@ -282,6 +290,34 @@ function Dashboard() {
     boxSizing: "border-box"
   }; 
 
+  const startEdit = (user) => {
+    setEditingUser(user);
+    setEditedName(user.name);
+    setEditedEmail(user.email);
+    setEditedRole(user.role);
+    setEditedPosition(user.position);
+    setEditedPassword(user.password);
+  };
+
+  const saveUser = async () => {
+    try {
+      await api.put(`/auth/users/${editingUser.id}`, {
+        name: editedName,
+        email: editedEmail,
+        role: editedRole,
+        position: editedPosition,
+        password: editedPassword
+      });
+
+      fetchUsers();
+      setEditingUser(null);
+
+      alert("Bruger opdateret");
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     console.log("TOKEN IN DASHBOARD:", token);
@@ -472,12 +508,19 @@ function Dashboard() {
     }
   };
 
-  const deleteUser = async (id) => {
+ 
+    const deleteUser = async (userId) => {
+      const confirmDelete = window.confirm("Er du sikker på, at du vil slette denne bruger?");
+      if (!confirmDelete) return;
 
-    await api.delete(`/auth/users/${id}`);
-
-    fetchUsers();
+      try {
+        await api.delete(`/auth/users/${userId}`);
+       fetchUsers();
+      } catch (err) {
+        console.error(err);
+      }
   };
+
 
   if (!user) {
     return (
@@ -744,7 +787,14 @@ function Dashboard() {
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               style={{inputStyle}}
-              />   
+              />  
+
+              <input 
+              placeholder="Telefonnummer"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)} 
+              style={{inputStyle}}
+              />
 
               <input   
               type="password"
@@ -901,7 +951,7 @@ function Dashboard() {
                         </div>
                       </div>
                     ))}
-                    
+
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
             </div>

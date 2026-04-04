@@ -133,7 +133,7 @@ exports.login = async (req, res) => {
 };
 
 exports.createMonitor = async (req, res) => {
-    const { name, email, password, role} = req.body;
+    const { name, email, password, role, phone} = req.body;
 
     try {
 
@@ -142,8 +142,8 @@ exports.createMonitor = async (req, res) => {
         const userRole = role || "monitor";
 
           const [result] = await db.query(
-            "INSERT INTO users (name, email, password, role, organization_id) VALUES (?, ?, ?, ?, ?)",
-            [name, email, hashedPassword, userRole, req.user.organization_id]
+            "INSERT INTO users (name, email, password, role, phone, organization_id) VALUES (?, ?, ?, ?, ?)",
+            [name, email, hashedPassword, userRole, phone, req.user.organization_id]
         );
 
         res.json({
@@ -175,6 +175,10 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
+        if (id === req.user.id) {
+            return res.status(400).json({ error: "Du kan ikke slette dig selv" });
+        }
+            
         const [rows] = await db.query(
             "SELECT role FROM users WHERE id = ? AND organization_id = ?",
             [id, req.user.organization_id]
@@ -190,12 +194,58 @@ exports.deleteUser = async (req, res) => {
             });
         }
 
-        await db.query(
+        const [result] = await db.query(
             "DELETE FROM users WHERE id = ? AND organization_id = ?",
             [id, req.user.organization_id]
         );
 
+            if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Bruger ikke slettet" });
+        }
+
         res.json({ message: "Bruger slettet" });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server fejl" });
+    }
+};
+
+exports.updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, role, phone } = req.body;
+
+    try {
+        if (id === req.user.id) {
+            return res.status(400).json({ error: "Du kan ikke opdatere dig selv" });
+        }
+
+        const [rows] = await db.query(
+            "SELECT role FROM users WHERE id = ? AND organization_id = ?",
+            [id, req.user.organization_id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Bruger ikke fundet" });
+        }
+
+        if (rows[0].role === "admin") {
+            return res.status(403).json({
+                error: "Admin kan ikke opdateres"
+            });
+        }
+
+        const [result] = await db.query(
+            "UPDATE users SET name = ?, email = ?, role = ?, phone = ? WHERE id = ? AND organization_id = ?",
+            [name, email, role, id, phone, req.user.organization_id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Bruger ikke opdateret" });
+        }
+
+        res.json({ message: "Bruger opdateret" });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server fejl" });
