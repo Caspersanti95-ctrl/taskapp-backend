@@ -513,6 +513,9 @@ function Dashboard() {
               src={logo}  
               alt="Logo"
               style={{ height: "100px", objectFit: "contain" }} 
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
             />
             </div>
           )}
