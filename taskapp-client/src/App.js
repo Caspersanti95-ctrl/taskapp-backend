@@ -274,7 +274,7 @@ function Dashboard() {
   const inputStyle = {
     padding: "16px 14px",
     borderRadius: "12px",
-    border: "1px solid #334155",
+    border: "none",
     background: "#020617",
     color: "white",
     width: "100%",
