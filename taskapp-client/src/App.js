@@ -844,10 +844,64 @@ function Dashboard() {
               <h3>Brugere</h3>
 
               {users.map((u) => (
-                <div key={u.id}>
-                  {u.email} - {u.role}
-                </div>
-              ))} 
+                <div key={user.id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "8px 12px",
+                        borderRadius: "6px",
+                        background: "#020617",
+                        color: "white",
+                        marginBottom: "8px"
+                      }}
+                    >
+
+                      {/* VENSTRE */}
+                      <div>
+                        <div style={{ fontWeight: "bold" }}>{user.name}</div>
+                        <div style={{ fontSize: "12px", color: "#94a3b8" }}>
+                          {user.email}
+                        </div> 
+                      </div>
+
+                      {/* HØJRE */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+
+                        {/* ROLLER */}
+                        <span style={{
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                          background: 
+                              user.role === "admin" ? "#22c55e22" : "#3b82f622",
+                          color:
+                             user.admin === "admin" ? "#22c55e" : "#3b82f6",
+                          fontSize: "12px",
+                        }}
+                      >
+                  {user.role}
+                </span>
+                  
+                          {/* SLET KNAP */}
+                          <button
+                            onClick={() => deleteUser(user.id)}
+                            onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                            onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                            style={{
+                              padding: "6px 10px",
+                              borderRadius: "6px",
+                              border: "none",
+                              background: "#ef4444",
+                              color: "white",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Slet
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
             </div>
