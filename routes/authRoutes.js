@@ -46,9 +46,14 @@ router.delete(
             const logo = rows[0].logo;
 
             if (logo) {
+                try {
                 const publicId = logo.split("/").pop[0].split(".")[0];
                 await cloudinary.uploader.destroy(`logos/${publicId}`);
+            } catch (cloudErr) {
+                console.error("Cloudinary Delete Error:", cloudErr);
             }
+        }
+        
 
             await db.query(
                 "UPDATE users SET logo = NULL WHERE id = ?",
@@ -56,6 +61,7 @@ router.delete(
             );
 
             res.json({ message: "Logo slettet" });
+
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: "Kunne ikke slette logo" });
