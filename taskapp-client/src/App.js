@@ -272,8 +272,8 @@ function Dashboard() {
   };
 
   const inputStyle = {
-    padding: "12px",
-    borderRadius: "8px",
+    padding: "16px 14px",
+    borderRadius: "12px",
     border: "1px solid #334155",
     background: "#020617",
     color: "white",
