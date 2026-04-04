@@ -875,6 +875,16 @@ function Dashboard() {
           <button onClick={() => {
             setShowSettings(false); 
                 setActiveTab(null);
+          }}
+          style={{
+            padding: "6px 14px",
+            borderRadius: "6px",
+            border: "none",
+            cursor: "pointer",
+            background: "#e2e8f0",
+            color: "#1e293b",
+            marginBottom: "20px",
+            transition: "0.2s"
           }}>
             Luk
           </button>
@@ -907,6 +917,8 @@ function Dashboard() {
           
           {userPermissions.canCreateTask && (
           <button onClick={openNewTask} 
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             style={{ 
             padding: "8px 14px",
             borderRadius: "6px",
