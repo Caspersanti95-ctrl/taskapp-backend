@@ -507,7 +507,7 @@ function Dashboard() {
         </div>
         
         
-          {logo && (
+          {logo && logo !== "null" && (
             <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
             <img 
               src={logo}  
