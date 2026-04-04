@@ -506,9 +506,9 @@ function Dashboard() {
               </h2>
         </div>
         
-        
-          {logo && logo !== "null" && (
-            <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>        
+          {logo && logo !== "null" ? (
+            
             <img 
               src={logo}  
               alt="Logo"
@@ -516,9 +516,28 @@ function Dashboard() {
               onError={(e) => {
                 e.target.style.display = "none";
               }}
-            />
+            /> 
+          ) : (
+            <div 
+              style={{
+                width: "100px",
+                height: "100px",
+                border: "2px dashed #334155",
+                borderRadius: "12px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#64748b",
+                fontSize: "12px",
+                gap: "4px"
+              }}
+            >              
+            📷 Intet logo
             </div>
           )}
+          </div>
+         
        
 
         <div style={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center", gap: "12px" }}>
