@@ -678,6 +678,8 @@ function Dashboard() {
 
               <button onClick={() => handleLogoUpload(selectedLogo)}
                 disabled={!selectedLogo}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                 style={{
                   marginTop: "10px",
                   padding: "6px 12px",
@@ -693,6 +695,8 @@ function Dashboard() {
 
               <button
                 onClick={() => deleteLogo(selectedLogo)}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                 style={{
                   padding: "10px",
                   borderRadius: "6px",
@@ -840,6 +844,8 @@ function Dashboard() {
 
               <button 
                   onClick={() => setActiveTab(null)}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                   style={{
                     background: "white",
                     color: "black",
@@ -876,6 +882,8 @@ function Dashboard() {
             setShowSettings(false); 
                 setActiveTab(null);
           }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
           style={{
             padding: "6px 14px",
             borderRadius: "6px",
