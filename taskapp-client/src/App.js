@@ -199,6 +199,7 @@ function Dashboard() {
   const [showUsersModal, setShowUsersModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
@@ -301,6 +302,11 @@ function Dashboard() {
     setEditedRole(user.role);
     setEditedPosition(user.position);
     setEditedPassword(user.password);
+  };
+
+  const openUser = (user) => {
+    setEditingUser(user);
+    setIsEditing(false);
   };
 
   const saveUser = async () => {
@@ -903,7 +909,7 @@ function Dashboard() {
 
               {users.map((u) => (
                 <div key={u.id}
-                onClick={() => startEdit(u)}
+                onClick={() => openUser(u)}
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -970,6 +976,7 @@ function Dashboard() {
                     <h3>Rediger bruger</h3>
                     <input
                       value={editedName}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedName(e.target.value)}
                       style={inputStyle}
                       placeholder="Navn"
@@ -984,6 +991,7 @@ function Dashboard() {
 
                     <input
                       value={editedPhone || ""}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedPhone(e.target.value)}
                       style={inputStyle}
                       placeholder="Telefonnummer"
@@ -991,6 +999,7 @@ function Dashboard() {
 
                     <input
                       value={editedPosition}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedPosition(e.target.value)}
                       style={inputStyle}
                       placeholder="Position"
@@ -998,6 +1007,7 @@ function Dashboard() {
 
                     <select
                       value={editedRole}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedRole(e.target.value)}
                       style={inputStyle}
                      >
@@ -1009,6 +1019,7 @@ function Dashboard() {
 
                     <input
                       value={editedPassword}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedPassword(e.target.value)}
                       style={inputStyle}
                       placeholder="Adgangskode"
@@ -1018,13 +1029,64 @@ function Dashboard() {
                       type="password"
                       placeholder="Gentag adgangskode"
                       value={editedPassword}
+                      disabled={!isEditing}
                       onChange={(e) => setEditedPassword(e.target.value)}
                       style={inputStyle}
                     />
 
+                    {!isEditing ? (
+                      <button onClick={() => setIsEditing(true)}
+                        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                        style={{
+                          padding: "6px 12px",
+                          borderRadius: "6px",
+                          border: "none",
+                          background: "#3498db",
+                          color: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Rediger
+                      </button>
+                    ) : (
+                    
+                    <button 
+                      onClick={saveUser}
+                      onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                      onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                      style={{
+                        padding: "6px 12px",
+                        borderRadius: "6px",
+                        border: "none",
+                        background: "#22c55e",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                      >
+                        Gem
+                        </button>
+                    )}
 
-                    <button onClick={saveUser}>Gem</button>
-                    <button onClick={() => setEditingUser(null)}>Annuller</button>
+                    <button 
+                      onClick={() => {
+                        setEditingUser(null);
+                        setIsEditing(false);
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                      onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                      style={{
+                        padding: "6px 12px",
+                        borderRadius: "6px",
+                        border: "none",
+                        background: "#ef4444",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                      >
+                        Annuller
+                        </button>
+
                     </div>
                     </div>
               )}
