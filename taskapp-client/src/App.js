@@ -203,6 +203,7 @@ function Dashboard() {
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [editedRole, setEditedRole] = useState("");
+  const [editedPhone, setEditedPhone] = useState("");
   const [editedPosition, setEditedPosition] = useState("");
   const [editedPassword, setEditedPassword] = useState("");
   
@@ -296,6 +297,7 @@ function Dashboard() {
     setEditingUser(user);
     setEditedName(user.name);
     setEditedEmail(user.email);
+    setEditedPhone(user.phone || "");
     setEditedRole(user.role);
     setEditedPosition(user.position);
     setEditedPassword(user.password);
@@ -306,6 +308,7 @@ function Dashboard() {
       await api.put(`/auth/users/${editingUser.id}`, {
         name: editedName,
         email: editedEmail,
+        phone: editedPhone,
         role: editedRole,
         position: editedPosition,
         password: editedPassword
@@ -497,9 +500,11 @@ function Dashboard() {
 
     setNewName("");
     setNewEmail("");
+    setEditedPhone("");
     setNewPassword("");
     setRepeatPassword("");
     setNewRole("");
+    setEditedPosition("");
 
     setShowUserModal(false);
 
@@ -938,7 +943,7 @@ function Dashboard() {
                   
                           {/* SLET KNAP */}
                           <button
-                            onClick={() => {
+                            onClick={(e) => {
                               e.stopPropagation();
                               deleteUser(u.id);
                             }}
