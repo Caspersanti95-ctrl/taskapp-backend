@@ -183,6 +183,8 @@ function Dashboard() {
   const theme = darkMode ? darkTheme : lightTheme;
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [monthStats, setMonthStats] = useState(null);
   const [yearStats, setYearStats] = useState(null);
   const [statusFilter, setStatusFilter] = useState("Alle");
   const [users, setUsers] = useState([]);
@@ -790,6 +792,7 @@ function Dashboard() {
               />  
 
               <input 
+              type="phone"
               placeholder="Telefonnummer"
               value={phone}
               onChange={(e) => setPhone(e.target.value)} 
@@ -894,7 +897,8 @@ function Dashboard() {
               <h3>Brugere</h3>
 
               {users.map((u) => (
-                <div key={user.id}
+                <div key={u.id}
+                onClick={() => startEdit(u)}
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -951,6 +955,73 @@ function Dashboard() {
                         </div>
                       </div>
                     ))}
+
+              {editingUser && (
+                <div style={overlayStyle}>
+                  <div style={modalStyle}>
+                    <h3>Rediger bruger</h3>
+                    <input
+                      value={editedName}
+                      onChange={(e) => setEditedName(e.target.value)}
+                      style={inputStyle}
+                      placeholder="Navn"
+                      />
+
+                    <input
+                      value={editedEmail}
+                      disabled
+                      style={inputStyle}
+                      placeholder="E-mail"
+                    />
+
+                    <input
+                      value={editedPhone || ""}
+                      onChange={(e) => setEditedPhone(e.target.value)}
+                      style={inputStyle}
+                      placeholder="Telefonnummer"
+                    />
+
+                    <input
+                      value={editedPosition}
+                      onChange={(e) => setEditedPosition(e.target.value)}
+                      style={inputStyle}
+                      placeholder="Position"
+                    />
+
+                    <select
+                      value={editedRole}
+                      onChange={(e) => setEditedRole(e.target.value)}
+                      style={inputStyle}
+                     >
+                      <option value="monitor">Monitor</option>
+                      <option value="admin">Admin</option>
+                      <option value="direktør">Direktør</option>
+                     </select>
+                                       
+
+                    <input
+                      value={editedPassword}
+                      onChange={(e) => setEditedPassword(e.target.value)}
+                      style={inputStyle}
+                      placeholder="Adgangskode"
+                    />
+
+                    <input
+                      type="password"
+                      placeholder="Gentag adgangskode"
+                      value={editedPassword}
+                      onChange={(e) => setEditedPassword(e.target.value)}
+                      style={inputStyle}
+                    />
+
+
+                    <button onClick={saveUser}>Gem</button>
+                    <button onClick={() => setEditingUser(null)}>Annuller</button>
+                    </div>
+                    </div>
+              )}
+              
+                   
 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
