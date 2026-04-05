@@ -915,7 +915,7 @@ function Dashboard() {
                       <div>
                         <div style={{ fontWeight: "bold" }}>{user.name}</div>
                         <div style={{ fontSize: "12px", color: "#94a3b8" }}>
-                          {user.email}
+                          {u.email}
                         </div> 
                       </div>
 
@@ -927,18 +927,21 @@ function Dashboard() {
                           padding: "4px 8px",
                           borderRadius: "6px",
                           background: 
-                              user.role === "admin" ? "#22c55e22" : "#3b82f622",
+                              u.role === "admin" ? "#22c55e22" : "#3b82f622",
                           color:
-                             user.admin === "admin" ? "#22c55e" : "#3b82f6",
+                             u.admin === "admin" ? "#22c55e" : "#3b82f6",
                           fontSize: "12px",
                         }}
                       >
-                  {user.role}
+                  {u.role}
                 </span>
                   
                           {/* SLET KNAP */}
                           <button
-                            onClick={() => deleteUser(user.id)}
+                            onClick={() => {
+                              e.stopPropagation();
+                              deleteUser(u.id);
+                            }}
                             onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
                             onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                             style={{
@@ -1020,7 +1023,7 @@ function Dashboard() {
                     </div>
                     </div>
               )}
-              
+
                    
 
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
