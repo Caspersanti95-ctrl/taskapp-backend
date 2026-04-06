@@ -5,8 +5,9 @@ import ServiceReportPage from './pages/ServiceReportPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { io, Manager } from "socket.io-client";
-import Sidebar from './components/Sidebar';
 import AuthPage from "./pages/AuthPage";
+import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -197,6 +198,7 @@ function Dashboard() {
   const [phone, setPhone] = useState("");
   const [showUserModal, setShowUserModal] = useState(false);
   const [showUsersModal, setShowUsersModal] = useState(false);
+  const [showCreateUser, setShowCreateUser] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -207,6 +209,7 @@ function Dashboard() {
   const [editedPhone, setEditedPhone] = useState("");
   const [editedPosition, setEditedPosition] = useState("");
   const [editedPassword, setEditedPassword] = useState("");
+  const [loadingCreate, setLoadingCreate] = useState(false);
   
 
   const navigate = useNavigate();
@@ -489,20 +492,26 @@ function Dashboard() {
     return task.status === statusFilter;
   });
 
-  const createMonitor = async () => {
+  const createUser = async () => {
 
     if (newPassword !== repeatPassword) {
-      alert("Adgangskode matcher ikke");
+      toast.error("Adgangskode matcher ikke");
       return;
     }
+
+    setLoadingCreate(true);
+
     try {
 
-    await api.post("/auth/create-monitor", {
+    await api.post("/auth/register", {
       name: newName,
       email:newEmail,
       password: newPassword,
       role: newRole,
+      phone: newPhone
     });
+
+    toast.success("Bruger oprettet");
 
     setNewName("");
     setNewEmail("");
@@ -513,11 +522,13 @@ function Dashboard() {
     setEditedPosition("");
 
     setShowUserModal(false);
-
     fetchUsers();
 
   } catch (err) {
+    toast.error("Kunne ikke oprette bruger");
     console.error(err);
+    } finally {
+      setLoadingCreate(false);
     }
   };
 
@@ -558,6 +569,10 @@ function Dashboard() {
 
     return (
 
+    <>
+    <Toaster position="center" />
+
+    
      
 
       <div style={dashboardWrapper}>
@@ -781,7 +796,7 @@ function Dashboard() {
             </div>
           )}
 
-          {activeTab === "createUser" && (
+          {showCreateUser&& (
             <div style={overlayStyle}>
               <div style={modalStyle}>
               <h3>Opret ny bruger</h3>
@@ -859,7 +874,7 @@ function Dashboard() {
               </select>
 
               <button 
-                  onClick={createMonitor}
+                  onClick={createUser}
                   disabled={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword}
                   opacity={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "0.5" : "1"}
                   cursor={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "not-allowed" : "pointer"}
@@ -882,7 +897,7 @@ function Dashboard() {
 
 
               <button 
-                  onClick={() => setActiveTab(null)}
+                  onClick={() => setShowCreateUser(false)}
                   onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
                   onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                   style={{
@@ -1417,7 +1432,7 @@ function Dashboard() {
 
 )}
     </div>
-   
+   </>
 );      
 }
 
