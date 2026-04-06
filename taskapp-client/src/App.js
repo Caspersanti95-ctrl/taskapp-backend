@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate, Outlet } from 'rea
 import ServiceReportPage from './pages/ServiceReportPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { io, Manager } from "socket.io-client";
+import { io } from "socket.io-client";
 import AuthPage from "./pages/AuthPage";
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
@@ -98,15 +98,53 @@ function Dashboard() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
-  //const role = user?.role;
-  const [logo, setLogo] = useState(null);
-  const [selectedLogo, setSelectedLogo] = useState(null);
-  
-
-  
-
   const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [logo, setLogo] = useState(null);
+  const [phone, setPhone] = useState("");
+  const [users, setUsers] = useState([]);
+  const [position, setPosition] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [activeTab, setActiveTab] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [loadingCreate, setLoadingCreate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  //Selected
+  const [selectedLogo, setSelectedLogo] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+
+  // New
+  const [newName, setNewName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newPhone, setNewPhone] = useState("");
+  const [newRole, setNewRole] = useState("");
+
+  //stats
+  const [monthStats, setMonthStats] = useState(null);
+  const [yearStats, setYearStats] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("Alle");
+
+ 
+
+  // Show
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showUsersModal, setShowUsersModal] = useState(false);
+  const [showCreateUser, setShowCreateUser] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  // Editing
+  const [editingUser, setEditingUser] = useState(null);
+  const [editedName, setEditedName] = useState("");
+  const [editedEmail, setEditedEmail] = useState("");
+  const [editedRole, setEditedRole] = useState("");
+  const [editedPhone, setEditedPhone] = useState("");
+  const [editedPosition, setEditedPosition] = useState("");
+  const [editedPassword, setEditedPassword] = useState("");
+
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
 
@@ -118,6 +156,7 @@ function Dashboard() {
         
       
   });
+ const theme = darkMode ? darkTheme : lightTheme;
 
   const handleLogoUpload = async (file) => {
     const formData = new FormData();
@@ -158,6 +197,148 @@ function Dashboard() {
     }
   };
 
+  const saveUser = async () => {
+    try {
+      await api.put(`/auth/users/${editingUser.id}`, {
+        name: editedName,
+        email: editedEmail,
+        phone: editedPhone,
+        role: editedRole,
+        position: editedPosition,
+        password: editedPassword
+      });
+
+      fetchUsers();
+      setEditingUser(null);
+
+      alert("Bruger opdateret");
+
+    } catch (err) {
+      console.error(err);
+    }
+  }; 
+  
+  const fetchTasks = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get("/tasks");
+
+        setTasks(response.data);
+
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          logout();
+          navigate("/login");
+        } else {
+        console.error(error);
+    }
+  }
+
+    setLoading(false); 
+  };
+
+  const fetchUsers = async () => {
+    const res = await api.get("/auth/users");
+    setUsers(res.data);
+  };
+
+  const fetchYearStats = async () => {
+    try {
+      const res = await api.get(`/tasks/stats/year?year=${selectedYear}`);
+      setYearStats(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+ const openNewTask = () => {
+  navigate("/tasks/new");
+ };
+
+  const completeTask = async (id) => {
+    try {
+      await api.put(`/tasks/${id}/complete`, 
+        {},
+       );
+
+      fetchTasks();
+
+    } catch (error) {
+      console.error("COMPLETE ERROR:", error);
+    }
+  };
+
+  const startTask = async (id) => {
+    try {
+      await api.put(`/tasks/${id}/start`, {});
+      fetchTasks();
+    } catch (error) {
+      console.error("START ERROR:", error);
+    }
+  };
+
+  const approveTask = async (id) => {
+    await api.put(`/tasks/${id}/approve`, 
+      {},
+      
+  );
+
+    fetchTasks();
+  };
+
+  const createUser = async () => {
+
+    if (newPassword !== repeatPassword) {
+      toast.error("Adgangskode matcher ikke");
+      return;
+    }
+
+    setLoadingCreate(true);
+
+    try {
+
+    await api.post("/auth/register", {
+      name: newName,
+      email:newEmail,
+      password: newPassword,
+      role: newRole,
+      phone: newPhone
+    });
+
+    toast.success("Bruger oprettet");
+
+    setNewName("");
+    setNewEmail("");
+    setEditedPhone("");
+    setNewPassword("");
+    setRepeatPassword("");
+    setNewRole("");
+    setEditedPosition("");
+
+    setShowUserModal(false);
+    fetchUsers();
+
+  } catch (err) {
+    toast.error("Kunne ikke oprette bruger");
+    console.error(err);
+    } finally {
+      setLoadingCreate(false);
+    }
+  };
+
+ 
+    const deleteUser = async (userId) => {
+      const confirmDelete = window.confirm("Er du sikker på, at du vil slette denne bruger?");
+      if (!confirmDelete) return;
+
+      try {
+        await api.delete(`/auth/users/${userId}`);
+       fetchUsers();
+      } catch (err) {
+        console.error(err);
+      }
+  };
+
   const permissions = {
     monitor: {
       canCreateTask: false,
@@ -178,42 +359,8 @@ function Dashboard() {
     },
 
   };
-
-    
-
-  const theme = darkMode ? darkTheme : lightTheme;
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [monthStats, setMonthStats] = useState(null);
-  const [yearStats, setYearStats] = useState(null);
-  const [statusFilter, setStatusFilter] = useState("Alle");
-  const [users, setUsers] = useState([]);
-  const [newName, setNewName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [newRole, setNewRole] = useState("");
-  const [position, setPosition] = useState("");
-  const [phone, setPhone] = useState("");
-  const [showUserModal, setShowUserModal] = useState(false);
-  const [showUsersModal, setShowUsersModal] = useState(false);
-  const [showCreateUser, setShowCreateUser] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [activeTab, setActiveTab] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
-  const [editedName, setEditedName] = useState("");
-  const [editedEmail, setEditedEmail] = useState("");
-  const [editedRole, setEditedRole] = useState("");
-  const [editedPhone, setEditedPhone] = useState("");
-  const [editedPosition, setEditedPosition] = useState("");
-  const [editedPassword, setEditedPassword] = useState("");
-  const [loadingCreate, setLoadingCreate] = useState(false);
-  
-
-  const navigate = useNavigate();
   const userPermissions = permissions[role] || {};
+
   // Styling Objects
   const dashboardWrapper = {
     
@@ -312,26 +459,7 @@ function Dashboard() {
     setIsEditing(false);
   };
 
-  const saveUser = async () => {
-    try {
-      await api.put(`/auth/users/${editingUser.id}`, {
-        name: editedName,
-        email: editedEmail,
-        phone: editedPhone,
-        role: editedRole,
-        position: editedPosition,
-        password: editedPassword
-      });
 
-      fetchUsers();
-      setEditingUser(null);
-
-      alert("Bruger opdateret");
-
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   useEffect(() => {
     console.log("TOKEN IN DASHBOARD:", token);
@@ -414,74 +542,6 @@ function Dashboard() {
     setTasks([]);
     navigate("/login");
   };
- 
-    const fetchTasks = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get("/tasks");
-
-        setTasks(response.data);
-
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          logout();
-          navigate("/login");
-        } else {
-        console.error(error);
-    }
-  }
-
-    setLoading(false); 
-  };
-
-  const fetchUsers = async () => {
-    const res = await api.get("/auth/users");
-    setUsers(res.data);
-  };
-
-  const fetchYearStats = async () => {
-    try {
-      const res = await api.get(`/tasks/stats/year?year=${selectedYear}`);
-      setYearStats(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
- const openNewTask = () => {
-  navigate("/tasks/new");
- };
-
-  const completeTask = async (id) => {
-    try {
-      await api.put(`/tasks/${id}/complete`, 
-        {},
-       );
-
-      fetchTasks();
-
-    } catch (error) {
-      console.error("COMPLETE ERROR:", error);
-    }
-  };
-
-  const startTask = async (id) => {
-    try {
-      await api.put(`/tasks/${id}/start`, {});
-      fetchTasks();
-    } catch (error) {
-      console.error("START ERROR:", error);
-    }
-  };
-
-  const approveTask = async (id) => {
-    await api.put(`/tasks/${id}/approve`, 
-      {},
-      
-  );
-
-    fetchTasks();
-  };
 
   const total = tasks.length;
   const open = tasks.filter(t => t.status === "Oprettet").length;
@@ -491,60 +551,6 @@ function Dashboard() {
     if (statusFilter === "Alle") return true;
     return task.status === statusFilter;
   });
-
-  const createUser = async () => {
-
-    if (newPassword !== repeatPassword) {
-      toast.error("Adgangskode matcher ikke");
-      return;
-    }
-
-    setLoadingCreate(true);
-
-    try {
-
-    await api.post("/auth/register", {
-      name: newName,
-      email:newEmail,
-      password: newPassword,
-      role: newRole,
-      phone: newPhone
-    });
-
-    toast.success("Bruger oprettet");
-
-    setNewName("");
-    setNewEmail("");
-    setEditedPhone("");
-    setNewPassword("");
-    setRepeatPassword("");
-    setNewRole("");
-    setEditedPosition("");
-
-    setShowUserModal(false);
-    fetchUsers();
-
-  } catch (err) {
-    toast.error("Kunne ikke oprette bruger");
-    console.error(err);
-    } finally {
-      setLoadingCreate(false);
-    }
-  };
-
- 
-    const deleteUser = async (userId) => {
-      const confirmDelete = window.confirm("Er du sikker på, at du vil slette denne bruger?");
-      if (!confirmDelete) return;
-
-      try {
-        await api.delete(`/auth/users/${userId}`);
-       fetchUsers();
-      } catch (err) {
-        console.error(err);
-      }
-  };
-
 
   if (!user) {
     return (
@@ -568,12 +574,8 @@ function Dashboard() {
   }
 
     return (
-
-    <>
+  <>
     <Toaster position="center" />
-
-    
-     
 
       <div style={dashboardWrapper}>
         {/* Topbar */}
@@ -752,7 +754,7 @@ function Dashboard() {
               <h3>Logo</h3>
               
               {user?.logo && (
-                <img src={user.logo} style ={{ width: "100" }} /> 
+                <img src={user.logo} style ={{ width: "100%" }} /> 
               )} 
               <input type="file" 
               onChange={(e) => setSelectedLogo(e.target.files[0])}
@@ -796,7 +798,7 @@ function Dashboard() {
             </div>
           )}
 
-          {showCreateUser&& (
+          {activeTab === "createUser" && (
             <div style={overlayStyle}>
               <div style={modalStyle}>
               <h3>Opret ny bruger</h3>
@@ -806,7 +808,7 @@ function Dashboard() {
               placeholder="Navn"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              style={{inputStyle}}
+              style={inputStyle}
               />
 
               <input
@@ -814,15 +816,15 @@ function Dashboard() {
               placeholder="E-mailadresse"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              style={{inputStyle}}
+              style={inputStyle}
               />  
 
               <input 
               type="phone"
               placeholder="Telefonnummer"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)} 
-              style={{inputStyle}}
+              value={newPhone}
+              onChange={(e) => setNewPhone(e.target.value)} 
+              style={inputStyle}
               />
 
               <input   
@@ -830,7 +832,7 @@ function Dashboard() {
               placeholder="Adgangskode"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              style={{inputStyle}}
+              style={inputStyle}
               />
 
               <input
@@ -838,7 +840,7 @@ function Dashboard() {
               placeholder="Gentag adgangskode"
               value={repeatPassword}
               onChange={(e) => setRepeatPassword(e.target.value)}
-              style={{inputStyle}}
+              style={inputStyle}
               />
 
               <select value={newRole} onChange={(e) => setNewRole(e.target.value)}
@@ -874,17 +876,16 @@ function Dashboard() {
               </select>
 
               <button 
-                  onClick={createUser}
-                  disabled={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword}
-                  opacity={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "0.5" : "1"}
-                  cursor={!newName || !newEmail || !newPassword || !repeatPassword || newPassword !== repeatPassword ? "not-allowed" : "pointer"}
+                  onClick={() => ("createUser")}
+                  disabled={loadingCreate}
                   style={{
                     background: "#22c55e",
                     color: "white",
                     padding: "12px",
                     borderRadius: "8px",
                     border: "none",
-                    cursor: "pointer",
+                    opacity: loadingCreate ? 0.6 : 1,
+                    cursor: loadingCreate ? "not-allowed" : "pointer",
                     fontWeight: "600",
                     transition: "0.2s",
                   }
@@ -892,12 +893,12 @@ function Dashboard() {
                 onMouseOver={(e) => e.target.style.background = "#16a34a"}
                 onMouseOut={(e) => e.target.style.background = "#22c55e"}
                   >
-                Opret bruger
+                {loadingCreate ? "loading.." : "Opret bruger"}
               </button>
 
 
               <button 
-                  onClick={() => setShowCreateUser(false)}
+                  onClick={() => setActiveTab(null)}
                   onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
                   onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                   style={{
@@ -914,6 +915,7 @@ function Dashboard() {
               </button>
             </div>
             </div>
+            
 
           )}
 
@@ -939,11 +941,24 @@ function Dashboard() {
 
                       {/* VENSTRE */}
                       <div>
-                        <div style={{ fontWeight: "bold" }}>{user.name}</div>
-                        <div style={{ fontSize: "12px", color: "#94a3b8" }}>
-                          {u.email}
-                        </div> 
+                        <div style={{ 
+                                fontWeight: "bold" 
+                                }}
+                              >
+                                {u.name}
+                              </div>
+
+                        <div style={{ 
+                                fontSize: "12px", 
+                                color: "#94a3b8" 
+                                }}
+                              >
+                                {u.email}
+                            </div> 
                       </div>
+
+                      <div>
+                        
 
                       {/* HØJRE */}
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -955,7 +970,7 @@ function Dashboard() {
                           background: 
                               u.role === "admin" ? "#22c55e22" : "#3b82f622",
                           color:
-                             u.admin === "admin" ? "#22c55e" : "#3b82f6",
+                             u.role === "admin" ? "#22c55e" : "#3b82f6",
                           fontSize: "12px",
                         }}
                       >
@@ -982,6 +997,7 @@ function Dashboard() {
                             Slet
                           </button>
                         </div>
+                      </div>
                       </div>
                     ))}
 
@@ -1104,6 +1120,7 @@ function Dashboard() {
 
                     </div>
                     </div>
+                    
               )}
 
                    
@@ -1111,6 +1128,7 @@ function Dashboard() {
               <button onClick={() => setActiveTab(null)}>Tilbage</button>
             </div>
             </div>
+            
           )}
 
           <button onClick={() => {
@@ -1131,12 +1149,14 @@ function Dashboard() {
           }}>
             Luk
           </button>
-        
-        </div>
-      </div>
-</div>
+          </div>
+          </div>
+          </div>
+          
+     
+)}
 
-)}    
+
    
       {/* Statistik*/}
       <div style={statsGrid}>
@@ -1329,6 +1349,7 @@ function Dashboard() {
 
       
     </div>
+</div>
 
     {showUserModal && (
 
@@ -1410,7 +1431,7 @@ function Dashboard() {
 
 <button
   onClick={() => {
-    createMonitor();
+    createUser();
     setShowUserModal(false);
   }}
   style={{
@@ -1430,17 +1451,16 @@ function Dashboard() {
 
 </div>
 
-)}
-    </div>
-   </>
-);      
-}
+  
+    )}</>
+);
 
 const ProtectedRoute = () => {
   const token =localStorage.getItem("token");
 
     return token ? <Outlet /> : <Navigate to="/login" replace />;
   };
+
 
 
 function App() {
@@ -1460,7 +1480,8 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+    
   );
 }
-
+}
 export default App;
