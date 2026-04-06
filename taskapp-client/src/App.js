@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, Navigate, Outlet } from 'rea
 import ServiceReportPage from './pages/ServiceReportPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { io } from "socket.io-client";
+import { io, Manager} from "socket.io-client";
 import AuthPage from "./pages/AuthPage";
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
@@ -542,6 +542,12 @@ function Dashboard() {
     setTasks([]);
     navigate("/login");
   };
+
+  const ProtectedRoute = () => {
+    const token =localStorage.getItem("token");
+  
+      return token ? <Outlet /> : <Navigate to="/login" replace />;
+    };
 
   const total = tasks.length;
   const open = tasks.filter(t => t.status === "Oprettet").length;
@@ -1351,6 +1357,7 @@ function Dashboard() {
     </div>
 </div>
 
+
     {showUserModal && (
 
 <div style={{
@@ -1446,15 +1453,17 @@ function Dashboard() {
 </button>
 
 </div>
-
-</div>
-
-</div>
-
   
-    )}</>
-);
 
+</div>
+
+</div>
+    
+  
+    
+ )} </>
+);
+}
 const ProtectedRoute = () => {
   const token =localStorage.getItem("token");
 
@@ -1483,5 +1492,5 @@ function App() {
     
   );
 }
-}
+
 export default App;
