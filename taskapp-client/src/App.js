@@ -819,7 +819,7 @@ function Dashboard() {
           {activeTab === "createUser" && (
             <div style={overlayStyle}>
               <div style={modalStyle}>
-              <h3>Opret ny bruger</h3>
+              <h3>Opret ny Medarbejder</h3>
 
               <input
               type="text"
@@ -911,7 +911,7 @@ function Dashboard() {
                 onMouseOver={(e) => e.target.style.background = "#16a34a"}
                 onMouseOut={(e) => e.target.style.background = "#22c55e"}
                   >
-                {loadingCreate ? "loading.." : "Opret bruger"}
+                {loadingCreate ? "loading.." : "Opret Medarbejder"}
               </button>
 
 
@@ -940,7 +940,7 @@ function Dashboard() {
           {activeTab === "users" && (
              <div style={overlayStyle}>
               <div style={modalStyle}>
-              <h3>Brugere</h3>
+              <h3>Medarbejdere</h3>
 
               {users.map((u) => (
                 <div key={u.id}
@@ -1015,7 +1015,7 @@ function Dashboard() {
               {editingUser && (
                 <div style={overlayStyle}>
                   <div style={modalStyle}>
-                    <h3>Rediger bruger</h3>
+                    <h3>Medarbejder indformationer</h3>
                     <input
                       value={editedName}
                       disabled={!isEditing}
