@@ -2,8 +2,6 @@ const db = require('../db'); //Mysql connection
 const bcrypt = require('bcrypt'); //For password hashing
 const jwt = require('jsonwebtoken'); //For token generation
 
-
-
 // REGISTER
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
@@ -237,7 +235,7 @@ exports.updateUser = async (req, res) => {
 
         const [result] = await db.query(
             "UPDATE users SET name = ?, email = ?, role = ?, phone = ? WHERE id = ? AND organization_id = ?",
-            [name, email, role, id, phone, req.user.organization_id]
+            [name, email, role, phone, id, req.user.organization_id]
         );
 
         if (result.affectedRows === 0) {

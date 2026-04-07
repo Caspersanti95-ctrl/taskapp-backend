@@ -446,12 +446,13 @@ function Dashboard() {
 
   const startEdit = (user) => {
     setEditingUser(user);
+    setIsEditing(false);
     setEditedName(user.name);
     setEditedEmail(user.email);
     setEditedPhone(user.phone || "");
     setEditedRole(user.role);
     setEditedPosition(user.position);
-    setEditedPassword(user.password);
+    setEditedPassword("");
   };
 
   const openUser = (user) => {
@@ -932,7 +933,7 @@ function Dashboard() {
 
               {users.map((u) => (
                 <div key={u.id}
-                onClick={() => openUser(u)}
+                onClick={() => startEdit(u)}
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -949,7 +950,7 @@ function Dashboard() {
                       <div>
                         <div style={{ fontWeight: "bold" }}
                               >
-                                {u.name}
+                                {u.username}
                               </div>
 
                         <div style={{ fontSize: "12px", color: "#94a3b8" }}

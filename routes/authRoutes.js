@@ -7,6 +7,8 @@ const roleMiddleware = require("../middleware/roleMiddleware");
 
 const db = require("../db");
 
+const { updateUser } = require("../controllers/authController");
+
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 
@@ -24,6 +26,8 @@ router.get("/users",
     roleMiddleware("admin"),
     authController.getUsers
 );
+
+router.put("/users/:id", authMiddleware, updateUser);
 
 // Slet Bruger
 router.delete(
