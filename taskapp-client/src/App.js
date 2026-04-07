@@ -199,17 +199,27 @@ function Dashboard() {
 
   const saveUser = async () => {
     try {
+
+      console.log("SAVING USER:", {
+        id: editingUser.id,
+        name: editedName,
+        email: editedEmail,
+        phone: editedPhone,
+        role: editedRole,
+        password: editedPassword ? "******" : "(unchanged)"
+      });
+
       await api.put(`/auth/users/${editingUser.id}`, {
         name: editedName,
         email: editedEmail,
         phone: editedPhone,
         role: editedRole,
-        position: editedPosition,
         password: editedPassword
       });
 
       fetchUsers();
       setEditingUser(null);
+      setIsEditing(false);
 
       alert("Bruger opdateret");
 
@@ -446,13 +456,14 @@ function Dashboard() {
 
   const startEdit = (user) => {
     setEditingUser(user);
-    setIsEditing(false);
-    setEditedName(user.name);
-    setEditedEmail(user.email);
+    
+    setEditedName(user.name || "");
+    setEditedEmail(user.email || "");
     setEditedPhone(user.phone || "");
-    setEditedRole(user.role);
-    setEditedPosition(user.position);
+    setEditedRole(user.role || "");
     setEditedPassword("");
+
+    setIsEditing(false);
   };
 
   const openUser = (user) => {
