@@ -730,7 +730,7 @@ function Dashboard() {
                       transition: "0.2s"
                   }}
                 >
-                  + Opret bruger
+                  + Opret Medarbejder
                 </button>
           )}
                 
@@ -750,7 +750,7 @@ function Dashboard() {
                 transition: "0.2s"
               }}
             >
-              👥 Brugere
+              👥 Medarbejder
             </button>
             </>
           )}  
