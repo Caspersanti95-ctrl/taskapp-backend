@@ -214,33 +214,21 @@ exports.updateUser = async (req, res) => {
     const { name, email, role, phone } = req.body;
 
     try {
-        //if (id === req.user.id) {
-        //    return res.status(400).json({ error: "Du kan ikke opdatere dig selv" });
-        //}
 
-        const [rows] = await db.query(
-            "SELECT role FROM users WHERE id = ? AND organization_id = ?",
-            [id, req.user.organization_id]
-        );
-
-        if (rows.length === 0) {
-            return res.status(404).json({ error: "Bruger ikke fundet" });
-        }
-
-        //if (rows[0].role === "admin") {
-        //    return res.status(403).json({
-        //        error: "Admin kan ikke opdateres"
-        //    });
-        //}
 
         const [result] = await db.query(
-            "UPDATE users SET name = ?, email = ?, role = ?, phone = ? WHERE id = ? AND organization_id = ?",
-            [name, email, role, phone, id, req.user.organization_id]
+            "UPDATE users SET name = ?, email = ?, role = ?, phone = ? WHERE id = ?",
+            [
+                name || "", 
+                email || "", 
+                role || "user", 
+                phone || "", 
+                id || "", 
+                Number(id) 
+            ]
         );
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: "Bruger ikke opdateret" });
-        }
+        
 
         res.json({ message: "Bruger opdateret" });
 
