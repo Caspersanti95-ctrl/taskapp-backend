@@ -882,7 +882,7 @@ function Dashboard() {
               </select>
 
               <button 
-                  onClick={() => ("createUser")}
+                  onClick={createUser}
                   disabled={loadingCreate}
                   style={{
                     background: "#22c55e",
@@ -947,24 +947,17 @@ function Dashboard() {
 
                       {/* VENSTRE */}
                       <div>
-                        <div style={{ 
-                                fontWeight: "bold" 
-                                }}
+                        <div style={{ fontWeight: "bold" }}
                               >
                                 {u.name}
                               </div>
 
-                        <div style={{ 
-                                fontSize: "12px", 
-                                color: "#94a3b8" 
-                                }}
+                        <div style={{ fontSize: "12px", color: "#94a3b8" }}
                               >
                                 {u.email}
                             </div> 
-                      </div>
+                          </div>
 
-                      <div>
-                        
 
                       {/* HØJRE */}
                       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -1004,7 +997,7 @@ function Dashboard() {
                           </button>
                         </div>
                       </div>
-                      </div>
+                      
                     ))}
 
               {editingUser && (
@@ -1158,6 +1151,7 @@ function Dashboard() {
           </div>
           </div>
           </div>
+          
           
      
 )}
@@ -1355,7 +1349,7 @@ function Dashboard() {
 
       
     </div>
-</div>
+  </div>
 
 
     {showUserModal && (
@@ -1455,12 +1449,13 @@ function Dashboard() {
 </div>
 
 </div>
+   </div>
+   
+    )}
+    </>
+)};
 
-</div>
-    
- )} </>
-);
-}
+
 const ProtectedRoute = () => {
   const token =localStorage.getItem("token");
 
