@@ -223,8 +223,7 @@ exports.updateUser = async (req, res) => {
                 email || "", 
                 role || "user", 
                 phone || "", 
-                id || "", 
-                Number(id) 
+                id || "",  
             ]
         );
 
