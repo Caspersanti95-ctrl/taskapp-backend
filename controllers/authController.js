@@ -75,6 +75,10 @@ exports.register = async (req, res) => {
 
     } catch (err) {
         console.error("REGISTER ERROR:", err)
+
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.status(400).json({ message: "Email findes allerede" });
+        }
         return res.status(500).json({ 
             error: err.message || JSON.stringify(err) });
     }
