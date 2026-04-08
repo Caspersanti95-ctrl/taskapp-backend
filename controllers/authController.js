@@ -217,7 +217,7 @@ exports.updateUser = async (req, res) => {
 
 
         const [result] = await db.query(
-            "UPDATE users SET name = ?, email = ?, role = ?, phone = ? WHERE id = ?",
+            "UPDATE users SET name = ?, email = ?, phone = ?, role = ? WHERE id = ?",
             [
                 name || "", 
                 email || "", 

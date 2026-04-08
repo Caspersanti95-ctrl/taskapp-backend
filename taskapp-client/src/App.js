@@ -197,18 +197,17 @@ function Dashboard() {
     }
   };
 
+  const fetchUsers = async () => {
+    const res = await api.get("/auth/users");
+    setUsers(res.data);
+  };
+
+  useEffect(() => {
+      fetchUsers();    
+  }, []);
+
   const saveUser = async () => {
     try {
-
-      console.log("SAVING USER:", {
-        id: editingUser.id,
-        name: editedName,
-        email: editedEmail,
-        phone: editedPhone,
-        role: editedRole,
-        password: editedPassword ? "******" : "(unchanged)"
-      });
-
       await api.put(`/auth/users/${editingUser.id}`, {
         name: editedName,
         email: editedEmail,
@@ -217,9 +216,10 @@ function Dashboard() {
         password: editedPassword
       });
 
-      fetchUsers();
+     const res = await api.get("/auth/users");
+      setUsers(res.data);
+
       setEditingUser(null);
-      setIsEditing(false);
 
       alert("Bruger opdateret");
 
@@ -247,10 +247,7 @@ function Dashboard() {
     setLoading(false); 
   };
 
-  const fetchUsers = async () => {
-    const res = await api.get("/auth/users");
-    setUsers(res.data);
-  };
+
 
   const fetchYearStats = async () => {
     try {
@@ -539,11 +536,7 @@ function Dashboard() {
     };
   }, []);
 
-  useEffect(() => {
-    if (role === "admin") {
-      fetchUsers();
-    }
-  }, [role]);
+
   
   const logout = () => {
     localStorage.removeItem("token");
@@ -961,7 +954,7 @@ function Dashboard() {
                       <div>
                         <div style={{ fontWeight: "bold" }}
                               >
-                                {u.username}
+                                {u.name}
                               </div>
 
                         <div style={{ fontSize: "12px", color: "#94a3b8" }}
