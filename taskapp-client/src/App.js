@@ -209,15 +209,31 @@ function Dashboard() {
   const saveUser = async () => {
     try {
 
-      const data = {
-        name: editedName,
-        email: editedEmail,
-        phone: editedPhone,
-        role: editedRole
-      };
+      const data = {};
 
-      if (editedPassword && editedPassword.trim() !== "") {
+      if (editedName !== editingUser.name) {
+        data.name = editedName;
+      }
+
+      if (editedEmail !== editingUser.email) {
+        data.email = editedEmail;
+      }
+       
+      if (editedPhone !== editingUser.phone) {
+        data.phone = editedPhone;
+      }
+
+      if (editedRole !== editingUser.role) {
+        data.role = editedRole;
+      }
+
+      if (editedPassword && editedPassword?.trim().length > 0) {
         data.password = editedPassword;
+      }
+
+      if (Object.keys(data).length === 0) {
+        alert("Ingen ændringer");
+        return;
       }
 
       await api.put(`/auth/users/${editingUser.id}`, data);

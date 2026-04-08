@@ -227,22 +227,39 @@ exports.updateUser = async (req, res) => {
     const { name, email, role, phone, password } = req.body;
 
     try {
-        const emailClean = email?.toLowerCase().trim();
-
-        let query = "UPDATE users SET name = ?, email = ?, role = ?, phone = ?";
-
         
-          const values = [
-                name || "", 
-                emailClean || "", 
-                role || "user", 
-                phone || "", 
-            ]
-        if (password && password.trim() !== "") {
+        let query = "UPDATE users SET ";
+        const values = [];
+        const fields = [];
+
+        if (name !== undefined) {
+            fields.push("name = ?");
+            values.push(name);
+        }
+
+        if (email !== undefined) {
+            fields.push("email = ?");
+            values.push(email);
+        }
+
+        if (role !== undefined) {
+            fields.push("role = ?");
+            values.push(role);
+        }
+
+        if (phone !== undefined) {
+            fields.push("phone = ?");
+            values.push(phone);
+        }
+        
+          
+        if (password && password.trim().length > 6) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            query += ", password = ?";
+            fields.push("password = ?");
             values.push(hashedPassword);
         }
+        
+        query += fields.join(", ");
         query += " WHERE id = ?";
         values.push(id);
         
