@@ -11,10 +11,17 @@ exports.register = async (req, res) => {
     }
 
     try {
+
+        const emailClean = email.toLowerCase().trim();
+
+        if (!emailClean || !password) {
+            return res.status(400).json({ message: "Email og Adgangskode er påkrævet"});
+        }
+
         // Tjek om email allerede findes
         const [existing] = await db.query(
             "SELECT id from users WHERE email = ?",
-            [email]
+            [emailClean]
         );
         
         if (existing.length > 0) {
@@ -22,6 +29,10 @@ exports.register = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        await db.query("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+            [name || "", emailClean, hashedPassword, "admin"]
+        );
 
         const [orgResult] = await db.query(
             "INSERT INTO organizations (name) VALUES (?)",
@@ -71,11 +82,10 @@ exports.register = async (req, res) => {
 
 // LOGIN
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    console.log("LOGIN:", email, password);
-
-
+    
     try {
+    const { email, password } = req.body;
+    const emailClean = email.toLowerCase().trim();
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email og Adgangskode er påkrævet"});
@@ -84,7 +94,7 @@ exports.login = async (req, res) => {
     
         const [users] = await db.query(
             `SELECT * FROM users WHERE email = ?`, 
-            [email]
+            [emailClean]
         );
 
         if (users.length === 0) {
@@ -132,7 +142,7 @@ exports.login = async (req, res) => {
 };
 
 exports.createMonitor = async (req, res) => {
-    const { name, email, password, role, phone} = req.body;
+    const { name, email, password, role, phone } = req.body;
 
     try {
 
@@ -212,24 +222,30 @@ exports.deleteUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, role, phone } = req.body;
+    const { name, email, role, phone, password } = req.body;
 
     try {
+        const emailClean = email?.toLowerCase().trim();
 
-
-        const [result] = await db.query(
-            "UPDATE users SET name = ?, email = ?, phone = ?, role = ? WHERE id = ?",
-            [
-                name || "", 
-                email || "", 
-                role || "user", 
-                phone || "", 
-                id || "",  
-            ]
-        );
+        let query = "UPDATE users SET name = ?, email = ?, role = ?, phone = ?";
 
         
-
+          const values = [
+                name || "", 
+                emailClean || "", 
+                role || "user", 
+                phone || "", 
+            ]
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            query += ", password = ?";
+            values.push(hashedPassword);
+        }
+        query += " WHERE id = ?";
+        values.push(id);
+        
+        await db.query(query, values);
+        
         res.json({ message: "Bruger opdateret" });
 
     } catch (err) {
