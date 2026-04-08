@@ -98,6 +98,8 @@ function Dashboard() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [logo, setLogo] = useState(null);
   const [phone, setPhone] = useState("");

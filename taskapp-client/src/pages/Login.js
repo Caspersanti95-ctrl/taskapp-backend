@@ -7,16 +7,16 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function Login({ onFlip}) {
 
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [showPassword,setShowPassword] = useState(false);
-  const [loading,setLoading] = useState(false);
-  const [error,setError] = useState("");
-  const [darkMode,setDarkMode] = useState(
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "light" ? false : true
   );
-  const [fadeOut,setFadeOut] = useState(false);
-  const [buttonState,setButtonState] = useState("idle");
+  const [fadeOut, setFadeOut] = useState(false);
+  const [buttonState, setButtonState] = useState("idle");
   const [shake, setShake] = useState(false);
 
   const navigate = useNavigate();
@@ -39,35 +39,23 @@ export default function Login({ onFlip}) {
 
     try {
 
-      const res = await fetch(
-        "https://taskapp-backend-production-3da5.up.railway.app/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
-        }
-      );
+      const res = await api.post("/auth/login", {
+        email,
+        password
+      });
 
-      if (!res.ok) {
-        throw new Error("Login failed");
-      }
+      const data = res.data;
 
-      const data = await res.json();
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.user.role);
       localStorage.setItem("username", data.user.name);
 
       setButtonState("success");
-   
       setFadeOut(true);
 
       setTimeout(() => {
       navigate("/dashboard");
     }, 1000);
-
-  
 
     } catch(err) {
 
@@ -75,7 +63,6 @@ export default function Login({ onFlip}) {
       setError("Forkert email eller password");
       setButtonState("idle");
       setLoading(false);
-
       setShake(true);
        
       setTimeout(() => {
