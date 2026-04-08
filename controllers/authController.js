@@ -236,7 +236,7 @@ exports.updateUser = async (req, res) => {
                 role || "user", 
                 phone || "", 
             ]
-        if (password) {
+        if (password && password.trim() !== "") {
             const hashedPassword = await bcrypt.hash(password, 10);
             query += ", password = ?";
             values.push(hashedPassword);
@@ -245,7 +245,7 @@ exports.updateUser = async (req, res) => {
         values.push(id);
         
         await db.query(query, values);
-        
+
         res.json({ message: "Bruger opdateret" });
 
     } catch (err) {

@@ -208,13 +208,19 @@ function Dashboard() {
 
   const saveUser = async () => {
     try {
-      await api.put(`/auth/users/${editingUser.id}`, {
+
+      const data = {
         name: editedName,
         email: editedEmail,
         phone: editedPhone,
-        role: editedRole,
-        ...(editedPassword && { password: editedPassword })
-      });
+        role: editedRole
+      };
+
+      if (editedPassword && editedPassword.trim() !== "") {
+        data.password = editedPassword;
+      }
+
+      await api.put(`/auth/users/${editingUser.id}`, data);
 
      const res = await api.get("/auth/users");
       setUsers(res.data);
