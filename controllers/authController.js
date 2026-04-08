@@ -253,12 +253,12 @@ exports.updateUser = async (req, res) => {
         }
         
           
-        if (password && password.trim().length > 6) {
+        if (typeof password === "string" && password.trim() !== "") {
             const hashedPassword = await bcrypt.hash(password, 10);
             fields.push("password = ?");
             values.push(hashedPassword);
         }
-        
+
         query += fields.join(", ");
         query += " WHERE id = ?";
         values.push(id);
