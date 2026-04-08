@@ -213,7 +213,7 @@ function Dashboard() {
         email: editedEmail,
         phone: editedPhone,
         role: editedRole,
-        password: editedPassword
+        ...(editedPassword && { password: editedPassword })
       });
 
      const res = await api.get("/auth/users");
