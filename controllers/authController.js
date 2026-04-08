@@ -71,13 +71,11 @@ exports.register = async (req, res) => {
 
 // LOGIN
 exports.login = async (req, res) => {
-    console.log("LOGIN:", email, password);
-    try {
-        
-
     const { email, password } = req.body;
+    console.log("LOGIN:", email, password);
 
 
+    try {
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email og Adgangskode er påkrævet"});
