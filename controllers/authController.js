@@ -252,8 +252,8 @@ exports.updateUser = async (req, res) => {
             values.push(phone);
         }
         
-          
-        if (typeof password === "string" && password.trim() !== "") {
+        if (!req.body.hasOwnProperty("password")) {  
+        } else if (req.body.password && req.body.password.trim() !== "") {
             const hashedPassword = await bcrypt.hash(password, 10);
             fields.push("password = ?");
             values.push(hashedPassword);
