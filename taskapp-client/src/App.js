@@ -229,7 +229,7 @@ function Dashboard() {
         data.role = editedRole;
       }
 
-      if (editedPassword && editedPassword?.trim().length > 0) {
+      if (editedPassword && editedPassword?.trim() !== "") {
         data.password = editedPassword;
       }
 
@@ -478,13 +478,13 @@ function Dashboard() {
   const startEdit = (user) => {
     setEditingUser(user);
     
-    setEditedName(user.name || "");
-    setEditedEmail(user.email || "");
-    setEditedPhone(user.phone || "");
-    setEditedRole(user.role || "");
+    setEditedName(user.name);
+    setEditedEmail(user.email);
+    setEditedPhone(user.phone);
+    setEditedRole(user.role);
     setEditedPassword("");
 
-    setIsEditing(false);
+    setIsEditing(true);
   };
 
   const openUser = (user) => {
@@ -1049,7 +1049,7 @@ function Dashboard() {
                     />
 
                     <input
-                      value={editedPhone || ""}
+                      value={editedPhone}
                       disabled={!isEditing}
                       onChange={(e) => setEditedPhone(e.target.value)}
                       style={inputStyle}
