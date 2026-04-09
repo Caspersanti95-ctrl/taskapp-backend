@@ -60,7 +60,7 @@ export default function SettingsModal({
             <h3>Logo</h3>
 
             {user?.logo && (
-              <img src={user.logo} style={{ width: "100%" }} />
+              <img src={u.logo} style={{ width: "100%" }} />
             )}
 
             <input type="file" onChange={(e) => setSelectedLogo(e.target.files[0])} />

@@ -166,7 +166,7 @@ function Dashboard() {
     const formData = new FormData();
     formData.append("logo", file);
       try {
-        const res = await api.post("/logo", formData, {
+        const res = await api.post("/auth/logo", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
