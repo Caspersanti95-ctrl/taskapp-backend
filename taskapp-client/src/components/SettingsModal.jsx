@@ -216,7 +216,10 @@ export default function SettingsModal({
                   </button>
                 )}
 
-                <button onClick={() => setIsEditing(false)}
+                <button onClick={() => {
+                    setIsEditing(false);
+                    setEditingUser(null);
+                }}
                         onMouseEnter={(e) => e.target.style.background = "#ef4444"}
                         onMouseLeave={(e) => e.target.style.background = "#dc2626"}
                         style={{
