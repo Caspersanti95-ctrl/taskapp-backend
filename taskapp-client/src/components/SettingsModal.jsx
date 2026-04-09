@@ -25,6 +25,7 @@ export default function SettingsModal({
   startEdit,
   deleteUser,
   editingUser,
+  setEditingUser,
   saveUser,
   isEditing,
   setIsEditing,
@@ -126,25 +127,32 @@ export default function SettingsModal({
             {/* EDIT USER */}
             {editingUser && (
               <>
-                <h4>Rediger</h4>
+              <div style={overlay}>
+                <div style={modal}>
+                <h3>Medarbejder informationer</h3>
 
                 <input 
                     type="text"
                     placeholder="Navn"
-                    value={editedName} 
+                    value={editedName}
+                    disabled={!isEditing} 
                     onChange={(e) => setEditedName(e.target.value)}
+                    style={inputStyle}
                      />
 
                 <input 
                     type="email"
-                    placeholder="Email"
-                    value={editedEmail} disabled
+                    placeholder="Email kan ikke redigeres"
+                    value={editedEmail} 
+                    disabled
+                    style={inputStyle}
                      />
 
                 <input 
                     type="text"
                     placeholder="Telefon"
                     value={editedPhone} 
+                    disabled={!isEditing}
                     onChange={(e) => setEditedPhone(e.target.value)}
                      />
 
@@ -168,16 +176,32 @@ export default function SettingsModal({
                 />
 
                 {!isEditing ? (
-                  <button onClick={() => setIsEditing(true)}>Rediger</button>
+                  <button onClick={() => setIsEditing(true)}>
+                    Rediger
+                  </button>
                 ) : (
-                  <button onClick={saveUser}>Gem</button>
+                  <button onClick={saveUser}>
+                    Gem
+                  </button>
                 )}
 
-                <button onClick={() => setIsEditing(false)}>Annuller</button>
-              </>
+                <button onClick={() => setIsEditing(false)}>
+                    Annuller
+                </button>
+               </div>
+            </div>
+            </>
             )}
 
-            <button onClick={() => setTab(null)}>Tilbage</button>
+            <button 
+                onClick={() => { 
+                    setEditingUser(null);
+                    setIsEditing(false);
+                }}
+            >
+                Tilbage
+            </button>
+           
           </>
         )}
 
