@@ -182,7 +182,8 @@ const overlay = {
   background: "rgba(0,0,0,0.7)",
   display: "flex",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+  zIndex: 9999
 };
 
 const modal = {
