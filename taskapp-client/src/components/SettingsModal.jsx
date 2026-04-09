@@ -128,10 +128,25 @@ export default function SettingsModal({
               <>
                 <h4>Rediger</h4>
 
-                <input value={editedName} onChange={(e) => setEditedName(e.target.value)} />
-                <input value={editedEmail} disabled />
+                <input 
+                    type="text"
+                    placeholder="Navn"
+                    value={editedName} 
+                    onChange={(e) => setEditedName(e.target.value)}
+                     />
 
-                <input value={editedPhone} onChange={(e) => setEditedPhone(e.target.value)} />
+                <input 
+                    type="email"
+                    placeholder="Email"
+                    value={editedEmail} disabled
+                     />
+
+                <input 
+                    type="text"
+                    placeholder="Telefon"
+                    value={editedPhone} 
+                    onChange={(e) => setEditedPhone(e.target.value)}
+                     />
 
                 <select value={editedRole} onChange={(e) => setEditedRole(e.target.value)}>
                   <option value="monitor">Monitor</option>
