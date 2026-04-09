@@ -153,7 +153,7 @@ exports.createMonitor = async (req, res) => {
         const userRole = role || "monitor";
 
           const [result] = await db.query(
-            "INSERT INTO users (name, email, password, role, phone, organization_id) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO users (name, email, password, role, phone, organization_id) VALUES (?, ?, ?, ?, ?, ?)",
             [name, email, hashedPassword, userRole, phone, req.user.organization_id]
         );
 
@@ -171,7 +171,7 @@ exports.getUsers = async (req, res) => {
     try {
 
         const [rows] = await db.query(
-            "SELECT id, name AS username, role FROM users WHERE organization_id = ?",
+            "SELECT id, name, role FROM users WHERE organization_id = ?",
             [req.user.organization_id]
         );
 

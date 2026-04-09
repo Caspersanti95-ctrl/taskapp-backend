@@ -8,6 +8,7 @@ import { io, Manager} from "socket.io-client";
 import AuthPage from "./pages/AuthPage";
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
+import SettingsModal from './components/SettingsModal';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -146,6 +147,7 @@ function Dashboard() {
   const [editedPhone, setEditedPhone] = useState("");
   const [editedPosition, setEditedPosition] = useState("");
   const [editedPassword, setEditedPassword] = useState("");
+  const [repeatEditedPassword, setRepeatEditedPassword] = useState("");
 
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
@@ -164,20 +166,20 @@ function Dashboard() {
     const formData = new FormData();
     formData.append("logo", file);
       try {
-        const res = await api.post("/auth/upload-logo", formData, {
+        const res = await api.post("/logo", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
         });
         
-        setLogo(res.data.logo);
+        setLogo(res.data.url);
 
         setUser(prev => ({ 
           ...prev, 
-          logo: res.data.logo 
+          logo: res.data.url 
         }));
 
-        localStorage.setItem("logo", res.data.logo);
+        localStorage.setItem("logo", res.data.url);
 
       } catch (err) {
         console.error(err);
@@ -210,6 +212,11 @@ function Dashboard() {
 
   const saveUser = async () => {
     try {
+
+      if (editedPassword !== repeatEditedPassword) {
+        alert("Adgangskoder matcher ikke");
+        return;
+      }
 
       const data = {};
 
@@ -328,7 +335,7 @@ function Dashboard() {
 
     try {
 
-    await api.post("/auth/register", {
+    await api.post("/auth/create-monitor", {
       name: newName,
       email:newEmail,
       password: newPassword,
@@ -482,7 +489,9 @@ function Dashboard() {
     setEditedEmail(user.email);
     setEditedPhone(user.phone);
     setEditedRole(user.role);
+
     setEditedPassword("");
+    setRepeatEditedPassword("");
 
     setIsEditing(true);
   };
@@ -709,480 +718,51 @@ function Dashboard() {
         </div>
       </div> 
 
-{userPermissions.canViewSettings && showSettings && (
+      {userPermissions.canViewSettings && showSettings && (
+  <SettingsModal
+    onClose={() => setShowSettings(false)}
 
-<div className="modal-overlay">
-  <div className="modal">
-      <h2>Indstillinger</h2>
-      <div style={{
-        display: "flex",
-        gap: "10px",
-        alignItems: "20px",
-        position: "relative"
-      }}>
+    user={user}
+    selectedLogo={selectedLogo}
+    setSelectedLogo={setSelectedLogo}
+    handleLogoUpload={handleLogoUpload}
+    deleteLogo={deleteLogo}
 
-          
-          {activeTab === null && ( 
-            <>
-            <button
-              onClick={() => setActiveTab("logo")}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-              style={{
-                padding: "6px 14px",
-                borderRadius: "6px",
-                border: "none",
-                cursor: "pointer",
-                background: "#3498db",
-                color: "white",
-                marginBottom: "20px",
-                transition: "0.2s"
-              }}
-            >
-              Logo
-            </button>
-          
-          {userPermissions.canCreateUser && (
-            <button
-                  onClick={() => setActiveTab("createUser")}
-                  onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                  onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                  style={{
-                      padding: "8px 14px",
-                      borderRadius: "6px",
-                      border: "none",
-                      background: "#3498db",
-                      color: "white",
-                      cursor: "pointer",
-                      marginBottom: "20px",
-                      transition: "0.2s"
-                  }}
-                >
-                  + Opret Medarbejder
-                </button>
-          )}
-                
-      
-          <button
-              onClick={() => setActiveTab("users")}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-              style={{
-                padding: "6px 14px",
-                borderRadius: "6px",
-                border: "none",
-                cursor: "pointer",
-                background: "#3498db",
-                color: "white",
-                marginBottom: "20px",
-                transition: "0.2s"
-              }}
-            >
-              👥 Medarbejder
-            </button>
-            </>
-          )}  
+    newName={newName}
+    setNewName={setNewName}
+    newEmail={newEmail}
+    setNewEmail={setNewEmail}
+    newPassword={newPassword}
+    setNewPassword={setNewPassword}
+    repeatPassword={repeatPassword}
+    setRepeatPassword={setRepeatPassword}
+    newPhone={newPhone}
+    setNewPhone={setNewPhone}
+    newRole={newRole}
+    setNewRole={setNewRole}
+    createUser={createUser}
+    loadingCreate={loadingCreate}
 
-          {activeTab === "logo" && (
-            <div style={overlayStyle}>
-              <div style={modalStyle}>
-              <h3>Logo</h3>
-              
-              {user?.logo && (
-                <img src={user.logo} style ={{ width: "100%" }} /> 
-              )} 
-              <input type="file" 
-              onChange={(e) => setSelectedLogo(e.target.files[0])}
-              />
+    users={users}
+    startEdit={startEdit}
+    deleteUser={deleteUser}
+    editingUser={editingUser}
+    saveUser={saveUser}
+    isEditing={isEditing}
+    setIsEditing={setIsEditing}
 
-              <button onClick={() => handleLogoUpload(selectedLogo)}
-                disabled={!selectedLogo}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                style={{
-                  marginTop: "10px",
-                  padding: "6px 12px",
-                  borderRadius: "6px",
-                  border: "none",
-                  background: "#2ecc71",
-                  color: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Gem Logo
-              </button>
-
-              <button
-                onClick={() => deleteLogo(selectedLogo)}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                style={{
-                  padding: "10px",
-                  borderRadius: "6px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: "#ef4444",
-                  color: "white",
-                }}
-                >
-                  Slet Logo
-                </button>
-
-              <button onClick={() => setActiveTab(null)}>Tilbage</button>
-            </div>
-            </div>
-          )}
-
-          {activeTab === "createUser" && (
-            <div style={overlayStyle}>
-              <div style={modalStyle}>
-              <h3>Opret ny Medarbejder</h3>
-
-              <input
-              type="text"
-              placeholder="Navn"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              style={inputStyle}
-              />
-
-              <input
-              type="email"
-              placeholder="E-mailadresse"
-              value={newEmail}
-              onChange={(e) => setNewEmail(e.target.value)}
-              style={inputStyle}
-              />  
-
-              <input 
-              type="phone"
-              placeholder="Telefonnummer"
-              value={newPhone}
-              onChange={(e) => setNewPhone(e.target.value)} 
-              style={inputStyle}
-              />
-
-              <input   
-              type="password"
-              placeholder="Adgangskode"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              style={inputStyle}
-              />
-
-              <input
-              type="password"
-              placeholder="Gentag adgangskode"
-              value={repeatPassword}
-              onChange={(e) => setRepeatPassword(e.target.value)}
-              style={inputStyle}
-              />
-
-              <select value={newRole} onChange={(e) => setNewRole(e.target.value)}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #334155",
-                  background: "#020617",
-                  color: "white",
-                  width: "100%"
-                }}
-                >
-                <option value="monitor">Monitor</option>
-                <option value="admin">Admin</option>
-              </select>
-
-              <select value={position} onChange={(e) => setPosition(e.target.value)}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  border: "1px solid #334155",
-                  background: "#020617",
-                  color: "white",
-                  width: "100%"
-                }}
-                >
-                <option value="direktør">Direktør</option>
-                <option value="leder">Leder</option>
-                <option value="chef">Chef</option>
-                <option value="administrator">Administrator</option>
-                <option value="sælger">Sælger</option>
-                <option value="tekniker">Tekniker</option>
-              </select>
-
-              <button 
-                  onClick={createUser}
-                  disabled={loadingCreate}
-                  style={{
-                    background: "#22c55e",
-                    color: "white",
-                    padding: "12px",
-                    borderRadius: "8px",
-                    border: "none",
-                    opacity: loadingCreate ? 0.6 : 1,
-                    cursor: loadingCreate ? "not-allowed" : "pointer",
-                    fontWeight: "600",
-                    transition: "0.2s",
-                  }
-                }
-                onMouseOver={(e) => e.target.style.background = "#16a34a"}
-                onMouseOut={(e) => e.target.style.background = "#22c55e"}
-                  >
-                {loadingCreate ? "loading.." : "Opret Medarbejder"}
-              </button>
-
-
-              <button 
-                  onClick={() => setActiveTab(null)}
-                  onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                  onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                  style={{
-                    background: "white",
-                    color: "black",
-                    padding: "10px",
-                    borderRadius: "6px",
-                    border: "none",
-                    cursor: "pointer"
-                    }
-                  }
-                  >
-                    Tilbage
-              </button>
-            </div>
-            </div>
-            
-
-          )}
-
-          {activeTab === "users" && (
-             <div style={overlayStyle}>
-              <div style={modalStyle}>
-              <h3>Medarbejdere</h3>
-
-              {users.map((u) => (
-                <div key={u.id}
-                onClick={() => startEdit(u)}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "8px 12px",
-                        borderRadius: "6px",
-                        background: "#020617",
-                        color: "white",
-                        marginBottom: "8px"
-                      }}
-                    >
-
-                      {/* VENSTRE */}
-                      <div>
-                        <div style={{ fontWeight: "bold" }}
-                              >
-                                {u.name}
-                              </div>
-
-                        <div style={{ fontSize: "12px", color: "#94a3b8" }}
-                              >
-                                {u.email}
-                            </div> 
-                          </div>
-
-
-                      {/* HØJRE */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-
-                        {/* ROLLER */}
-                        <span style={{
-                          padding: "4px 8px",
-                          borderRadius: "6px",
-                          background: 
-                              u.role === "admin" ? "#22c55e22" : "#3b82f622",
-                          color:
-                             u.role === "admin" ? "#22c55e" : "#3b82f6",
-                          fontSize: "12px",
-                        }}
-                      >
-                  {u.role}
-                </span>
-                  
-                          {/* SLET KNAP */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              deleteUser(u.id);
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                            onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                            style={{
-                              padding: "6px 10px",
-                              borderRadius: "6px",
-                              border: "none",
-                              background: "#ef4444",
-                              color: "white",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Slet
-                          </button>
-                        </div>
-                      </div>
-                      
-                    ))}
-
-              {editingUser && (
-                <div style={overlayStyle}>
-                  <div style={modalStyle}>
-                    <h3>Medarbejder indformationer</h3>
-                    <input
-                      value={editedName}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedName(e.target.value)}
-                      style={inputStyle}
-                      placeholder="Navn"
-                      />
-
-                    <input
-                      value={editedEmail}
-                      disabled
-                      style={inputStyle}
-                      placeholder="E-mail"
-                    />
-
-                    <input
-                      value={editedPhone}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedPhone(e.target.value)}
-                      style={inputStyle}
-                      placeholder="Telefonnummer"
-                    />
-
-                    <input
-                      value={editedPosition}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedPosition(e.target.value)}
-                      style={inputStyle}
-                      placeholder="Position"
-                    />
-
-                    <select
-                      value={editedRole}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedRole(e.target.value)}
-                      style={inputStyle}
-                     >
-                      <option value="monitor">Monitor</option>
-                      <option value="admin">Admin</option>
-                      <option value="direktør">Direktør</option>
-                     </select>
-                                       
-
-                    <input
-                      value={editedPassword}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedPassword(e.target.value)}
-                      style={inputStyle}
-                      placeholder="Adgangskode"
-                    />
-
-                    <input
-                      type="password"
-                      placeholder="Gentag adgangskode"
-                      value={editedPassword}
-                      disabled={!isEditing}
-                      onChange={(e) => setEditedPassword(e.target.value)}
-                      style={inputStyle}
-                    />
-
-                    {!isEditing ? (
-                      <button onClick={() => setIsEditing(true)}
-                        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                        style={{
-                          padding: "6px 12px",
-                          borderRadius: "6px",
-                          border: "none",
-                          background: "#3498db",
-                          color: "white",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Rediger
-                      </button>
-                    ) : (
-                    
-                    <button 
-                      onClick={saveUser}
-                      onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                      style={{
-                        padding: "6px 12px",
-                        borderRadius: "6px",
-                        border: "none",
-                        background: "#22c55e",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                      >
-                        Gem
-                        </button>
-                    )}
-
-                    <button 
-                      onClick={() => {
-                        setEditingUser(null);
-                        setIsEditing(false);
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-                      style={{
-                        padding: "6px 12px",
-                        borderRadius: "6px",
-                        border: "none",
-                        background: "#ef4444",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                      >
-                        Annuller
-                        </button>
-
-                    </div>
-                    </div>
-                    
-              )}
-
-                   
-
-              <button onClick={() => setActiveTab(null)}>Tilbage</button>
-            </div>
-            </div>
-            
-          )}
-
-          <button onClick={() => {
-            setShowSettings(false); 
-                setActiveTab(null);
-          }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-          style={{
-            padding: "6px 14px",
-            borderRadius: "6px",
-            border: "none",
-            cursor: "pointer",
-            background: "#e2e8f0",
-            color: "#1e293b",
-            marginBottom: "20px",
-            transition: "0.2s"
-          }}>
-            Luk
-          </button>
-          </div>
-          </div>
-          </div>
-          
-          
-     
+    editedName={editedName}
+    setEditedName={setEditedName}
+    editedEmail={editedEmail}
+    editedPhone={editedPhone}
+    setEditedPhone={setEditedPhone}
+    editedRole={editedRole}
+    setEditedRole={setEditedRole}
+    editedPassword={editedPassword}
+    setEditedPassword={setEditedPassword}
+    repeatEditedPassword={repeatEditedPassword}
+    setRepeatEditedPassword={setRepeatEditedPassword}
+  />
 )}
 
 
