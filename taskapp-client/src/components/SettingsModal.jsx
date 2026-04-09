@@ -318,7 +318,7 @@ const inputStyle = {
   Color: "white",
   width: "100%",
   outline: "none",
-  transition: "0.2s",
+  transition: "0.2s"
 };
 
 const buttonStyle = {
