@@ -327,6 +327,11 @@ function Dashboard() {
 
   const createUser = async () => {
 
+    if (!newName || !newEmail || !newPassword || !newRole) {
+      toast.error("Udfyld alle felter");
+      return;
+    }
+
     if (newPassword !== repeatPassword) {
       toast.error("Adgangskode matcher ikke");
       return;
@@ -348,11 +353,10 @@ function Dashboard() {
 
     setNewName("");
     setNewEmail("");
-    setEditedPhone("");
     setNewPassword("");
     setRepeatPassword("");
     setNewRole("");
-    setEditedPosition("");
+    setEditedPhone("");
 
     setShowUserModal(false);
     fetchUsers();
