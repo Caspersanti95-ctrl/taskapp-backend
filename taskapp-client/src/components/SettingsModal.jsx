@@ -230,6 +230,19 @@ export default function SettingsModal({
                     >
                     Annuller
                 </button>
+
+                <button onClick={() => {
+                    setIsEditing(false);
+                    setEditingUser(null);
+                }}
+                        onMouseEnter={(e) => e.target.style.background = "#2563eb"}
+                        onMouseLeave={(e) => e.target.style.background = "#3b82f6"}
+                        style={
+                        buttonStyle
+                        }
+                    >
+                        Tilbage
+                        </button>
                </div>
             </div>
             </>
