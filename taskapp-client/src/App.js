@@ -752,6 +752,7 @@ function Dashboard() {
     startEdit={startEdit}
     deleteUser={deleteUser}
     editingUser={editingUser}
+    setEditingUser={setEditingUser}
     saveUser={saveUser}
     isEditing={isEditing}
     setIsEditing={setIsEditing}
