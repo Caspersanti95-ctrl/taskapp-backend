@@ -222,7 +222,7 @@ const overlay = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  zIndex: 9999
+  zIndex: 2000
 };
 
 const modal = {
@@ -233,4 +233,15 @@ const modal = {
   display: "flex",
   flexDirection: "column",
   gap: "10px"
+};
+
+const inputStyle = {
+  padding: "16px 14px",
+  borderRadius: "12px",
+  border: "none",
+  background: "#020617",
+  Color: "white",
+  width: "100%",
+  outline: "none",
+  boxSizing: "border-box"
 };
