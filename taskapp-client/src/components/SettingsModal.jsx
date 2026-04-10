@@ -290,7 +290,7 @@ export default function SettingsModal({
                         onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
                             ...buttonStyle,
-                            background: "#dc2626",
+                            background: "#1e293b",
                             color: "white"
                             }}
                     >
@@ -303,9 +303,11 @@ export default function SettingsModal({
                 }}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
                         onMouseLeave={(e) => e.target.style.background = "#1e293b"}
-                        style={
-                        buttonStyle
-                        }
+                        style={{
+                        ...buttonStyle,
+                        background: "#1e293b",
+                        color: "white"
+                        }}
                     >
                         Tilbage
                         </button>
