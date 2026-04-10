@@ -135,10 +135,10 @@ export default function SettingsModal({
                     {/* FRA VENSTRE */}
                 <div>
                 <div style={{ fontWeight: "600" }}>
-                {u.name} 
+                {u.name || u.username} 
                 </div>
                 <div style={{ fontSize: "12px", color: "#94a3b8" }}>
-                ({u.email})
+                {u.email}
                 </div>
                 </div>
 
@@ -287,7 +287,7 @@ export default function SettingsModal({
                     setEditingUser(null);
                 }}
                         onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                        onMouseLeave={(e) => e.target.style.background = "#dc2626"}
+                        onMouseLeave={(e) => e.target.style.background = "#020617"}
                         style={{
                             ...buttonStyle,
                             background: "#dc2626",
@@ -320,7 +320,7 @@ export default function SettingsModal({
                     setIsEditing(false);
                 }}
                 onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                onMouseLeave={(e) => e.target.style.background = "#dc2626"}
+                onMouseLeave={(e) => e.target.style.background = "#020617"}
                 style={{
                     ...buttonStyle,
                     background: "#1e293b",
@@ -335,7 +335,7 @@ export default function SettingsModal({
 
         <button onClick={onClose}
                 onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                onMouseLeave={(e) => e.target.style.background = "#dc2626"}
+                onMouseLeave={(e) => e.target.style.background = "#020617"}
                 style={{
                     ...buttonStyle,
                     background: "#1e293b",
