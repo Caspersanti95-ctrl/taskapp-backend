@@ -107,22 +107,88 @@ export default function SettingsModal({
         {/* USERS */}
         {tab === "users" && (
           <>
-            <h3>Medarbejdere</h3>
+            <h3 style={{ marginBottom: "10px" }}>Medarbejdere</h3>
 
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {users.map((u) => (
-              <div key={u.id} onClick={() => startEdit(u)}>
-                {u.name} ({u.role})
+              <div 
+                key={u.id} 
+                onClick={() => startEdit(u)}
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "12px 14px",
+                    borderRadius: "12px",
+                    background: "#020617",
+                    border: "1px solid #1e293b",
+                    cursor: "pointer",
+                    transition: "0.2s"
+                }}
+                onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#0f172a")
+                }
+                onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "#020617")
+                }
+                >
+                    {/* FRA VENSTRE */}
+                <div>
+                <div style={{ fontWeight: "600" }}>
+                {u.name} 
+                </div>
+                <div style={{ fontSize: "12px", color: "#94a3b8" }}>
+                ({u.email})
+                </div>
+                </div>
 
+                {/* HØJRE */}
+                <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+
+                    {/* ROLLE */}
+                <span 
+                    style={{
+                        padding: "4px 8px",
+                        borderRadius: "6px",
+                        fontSize: "12px",
+                        background:
+                            u.role === "admin" ? "#22c55e22" : "#3b82f622",
+                         color:
+                            u.role === "admin" ? "#22c55e" : "#3b82f6"
+                    }}
+                    >
+                        {u.role}
+                    </span>
+
+                    {/* DELETE Medarbejder */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     deleteUser(u.id);
                   }}
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "#ef4444",
+                    color: "white",
+                    cursor: "pointer",
+                    fontSize: "12px"
+                  }}
+                  onMouseEnter={(e) =>
+                  (e.currentTarget.style.opacity = "0.8")
+                  }
+                  onMouseLeave={(e) =>
+                  (e.currentTarget.style.opacity = "1")
+                  }
                 >
                   Slet
                 </button>
               </div>
+           </div>
             ))}
+            </div>
+            
 
             {/* EDIT USER */}
             {editingUser && (
