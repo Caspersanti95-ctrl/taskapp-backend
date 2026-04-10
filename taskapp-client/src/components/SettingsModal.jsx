@@ -259,7 +259,7 @@ export default function SettingsModal({
                 {!isEditing ? (
                   <button onClick={() => setIsEditing(true)}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
-                        onMouseLeave={(e) => e.target.style.background = "#3b82f6"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
                             ...buttonStyle,
                             background: "#3b82f6",
@@ -271,7 +271,7 @@ export default function SettingsModal({
                 ) : (
                   <button onClick={saveUser}
                         onMouseEnter={(e) => e.target.style.background = "#16a34a"}
-                        onMouseLeave={(e) => e.target.style.background = "#22c55e"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
                             ...buttonStyle,
                             background: "#22c55e",
@@ -287,7 +287,7 @@ export default function SettingsModal({
                     setEditingUser(null);
                 }}
                         onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                        onMouseLeave={(e) => e.target.style.background = "#020617"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
                             ...buttonStyle,
                             background: "#dc2626",
@@ -302,7 +302,7 @@ export default function SettingsModal({
                     setEditingUser(null);
                 }}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
-                        onMouseLeave={(e) => e.target.style.background = "#3b82f6"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={
                         buttonStyle
                         }
@@ -320,7 +320,7 @@ export default function SettingsModal({
                     setIsEditing(false);
                 }}
                 onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                onMouseLeave={(e) => e.target.style.background = "#020617"}
+                onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                 style={{
                     ...buttonStyle,
                     background: "#1e293b",
@@ -335,7 +335,7 @@ export default function SettingsModal({
 
         <button onClick={onClose}
                 onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                onMouseLeave={(e) => e.target.style.background = "#020617"}
+                onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                 style={{
                     ...buttonStyle,
                     background: "#1e293b",
