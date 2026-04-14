@@ -111,6 +111,8 @@ function Dashboard() {
   const [isEditing, setIsEditing] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [originalUser, setOriginalUser] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
   const navigate = useNavigate();
 
   //Selected
@@ -138,6 +140,7 @@ function Dashboard() {
   const [showUsersModal, setShowUsersModal] = useState(false);
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   // Editing
   const [editingUser, setEditingUser] = useState(null);
@@ -382,6 +385,24 @@ function Dashboard() {
       }
   };
 
+  const handleEdit = () => {
+    setOriginalUser({
+      name: editingName,
+      phone: editingPhone,
+      role: editingRole,
+    });
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setEditedName(originalUser.name ?? "");
+    setEditedPhone(originalUser.phone ?? "");
+    setEditedRole(originalUser.role ?? "");
+    setEditedPassword("");
+
+    setIsEditing(false);
+  };
+
   const permissions = {
     monitor: {
       canCreateTask: false,
@@ -498,6 +519,8 @@ function Dashboard() {
     setEditedPassword("");
     setRepeatEditedPassword("");
 
+    setOriginalUser(user);
+
     setIsEditing(true);
   };
 
@@ -505,6 +528,8 @@ function Dashboard() {
     setEditingUser(user);
     setIsEditing(false);
   };
+
+
 
 
 
@@ -756,6 +781,12 @@ function Dashboard() {
     saveUser={saveUser}
     isEditing={isEditing}
     setIsEditing={setIsEditing}
+    originalUser={originalUser}
+    setOriginalUser={setOriginalUser}
+    pendingAction={pendingAction}
+    setPendingAction={setPendingAction}
+    handleEdit={handleEdit}
+    handleCancel={handleCancel}
 
     editedName={editedName}
     setEditedName={setEditedName}

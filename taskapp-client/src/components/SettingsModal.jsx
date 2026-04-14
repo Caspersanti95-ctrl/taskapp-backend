@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 export default function SettingsModal({
   onClose,
 
@@ -9,6 +10,8 @@ export default function SettingsModal({
   setSelectedLogo,
   handleLogoUpload,
   deleteLogo,
+  
+
 
   // create user
   newName, setNewName,
@@ -29,6 +32,8 @@ export default function SettingsModal({
   saveUser,
   isEditing,
   setIsEditing,
+  handleEdit,
+  handleCancel,
 
   // edit fields
   editedName, setEditedName,
@@ -40,6 +45,8 @@ export default function SettingsModal({
 }) {
 
   const [tab, setTab] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
 
   return (
     <div style={overlay}>
@@ -105,8 +112,8 @@ export default function SettingsModal({
         )}
 
         {/* USERS */}
-        {tab === "users" && (
-          <>
+        {tab === "users" && ( 
+            <>
             <h3 style={{ marginBottom: "10px" }}>Medarbejdere</h3>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -186,8 +193,11 @@ export default function SettingsModal({
                 </button>
               </div>
            </div>
+           
             ))}
             </div>
+            </>
+        )}
             
 
             {/* EDIT USER */}
@@ -241,6 +251,7 @@ export default function SettingsModal({
 
                 <input
                   type="password"
+                    disabled={!isEditing}
                   placeholder="Nyt password"
                   value={editedPassword}
                   onChange={(e) => setEditedPassword(e.target.value)}
@@ -249,6 +260,7 @@ export default function SettingsModal({
 
                 <input
                   type="password"
+                    disabled={!isEditing}
                   placeholder="Gentag password"
                   value={repeatEditedPassword}
                   onChange={(e) => setRepeatEditedPassword(e.target.value)}
@@ -257,50 +269,23 @@ export default function SettingsModal({
             </div>
 
                 {!isEditing ? (
-                  <button onClick={() => setIsEditing(true)}
+                    <>
+                  <button onClick={handleEdit}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
-                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
-                        style={{
-                            ...buttonStyle,
-                            background: "#3b82f6",
-                            color: "white"
-                            }}
-                  >
-                    Rediger
-                  </button>
-                ) : (
-                  <button onClick={saveUser}
-                        onMouseEnter={(e) => e.target.style.background = "#16a34a"}
-                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
-                        style={{
-                            ...buttonStyle,
-                            background: "#22c55e",
-                            color: "white"
-                            }}
-                  >
-                    Gem
-                  </button>
-                )}
-
-                <button onClick={() => {
-                    setIsEditing(false);
-                    setEditingUser(null);
-                }}
-                        onMouseEnter={(e) => e.target.style.background = "#ef4444"}
                         onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
                             ...buttonStyle,
                             background: "#1e293b",
                             color: "white"
                             }}
-                    >
-                    Annuller
-                </button>
-
-                <button onClick={() => {
+                  >
+                    Rediger
+                  </button>
+                 
+                  <button onClick={() => {
                     setIsEditing(false);
                     setEditingUser(null);
-                }}
+                    }}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
                         onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{
@@ -311,29 +296,42 @@ export default function SettingsModal({
                     >
                         Tilbage
                         </button>
-               </div>
-            </div>
-            </>
+                  </>
+                
+            ) : (
+                    <>
+                    <button onClick={saveUser}
+                        onMouseEnter={(e) => e.target.style.background = "#16a34a"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
+                        style={{
+                            ...buttonStyle,
+                            background: "#1e293b",
+                            color: "white"
+                            }}
+                    >
+                        Gem
+                    </button>
+
+                <button onClick={handleCancel}
+                        onMouseEnter={(e) => e.target.style.background = "#ef4444"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
+                        style={{
+                            ...buttonStyle,
+                            background: "#1e293b",
+                            color: "white"
+                            }}
+                    >
+                    Annuller
+                </button>
+                </>
             )}
 
-            <button 
-                onClick={() => { 
-                    setEditingUser(null);
-                    setIsEditing(false);
-                }}
-                onMouseEnter={(e) => e.target.style.background = "#ef4444"}
-                onMouseLeave={(e) => e.target.style.background = "#1e293b"}
-                style={{
-                    ...buttonStyle,
-                    background: "#1e293b",
-                    color: "white"
-                    }}
-            >
-                Tilbage
-            </button>
-           
+           </div>
+        </div> 
           </>
         )}
+       
+      
 
         <button onClick={onClose}
                 onMouseEnter={(e) => e.target.style.background = "#ef4444"}
@@ -347,10 +345,11 @@ export default function SettingsModal({
             Luk
         </button>
 
-      </div>
+        </div>
     </div>
-  );
-}
+  )};
+
+
 
 const overlay = {
   position: "fixed",
@@ -383,7 +382,7 @@ const inputStyle = {
   borderRadius: "10px",
   border: "1px solid #1e293b",
   background: "#020617",
-  Color: "white",
+  color: "white",
   width: "100%",
   outline: "none",
   transition: "0.2s"
