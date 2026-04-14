@@ -387,9 +387,9 @@ function Dashboard() {
 
   const handleEdit = () => {
     setOriginalUser({
-      name: editingName,
-      phone: editingPhone,
-      role: editingRole,
+      name: editedName,
+      phone: editedPhone,
+      role: editedRole,
     });
     setIsEditing(true);
   };
