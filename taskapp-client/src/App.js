@@ -206,8 +206,12 @@ function Dashboard() {
   };
 
   const fetchUsers = async () => {
+    try {
     const res = await api.get("/auth/users");
     setUsers(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -216,6 +220,7 @@ function Dashboard() {
 
   const saveUser = async () => {
     try {
+        setLoading(true);
 
       if (editedPassword !== repeatEditedPassword) {
         alert("Adgangskoder matcher ikke");
@@ -260,11 +265,12 @@ function Dashboard() {
 
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   }; 
   
   const fetchTasks = async () => {
-      setLoading(true);
       try {
         const response = await api.get("/tasks");
 
@@ -276,10 +282,8 @@ function Dashboard() {
           navigate("/login");
         } else {
         console.error(error);
+      }
     }
-  }
-
-    setLoading(false); 
   };
 
 
@@ -535,9 +539,18 @@ function Dashboard() {
 
   useEffect(() => {
     console.log("TOKEN IN DASHBOARD:", token);
-    if (token) {
-      fetchTasks();
-    }
+    const init = async () => {
+    if (!token) return;
+
+    setLoading(true);
+
+      await fetchTasks();
+      await fetchUsers();
+
+      setLoading(false);
+    };
+
+      init();
   }, [token]);
 
   useEffect(() => {
