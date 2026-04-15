@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 export default function SettingsModal({
   onClose,
+  
 
   // logo
   user,
@@ -41,7 +42,8 @@ export default function SettingsModal({
   editedPhone, setEditedPhone,
   editedRole, setEditedRole,
   editedPassword, setEditedPassword,
-  repeatEditedPassword, setRepeatEditedPassword
+  repeatEditedPassword, setRepeatEditedPassword,
+  loadingSave, 
 }) {
 
   const [tab, setTab] = useState(null);
@@ -227,11 +229,12 @@ export default function SettingsModal({
 
                 <input 
                     type="email"
-                    value={editedEmail || ""} 
+                    value={editedEmail || editingUser.email ||""} 
                     disabled
                     style={{
                         ...inputStyle,
                         opacity: "0.7",
+                        cursor: "not-allowed"
                         }}
                      />
 
@@ -308,10 +311,12 @@ export default function SettingsModal({
                         style={{
                             ...buttonStyle,
                             background: "#1e293b",
-                            color: "white"
+                            color: "white",
+                            opacity: loadingSave ? "0.7" : "1",
+                            cursor: loadingSave ? "not-allowed" : "pointer"
                             }}
                     >
-                        Gem
+                       {loadingSave ? "Gemmer..." : "Gem"}
                     </button>
 
                 <button onClick={handleCancel}

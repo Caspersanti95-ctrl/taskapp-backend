@@ -111,6 +111,7 @@ function Dashboard() {
   const [isEditing, setIsEditing] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingSave, setLoadingSave] = useState(false);
   const [originalUser, setOriginalUser] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
   const navigate = useNavigate();
@@ -220,7 +221,7 @@ function Dashboard() {
 
   const saveUser = async () => {
     try {
-        setLoading(true);
+        setLoadingSave(true);
 
       if (editedPassword !== repeatEditedPassword) {
         alert("Adgangskoder matcher ikke");
@@ -266,7 +267,7 @@ function Dashboard() {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setLoadingSave(false);
     }
   }; 
   
@@ -785,6 +786,8 @@ function Dashboard() {
     setNewRole={setNewRole}
     createUser={createUser}
     loadingCreate={loadingCreate}
+    loadingSave={loadingSave}
+    loading={loading}
 
     users={users}
     startEdit={startEdit}
