@@ -49,28 +49,52 @@
     text-align: center;
   }
 
-  .auth-slider {
+.toggle-container {
+    margin-bottom: 20px;
     display: flex;
-    width: 200%;
-    transition: transform 0.4s ease;
+    justify-content: center;
   }
 
-  .auth-slider.signup {
-    transform: translateX(-50%);
+  .toggle {
+    width: 180px;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5),
+                        0 10px 30px rgba(0,0,0,0.4);
+                
   }
 
-  .auth-panel {
-    width: 50%;
-    padding: 20px;
-    transition: opacity 0.3s ease;
+  .toggle span {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: 500;
   }
 
-  .auth-slider.signup .login-panel {
-    opacity: 0.3;
+  .toggle-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 2;
   }
 
-  .auth-slider:not(.signup) .signup-panel {
-    opacity: 0.3;
+  .toggle.active .toggle-circle {
+    transform: translateX(120px);
   }
 
  

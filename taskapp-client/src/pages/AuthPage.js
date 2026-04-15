@@ -50,22 +50,23 @@ export default function AuthPage() {
 
             <Login openSignup={openSignup} />
 
-            {showSignup &&  (
-                <div className="auth-container">
-                    <div className={`auth-slider ${isSignup ? "signup" : "login"}`}>
-
-                        <div className="auth-panel login-panel">
-                            <Login openSignup={toggleMode} />
-                        </div>
-
-                        <div className="auth-panel signup-panel">
-                            <Signup close={toggleMode} />
+        
+                <div className="toggle-container">
+                    <div className={'toggle ${isSignup ? "active" : ""}'} 
+                        onClick={toggleMode}
+                        >
+                        <div className="toggle-circle" />
+                            <span>{isSignup ? "Signup" : "Login"}</span>
                         </div>
                     </div>
-                </div>
-            )}
-                
-            
+
+                    <div className="auth-card">
+                        {isSignup ? (
+                            <Signup close={toggleMode} />
+                        ) : (
+                            <Login openSignup={toggleMode} />
+                        )}
+                    </div>
         </div>
     );
 }
