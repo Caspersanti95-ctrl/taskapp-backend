@@ -136,7 +136,7 @@ export default function Login({ onFlip}) {
       </button>
    </div>
 
-   <p className="link" onClick={onFlip}>
+   <p className="link" onClick={openSignup}>
     Opret Konto
    </p>
 

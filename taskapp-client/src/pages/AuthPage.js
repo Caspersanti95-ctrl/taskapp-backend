@@ -4,7 +4,9 @@ import Signup from "./Signup";
 import "./auth.css";
 
 export default function AuthPage() {
-    const [isFlipped, setIsFlipped] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
+    const [isclosing, setIsClosing] = useState(false);
+    
     const [darkMode, setDarkMode] = useState(
         localStorage.getItem("theme") === "light" ? false : true
     );
@@ -13,6 +15,20 @@ export default function AuthPage() {
         const newMode = !darkMode;
         setDarkMode(newMode);
         localStorage.setItem("theme", newMode ? "dark" : "light");
+    }
+
+    const openSignup = () => {
+        setIsClosing(false);
+        setShowSignup(true);
+    };
+
+    const closeSignup = () => {
+        setIsClosing(true);
+
+        setTimeout(() => {
+            setShowSignup(false);
+            setIsClosing(false);
+        }, 300);
     }
 
     return (
@@ -26,10 +42,17 @@ export default function AuthPage() {
 
             <div className="particles"></div>
 
-            {isFlipped ? (
-                <Signup onFlip={() => setIsFlipped(false)} />                        
-             ) : (
-                <Login onFlip={() => setIsFlipped(true)} />        
+            <Login openSignup={openSignup} />
+
+            {showSignup &&  (
+                <div className="overlay" onClick={closeSignup}>
+                    <div 
+                        className={`signup-container ${isclosing ? "closing" : ""}`} 
+                            onClick={(e) => e.stopPropagation()}
+                            >
+                        <Signup onFlip={closeSignup} />
+                    </div>
+                </div>
             )}
                 
             

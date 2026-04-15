@@ -109,7 +109,7 @@ export default function Signup({ onFlip }) {
             Opret Konto
             </button>
 
-            <p className="link" onClick={onFlip}>
+            <p className="link" onClick={close}>
                 Har du allerede en konto? Log ind
             </p>
         </div>
