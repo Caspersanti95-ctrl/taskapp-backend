@@ -227,10 +227,12 @@ export default function SettingsModal({
 
                 <input 
                     type="email"
-                    placeholder="Email kan ikke redigeres"
-                    value={editedEmail} 
+                    value={editedEmail || ""} 
                     disabled
-                    style={inputStyle}
+                    style={{
+                        ...inputStyle,
+                        opacity: "0.7",
+                        }}
                      />
 
                 <input 
