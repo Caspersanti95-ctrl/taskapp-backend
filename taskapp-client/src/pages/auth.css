@@ -78,6 +78,7 @@
     text-align: center;
     color: white;
     font-weight: 500;
+    pointer-events: none;
   }
 
   .toggle-circle {
@@ -96,6 +97,62 @@
   .toggle.active .toggle-circle {
     transform: translateX(120px);
   }
+
+  .auth-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    perspective: 1000px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .auth-card {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale(1);
+    opacity: 1;
+ }
+
+ .auth-card.signup {
+    animation: fadeScaleIn 0.4s ease;
+}
+
+.auth-card.login {
+    animation: fadeScaleIn 0.4s ease;
+}
+
+@keyframes fadeScaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.login-wrapper {
+    background: radial-gradient(circle at top, #1e2a4a, #0b0f1a);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.login-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: rgba(0,102,255,0.25);
+    filter: blur(120px);
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 0;
+}
+
 
  
   

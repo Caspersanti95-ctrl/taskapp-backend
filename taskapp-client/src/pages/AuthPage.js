@@ -57,13 +57,15 @@ export default function AuthPage() {
                         </div>
                     </div>
 
-                    <div className="auth-card">
+                    <div className="auth-card-wrapper">
+                        <div className={`auth-card ${isSignup ? "signup" : "login"}`}> 
                         {isSignup ? (
-                            <Signup close={toggleMode} />
+                            <Signup key="signup" close={toggleMode} />
                         ) : (
-                            <Login openSignup={toggleMode} />
+                            <Login key="login" openSignup={toggleMode} />
                         )}
                     </div>
+                </div>
         </div>
     );
 }
