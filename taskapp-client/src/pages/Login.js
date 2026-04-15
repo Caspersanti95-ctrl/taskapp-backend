@@ -79,7 +79,7 @@ export default function Login({ onFlip}) {
 
     <div className={`login-card ${shake ? "shake" : ""}`}>
 
-      <h1 className="logo">Lucache's FLOW DAY</h1>
+      <h1 className="logo">FLOW DAY</h1>
       <p className="subtitle">Monitor Dashboard</p>
 
       {error && <div className="login-error">{error}</div>}

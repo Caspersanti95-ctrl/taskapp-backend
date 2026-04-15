@@ -60,7 +60,7 @@ export default function Signup({ onFlip }) {
     return (
         <div className="login-card">
 
-            <h1 className="logo">LUCACHE</h1>
+            <h1 className="logo">FLOW DAY</h1>
             <p className="subtitle">Opret Konto</p>
 
             {error && <div className="login-error">{error}</div>}
