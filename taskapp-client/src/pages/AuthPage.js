@@ -26,17 +26,13 @@ export default function AuthPage() {
 
             <div className="particles"></div>
 
-            <div className={`card ${isFlipped ? "flipped" : ""}`}>
-                <div className="card-inner">
-                    
-                    <div className="card-front">
-                        <Login onFlip={() => setIsFlipped(true)} />
-                    </div>
-                    <div className="card-back">
-                        <Signup onFlip={() => setIsFlipped(false)} />
-                    </div>
-                </div>
-            </div>
+            {isFlipped ? (
+                <Signup onFlip={() => setIsFlipped(false)} />                        
+             ) : (
+                <Login onFlip={() => setIsFlipped(true)} />        
+            )}
+                
+            
         </div>
     );
 }
