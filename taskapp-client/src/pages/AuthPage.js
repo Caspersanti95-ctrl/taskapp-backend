@@ -47,9 +47,6 @@ export default function AuthPage() {
                 </div>
 
             <div className="particles"></div>
-
-            <Login openSignup={openSignup} />
-
         
                 <div className="toggle-container">
                     <div className={'toggle ${isSignup ? "active" : ""}'} 
