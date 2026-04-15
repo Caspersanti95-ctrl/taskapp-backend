@@ -6,6 +6,7 @@ import "./auth.css";
 export default function AuthPage() {
     const [showSignup, setShowSignup] = useState(false);
     const [isclosing, setIsClosing] = useState(false);
+    const [isSignup, setIsSignup] = useState(false);
     
     const [darkMode, setDarkMode] = useState(
         localStorage.getItem("theme") === "light" ? false : true
@@ -16,6 +17,11 @@ export default function AuthPage() {
         setDarkMode(newMode);
         localStorage.setItem("theme", newMode ? "dark" : "light");
     }
+
+    const toggleMode = () => {
+        setIsSignup(prev => !prev);
+    };
+    
 
     const openSignup = () => {
         setIsClosing(false);
@@ -45,12 +51,16 @@ export default function AuthPage() {
             <Login openSignup={openSignup} />
 
             {showSignup &&  (
-                <div className="overlay" onClick={closeSignup}>
-                    <div 
-                        className={`signup-container ${isclosing ? "closing" : ""}`} 
-                            onClick={(e) => e.stopPropagation()}
-                            >
-                        <Signup onFlip={closeSignup} />
+                <div className="auth-container">
+                    <div className={`auth-slider ${isSignup ? "signup" : "login"}`}>
+
+                        <div className="auth-panel login-panel">
+                            <Login openSignup={toggleMode} />
+                        </div>
+
+                        <div className="auth-panel signup-panel">
+                            <Signup close={toggleMode} />
+                        </div>
                     </div>
                 </div>
             )}
