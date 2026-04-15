@@ -5,7 +5,7 @@ import "./Login.css";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
-export default function Login({ onFlip}) {
+export default function Login({ openSignup}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -3,7 +3,7 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-export default function Signup({ onFlip }) {
+export default function Signup({ close }) {
 
     const navigate = useNavigate();
 
