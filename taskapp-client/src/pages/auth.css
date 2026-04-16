@@ -34,8 +34,6 @@
 
 .toggle-container {
     margin-bottom: 20px;
-    z-index: 2;
-    width: 100%;
     display: flex;
     justify-content: center;
   }
@@ -46,11 +44,6 @@
     border-radius: 999px;
     position: relative;
     cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
 
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(12px);   
@@ -68,9 +61,12 @@
 
   .toggle-label {
     position: absolute;
-    text-align: center;
     width: 50%;
-    color: rgba(255,255,255,0.7);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
     font-weight: 500;
     z-index: 2;
   }
@@ -81,6 +77,14 @@
 
     .toggle-label:last-of-type {
         right: 0;
+    }
+
+    .toggle.active .toggle-label:first-of-type {
+        color: white;
+    }
+
+    .toggle.active .toggle-label:last-of-type {
+        color: white;
     }
 
   .toggle-circle {
