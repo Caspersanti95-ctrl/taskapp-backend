@@ -83,7 +83,7 @@
         color: white;
     }
 
-    .toggle.active .toggle-label:last-of-type {
+    .toggle:not(.active) .toggle-label:last-of-type {
         color: white;
     }
 
@@ -111,12 +111,6 @@
     box-shadow: 
             0 8px 25px rgba(0,102,255,0.6),
             inset 0 1px 2px rgba(255,255,255,0.4);
-  }
-  
-  .toggle.active {
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5),
-                0 10px 30px rgba(0,0,0,0.4),
-                0 0 15px rgba(255,255,255,0.3);
   }
 
   /* ======================================
