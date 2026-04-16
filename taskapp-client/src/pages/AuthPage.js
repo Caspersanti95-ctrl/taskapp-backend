@@ -28,15 +28,6 @@ export default function AuthPage() {
         setShowSignup(true);
     };
 
-    const closeSignup = () => {
-        setIsClosing(true);
-
-        setTimeout(() => {
-            setShowSignup(false);
-            setIsClosing(false);
-        }, 300);
-    }
-
     return (
         <div className={`login-wrapper ${darkMode ? "dark" : "light"}`}>
 
@@ -58,13 +49,14 @@ export default function AuthPage() {
                     </div>
 
                     <div className="auth-card-wrapper">
-                        <div className={`auth-card ${isSignup ? "signup" : "login"}`}> 
-                        {isSignup ? (
+
+                        <div className={`auth-card ${!isSignup ? "active" : "inactive"}`}>                         
                             <Signup key="signup" close={toggleMode} />
-                        ) : (
+                        </div>
+
+                        <div className={`auth-card ${isSignup ? "active" : "inactive"}`}>
                             <Login key="login" openSignup={toggleMode} />
-                        )}
-                    </div>
+                        </div>
                 </div>
         </div>
     );
