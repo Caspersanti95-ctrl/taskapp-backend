@@ -44,7 +44,7 @@ export default function AuthPage() {
                         onClick={toggleMode}
                         >
                             {console.log("isSignup:", isSignup)}
-                        <div className="toggle-circle" />
+                        <div className="toggle-circle"></div>
                             <span className="toggle-label">Login</span>
                             <span className="toggle-label">Signup</span>
                         </div>
