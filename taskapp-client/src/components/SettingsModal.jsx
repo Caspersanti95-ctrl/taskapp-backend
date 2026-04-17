@@ -78,13 +78,43 @@ export default function SettingsModal({
             <button
               onClick={() => handleLogoUpload(selectedLogo)}
               disabled={!selectedLogo}
+              onMouseEnter={(e) => e.target.style.background = "#16a34a"}
+              onMouseLeave={(e) => e.target.style.background = "#1e293b"}
+              style={{
+                ...buttonStyle,
+                background: "#1e293b",
+                color: "white",
+                opacity: loadingSave ? "0.7" : "1",
+                cursor: loadingSave ? "not-allowed" : "pointer"
+                }}
             >
-              Gem Logo
+              {loadingSave ? "Gemmer..." : "Gem"}
             </button>
 
-            <button onClick={deleteLogo}>Slet Logo</button>
+            <button onClick={deleteLogo}
+                    onMouseEnter={(e) => e.target.style.background = "#ef4444"}
+                    onMouseLeave={(e) => e.target.style.background = "#1e293b"}
+                    style={{
+                        ...buttonStyle,
+                        background: "#1e293b",
+                        color: "white"
+                        }}
+                    >
+                        Slet Logo
+                    </button>
 
-            <button onClick={() => setTab(null)}>Tilbage</button>
+            <button onClick={() => 
+                        setTab(null)}
+                        onMouseEnter={(e) => e.target.style.background = "#2563eb"}
+                        onMouseLeave={(e) => e.target.style.background = "#1e293b"}
+                        style={{
+                        ...buttonStyle,
+                        background: "#1e293b",
+                        color: "white"
+                        }}
+                    >
+                        Tilbage
+                    </button>
           </>
         )}
 
