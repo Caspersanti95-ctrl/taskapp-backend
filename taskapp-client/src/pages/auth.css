@@ -53,7 +53,7 @@
                         0 10px 30px rgba(0,0,0,0.4);              
   }
 
-  .toggle::before {
+  /*.toggle::before {
     content: "";
     position: absolute;
     top: 0;
@@ -73,7 +73,7 @@
     filter: blur(25px);
     opacity: 0.6;
     z-index: 1;
-  }
+  }*/
 
   .toggle:hover {
     transform: scale(1.03);
