@@ -40,7 +40,7 @@ export default function AuthPage() {
             <div className="particles"></div>
         
                 <div className="toggle-container">
-                    <div className={'toggle ${isSignup ? "active" : ""}'} 
+                    <div className={`toggle ${isSignup ? "active" : ""}`} 
                         onClick={toggleMode}
                         >
                             {console.log("isSignup:", isSignup)}
