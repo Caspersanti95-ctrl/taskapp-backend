@@ -154,7 +154,7 @@
   }
 
   .toggle.active .toggle-circle {
-    transform: translateX(calc(100% - 50px));
+    transform: translateX(140px);
     box-shadow: 
             0 8px 25px rgba(0,120,255,0.7),
             inset 0 2px 6px rgba(255,255,255,0.6);
