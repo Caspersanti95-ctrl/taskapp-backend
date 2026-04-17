@@ -43,7 +43,6 @@ export default function AuthPage() {
                     <div className={`toggle ${isSignup ? "active" : ""}`} 
                         onClick={toggleMode}
                         >
-                            {console.log("isSignup:", isSignup)}
                         <div className="toggle-circle"></div>
                             <span className="toggle-label">Login</span>
                             <span className="toggle-label">Signup</span>
@@ -53,11 +52,11 @@ export default function AuthPage() {
                     <div className="auth-card-wrapper">
 
                         <div className={`auth-card ${!isSignup ? "active" : "inactive"}`}>                         
-                            <Signup key="signup" close={toggleMode} />
+                            <Signup key="login" close={toggleMode} />
                         </div>
 
                         <div className={`auth-card ${isSignup ? "active" : "inactive"}`}>
-                            <Login key="login" openSignup={toggleMode} />
+                            <Login key="signup" openSignup={toggleMode} />
                         </div>
                 </div>
         </div>
