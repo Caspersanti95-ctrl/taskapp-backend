@@ -80,7 +80,7 @@ export default function Login({ openSignup}) {
     <div className={`login-card ${shake ? "shake" : ""}`}>
 
       <h1 className="logo">FLOW DAY</h1>
-      <p className="subtitle">Monitor Dashboard</p>
+      <p className="subtitle">Log Ind</p>
 
       {error && <div className="login-error">{error}</div>}
 

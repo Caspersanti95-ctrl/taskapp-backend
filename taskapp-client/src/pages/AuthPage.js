@@ -44,8 +44,8 @@ export default function AuthPage() {
                         onClick={toggleMode}
                         >
                         <div className="toggle-circle"></div>
-                            <span className="toggle-label">Login</span>
-                            <span className="toggle-label">Signup</span>
+                            <span className="toggle-label">Log Ind</span>
+                            <span className="toggle-label">Opret Konto</span>
                         </div>
                     </div>
 
