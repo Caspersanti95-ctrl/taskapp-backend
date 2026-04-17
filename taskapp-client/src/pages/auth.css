@@ -73,7 +73,7 @@
 
     filter: blur(25px);
     opacity: 0.6;
-    z-index: 0;
+    z-index: 1;
   }
 
   .toggle:hover {
@@ -112,7 +112,7 @@
   .toggle-circle {
     position: absolute;
     top: 5px;
-    left: 5px;
+    left: 0;
 
     width: 50px;
     height: 50px;
@@ -125,7 +125,8 @@
     box-shadow: 
         0 10px 30px rgba(0,0,0,0.4)
         inset 0 2px 6px rgba(255,255,255,0.6);
-        
+    
+    transform: translateX(5px);
     transition: 
         transform 0.45s cubic-bezier(0.22,1,0.36,1),
         box-shadow 0.3s ease,
@@ -147,13 +148,13 @@
 
     z-index: -1;
   }
-  
+
   .toggle.active::before {
-    transform: translateX(-50%);
+    transform: translateX(50%);
   }
 
   .toggle.active .toggle-circle {
-    transform: translateX(calc(100% - 60px));
+    transform: translateX(calc(100% - 50px));
     box-shadow: 
             0 8px 25px rgba(0,120,255,0.7),
             inset 0 2px 6px rgba(255,255,255,0.6);
