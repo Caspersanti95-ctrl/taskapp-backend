@@ -61,7 +61,7 @@ const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   };
 
   const darkTheme = {
-    background: rgba(0, 42, 106, 0.592),
+    background: "#00204fa8",
     cardBg: "#2a2a3d",
     text: "white",
     shadow: "0 4px 12px rgba(0,0,0,0.4)"

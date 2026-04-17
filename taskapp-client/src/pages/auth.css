@@ -20,7 +20,7 @@
     position: absolute;
     width: 500px;
     height: 500px;
-    background: rgba(0, 42, 106, 0.25);
+    background: rgba(0,102,255,0.25);
     filter: blur(120px);
     top: 20%;
     left: 50%;
