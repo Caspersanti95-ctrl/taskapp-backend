@@ -103,8 +103,7 @@ export default function SettingsModal({
                         Slet Logo
                     </button>
 
-            <button onClick={() => 
-                        setTab(null)}
+            <button onClick={() => setTab(null)}
                         onMouseEnter={(e) => e.target.style.background = "#2563eb"}
                         onMouseLeave={(e) => e.target.style.background = "#1e293b"}
                         style={{

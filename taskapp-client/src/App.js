@@ -503,6 +503,15 @@ function Dashboard() {
     Godkendt: "#2ecc71" 
   };
 
+  const buttonStyle = {
+    padding: "12px",
+    borderRadius: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "600",
+    transition: "0.2s",
+};
+
   const inputStyle = {
     padding: "16px 14px",
     borderRadius: "12px",
@@ -977,6 +986,13 @@ function Dashboard() {
               e.stopPropagation();
               startTask(task.id);
             }}
+              onMouseEnter={(e) => e.target.style.background = "#0062ff"}
+              onMouseLeave={(e) => e.target.style.background = "white"}
+              style={{
+                  ...buttonStyle,
+                  background: "white",
+                  color: "Sort"
+                }}
             >
               Start
             </button>
@@ -989,7 +1005,14 @@ function Dashboard() {
             onClick={(e) => { 
               e.stopPropagation();
               completeTask(task.id);
-              }}
+            }}
+              onMouseEnter={(e) => e.target.style.background = "#00ff00fe"}
+              onMouseLeave={(e) => e.target.style.background = "white"}
+              style={{
+                  ...buttonStyle,
+                  background: "white",
+                  color: "Sort"
+                }}              
             >
               Afslut
             </button>
@@ -1002,6 +1025,13 @@ function Dashboard() {
               e.stopPropagation(); 
               approveTask(task.id);
               }}
+              onMouseEnter={(e) => e.target.style.background = "#ef4444"}
+              onMouseLeave={(e) => e.target.style.background = "white"}
+              style={{
+                  ...buttonStyle,
+                  background: "white",
+                  color: "Sort"
+                  }}
             >
               Godkend
             </button>
