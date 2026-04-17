@@ -473,6 +473,7 @@ function Dashboard() {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "15px",
+    marginTop: "20px",
     marginBottom: "30px"
   };
 
