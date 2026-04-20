@@ -8,7 +8,7 @@ router.post('/create-checkout-session', async (req, res) => {
     const { priceId } = req.body;
     
     try {
-        const session = await stripe.checkout.sessions.create({
+        const session = await stripe.checkout.sessions.create({            
         payment_method_types: ['card'],
         line_items: [
             {
@@ -20,10 +20,11 @@ router.post('/create-checkout-session', async (req, res) => {
         success_url: `https://lucache.com/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `https://lucache.com/cancel`,
         });
-    
+    console.log("SESSION:", session);
+
         res.json({ url: session.url });
     } catch (error) {
-        console.error('Stripe Error:', error);
+        console.error('Stripe Error:', error.message);
         res.status(500).json({ error: 'An error occurred while creating the checkout session' });
     }
     });
