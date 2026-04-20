@@ -4,6 +4,7 @@ console.log("SERVER SECRET:", process.env.JWT_SECRET);
 
 const express = require('express');
 const cors = require('cors');
+const stripeRoutes = require('./routes/stripe');
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -46,6 +47,7 @@ app.use("/company", authMiddleware, uploadRoute);
 
 app.use('/tasks', require('./routes/tasks')(io))
 app.use('/auth', require('./routes/authRoutes'));
+app.use('/stripe', stripeRoutes);
 
 io.on('connection', () => {
   console.log('Bruger forbundet');

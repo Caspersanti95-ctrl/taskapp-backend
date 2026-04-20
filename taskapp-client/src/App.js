@@ -97,6 +97,21 @@ function Dashboard() {
   // useState
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const buyPro = async () => {
+    const res = await fetch("/stripe/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify({
+          priceId: "price_1N8Xo2HjYqLh9wXl3a5g6s7t"
+        }),
+    });
+    
+    const data = await res.json();
+    window.location.href = data.url;
+  };
+
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
@@ -726,6 +741,22 @@ function Dashboard() {
 
           <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
           </span>
+
+          {role === "admin" && (
+            <button onClick={buyPro}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+              style={{
+                padding: "8px 12px",
+                background: "#10b981",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}>
+                Upgrade til Pro
+            </button>
+            )}
 
           {role === "admin" && (
             <button onClick={() => setShowSettings(true)}
