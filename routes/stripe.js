@@ -5,6 +5,7 @@ const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
+    console.log("CREATE CHECKOUT SESSION BODY:", req.body);
     const { priceId } = req.body;
     
     try {
