@@ -104,7 +104,7 @@ function Dashboard() {
         "Content-Type": "application/json",
       },
         body: JSON.stringify({
-          priceId: "price_1N8Xo2HjYqLh9wXl3a5g6s7t"
+          priceId: "price_1TOHtLRZuLib9NMSDksL0wHY"
         }),
     });
     
@@ -116,7 +116,7 @@ function Dashboard() {
       console.error("No URL in response:", data);
       return;
     }
-    
+
     window.location.href = data.url;
   };
 
