@@ -98,7 +98,7 @@ function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const buyPro = async () => {
-    const res = await fetch("/stripe/create-checkout-session", {
+    const res = await fetch("https://taskapp-backend-production-3da5.up.railway.app/stripe/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
