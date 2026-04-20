@@ -109,6 +109,14 @@ function Dashboard() {
     });
     
     const data = await res.json();
+
+    console.log("RESPONSE:", data);
+
+    if (!data.url) {
+      console.error("No URL in response:", data);
+      return;
+    }
+    
     window.location.href = data.url;
   };
 
