@@ -1,7 +1,7 @@
 const exspress = require('express');
 const router = exspress.Router();
-const Stripe = require('stripe');
-const db = require("./db");
+const stripe = require('stripe');
+const db = require("../db");
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
