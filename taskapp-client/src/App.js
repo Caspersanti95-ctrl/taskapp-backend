@@ -9,7 +9,7 @@ import AuthPage from "./pages/AuthPage";
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 import SettingsModal from './components/SettingsModal';
-import Success from "./Success";
+import Success from "./pages/Success";
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
