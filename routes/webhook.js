@@ -24,7 +24,7 @@ router.post('/webhook', exspress.raw({ type: 'application/json' }), async (req, 
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
 
-        const userId = session.metadata?.userId;
+        const userId = session.metadata.userId;
         console.log("Checkout session completed:", session);
 
         try {

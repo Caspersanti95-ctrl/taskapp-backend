@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log("CREATE CHECKOUT SESSION BODY:", req.body);
-    const { priceId } = req.body;
+    const { priceId, userId } = req.body;
     
     try {
         const session = await stripe.checkout.sessions.create({            
@@ -22,8 +22,8 @@ router.post('/create-checkout-session', async (req, res) => {
         success_url: `https://lucache.com/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `https://lucache.com/cancel`,
         metadata: {
-            userId: req.user?.id || "123"
-        }
+            userId: userId,
+        },
 
         });
 
@@ -31,7 +31,7 @@ router.post('/create-checkout-session', async (req, res) => {
     console.log("SESSION:", session);
 
         res.json({ 
-            url: session.url
+            url: session.url,
         });
     } catch (error) {
         console.error('Stripe Error:', error.message);

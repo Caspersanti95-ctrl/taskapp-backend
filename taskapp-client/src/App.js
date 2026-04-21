@@ -106,7 +106,8 @@ function Dashboard() {
         Authorization: `Bearer ${token}`
       },
         body: JSON.stringify({
-          priceId: "price_1TOHtLRZuLib9NMSDksL0wHY"
+          priceId: "price_1TOHtLRZuLib9NMSDksL0wHY",
+          userId: user.id,
         }),
     });
     
