@@ -5,6 +5,7 @@ console.log("SERVER SECRET:", process.env.JWT_SECRET);
 const express = require('express');
 const cors = require('cors');
 const stripeRoutes = require('./routes/stripe');
+const webhookRoute = require('./routes/webhook');
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -41,6 +42,7 @@ app.use(cors({
 }));
 
 
+app.use('/', webhookRoute);
 app.use(express.json());
 
 app.use("/company", authMiddleware, uploadRoute);
@@ -48,6 +50,7 @@ app.use("/company", authMiddleware, uploadRoute);
 app.use('/tasks', require('./routes/tasks')(io))
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/stripe', stripeRoutes);
+
 
 io.on('connection', () => {
   console.log('Bruger forbundet');

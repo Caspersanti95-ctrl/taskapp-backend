@@ -9,6 +9,7 @@ import AuthPage from "./pages/AuthPage";
 import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 import SettingsModal from './components/SettingsModal';
+import Success from "./Success";
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -102,6 +103,7 @@ function Dashboard() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
         body: JSON.stringify({
           priceId: "price_1TOHtLRZuLib9NMSDksL0wHY"
@@ -1205,6 +1207,8 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<AuthPage />} />
+
+        <Route path="/success" element={<Success />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
