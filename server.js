@@ -42,7 +42,8 @@ app.use(cors({
 }));
 
 
-app.use('/', webhookRoute);
+app.use('/webhook', webhookRoute);
+
 app.use(express.json());
 
 app.use("/company", authMiddleware, uploadRoute);
