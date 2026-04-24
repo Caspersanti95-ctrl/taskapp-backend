@@ -43,7 +43,7 @@ app.use(cors({
 
 
 app.use('/stripe/webhook', express.raw({ type: 'application/json' }));
-app.use('/stripe', webhookRoutes);
+app.use('/stripe', webhookRoute);
 
 app.use(express.json());
 
