@@ -1,9 +1,30 @@
 import { useEffect } from "react";
+import { useUser } from "../context/UserContext";
+import { useNavigate  } from "react-router-dom";
 
 export default function Success() {
+    const { fetchUser } = useUser();
+    const navigate = useNavigate();
 
         useEffect(() => {
-        console.log("User is now PRO");
+            const run = async () => {
+                try {
+                    const token = localStorage.getItem("token");
+
+                    if (!token) {
+                        navigate("/login");
+                        return;
+                    }
+
+                    await fetchUser();
+                    navigate("/dashboard");
+                } catch (err) {
+                    console.error("Fejl i success flow:", err);
+                    navigate("/dashboard");
+                }
+            };
+            
+            run();
     } , []);
     return (
         <div style ={{ 
@@ -17,7 +38,7 @@ export default function Success() {
             }}
         >
             <h1 style={{ fontSize: "48px", marginBottom: "20px" }}>Tak for dit køb!</h1>
-            <p style={{ fontSize: "18px" }}>Du har nu adgang til alle funktioner i Service System.</p>
+            <p style={{ fontSize: "18px" }}>Du har nu adgang til flere funktioner i FLOW System.</p>
         </div>
     );
 }

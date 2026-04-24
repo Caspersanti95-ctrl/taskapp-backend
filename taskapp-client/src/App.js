@@ -10,6 +10,9 @@ import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 import SettingsModal from './components/SettingsModal';
 import Success from "./pages/Success";
+import { UserProvider } from './context/UserContext';
+import RequirePro from './components/RequirePro';
+import CreateTaskModal from './components/CreateTaskModal';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -140,6 +143,7 @@ function Dashboard() {
   const [loadingSave, setLoadingSave] = useState(false);
   const [originalUser, setOriginalUser] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   const navigate = useNavigate();
 
   //Selected
@@ -893,7 +897,7 @@ function Dashboard() {
         <div style={{ marginBottom: "30px" }}>
           
           {userPermissions.canCreateTask && (
-          <button onClick={openNewTask} 
+          <button onClick={() => setCreateModalOpen(true)} 
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
               onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             style={{ 
@@ -1202,23 +1206,41 @@ const ProtectedRoute = () => {
 function App() {
   return (
     <>
+    <UserProvider>
     <BrowserRouter>
       <Routes>
 
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<AuthPage />} />
-
         <Route path="/success" element={<Success />} />
+        <Route path="/upgrade" element={<Upgrade />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tasks/new" element={<ServiceReportPage />} />
-          <Route path="/tasks/:id" element={<ServiceReportPage />} />
+
+          <Route 
+            path="/tasks/new" 
+            element={
+              <RequirePro>
+                <ServiceReportPage />
+              </RequirePro>
+            } 
+          />
+
+          <Route 
+            path="/tasks/:id" 
+            element={
+              <RequirePro>
+                <ServiceReportPage />
+              </RequirePro>
+             } 
+          />
         </Route>
 
       </Routes>
     </BrowserRouter>
+    </UserProvider>
     </>
   );
 }
