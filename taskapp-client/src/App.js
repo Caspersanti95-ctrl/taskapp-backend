@@ -1231,9 +1231,7 @@ function App() {
           <Route 
             path="/tasks/new" 
             element={
-              <RequirePro>
-                <ServiceReportPage />
-              </RequirePro>
+                <ServiceReportPage />              
             } 
           />
 
