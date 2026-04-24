@@ -12,7 +12,18 @@ export default function CreateTaskModal({ onClose }) {
             <div style={modal}>
                 <h2>Opret Opgave</h2>
 
-                <button onClick={goToTask}>
+                <button onClick={goToTask}
+                        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                        style={{
+                          padding: "8px 12px",
+                          background: "#3498db",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer"
+                        }}
+                >
                     Service Rapport
                 </button>
 
