@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTaskModal({ onClose }) {
     const navigate = useNavigate();
@@ -28,8 +28,9 @@ const overlay = {
     left: 0,
     width: "100%",
     height: "100%",
-    background: "rgba(0,0,0,0.6)",
-    dispaly: "flex",
+    background: "#010840",
+    color: "white",
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000,
@@ -39,7 +40,7 @@ const modal = {
     background: "#111",
     padding: "30px",
     borderRadius: "10px",
-    dispaly: "flex",
+    display: "flex",
     flexDirection: "column",
     gap: "10px",
 };

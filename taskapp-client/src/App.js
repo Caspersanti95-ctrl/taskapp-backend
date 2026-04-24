@@ -13,6 +13,7 @@ import Success from "./pages/Success";
 import { UserProvider } from './context/UserContext';
 import RequirePro from './components/RequirePro';
 import CreateTaskModal from './components/CreateTaskModal';
+import Upgrade from './pages/Upgrade';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -1191,6 +1192,14 @@ function Dashboard() {
    </div>
    
     )}
+
+    {createModalOpen && (
+      <CreateTaskModal 
+        onClose={() => setCreateModalOpen(false)}
+        fetchTasks={fetchTasks}
+      />
+     )}  
+    
     </>
 )};
 
