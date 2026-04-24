@@ -25,6 +25,8 @@ router.post('/create-checkout-session', async (req, res) => {
         metadata: {
             userId: String(userId),
         },
+
+        customer_email: user.email,
      });
 
 

@@ -14,6 +14,7 @@ import { UserProvider } from './context/UserContext';
 import RequirePro from './components/RequirePro';
 import CreateTaskModal from './components/CreateTaskModal';
 import Upgrade from './pages/Upgrade';
+import ProModal from './components/ProModal';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -173,6 +174,7 @@ function Dashboard() {
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showProModal, setShowProModal] = useState(false);
 
   // Editing
   const [editingUser, setEditingUser] = useState(null);
@@ -898,7 +900,13 @@ function Dashboard() {
         <div style={{ marginBottom: "30px" }}>
           
           {userPermissions.canCreateTask && (
-          <button onClick={() => setCreateModalOpen(true)} 
+          <button onClick={() => {
+                    if (!user?.isPro) {
+                      setShowProModal(true);
+                      return;
+                    }
+                      setCreateModalOpen(true);
+                    }} 
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
               onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             style={{ 
@@ -1198,7 +1206,14 @@ function Dashboard() {
         onClose={() => setCreateModalOpen(false)}
         fetchTasks={fetchTasks}
       />
-     )}  
+     )}
+
+     {showProModal && (
+      <ProModal
+        onClose={() => setShowProModal(false)}
+        onUpgrade={() => navigate("/upgrade")}
+      />
+      )}
     
     </>
 )};

@@ -42,7 +42,8 @@ app.use(cors({
 }));
 
 
-app.use('/webhook', webhookRoute);
+app.use('/stripe/webhook', express.raw({ type: 'application/json' }));
+app.use('/stripe', webhookRoutes);
 
 app.use(express.json());
 
@@ -50,7 +51,6 @@ app.use("/company", authMiddleware, uploadRoute);
 
 app.use('/tasks', require('./routes/tasks')(io))
 app.use('/auth', require('./routes/authRoutes'));
-app.use('/stripe', stripeRoutes);
 
 
 io.on('connection', () => {

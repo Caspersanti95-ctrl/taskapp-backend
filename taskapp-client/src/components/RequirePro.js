@@ -3,10 +3,11 @@ import { Navigate } from "react-router-dom";
 
 export default function RequirePro({ children }) {
     const { user, loading } = useUser();
+    console.log("USER:", user);
 
     if (loading) return null;
 
-    if (!user || Number(user.isPro) !== 1) {
+    if (!user || !user.isPro) {
         return <Navigate to="/upgrade" />;
     }
 

@@ -84,7 +84,11 @@ router.get("/me", authMiddleware, async (req, res) => {
             return res.status(404).json({ error: "Bruger ikke fundet" });
         }
 
-        res.json(rows[0]);
+        res.json({
+            ...rows[0],
+            isPro: Boolean(rows[0].isPro)
+    });
+    
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server fejl" });

@@ -24,6 +24,7 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
 
     console.log("EVENT TYPE:", event.type);
 
+    //Når bruger køber PRO
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
 
@@ -49,6 +50,41 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
                 }
             }
 
+    //Når bruger stopper Subscription -> FREE
+    if (event.type === "customer.subscription.deleted") {
+        const subscription = event.data.object;
+
+        const customerId = subscription.customer;
+
+        console.log("SUB CANCEL:", customerId);
+
+        try {
+            await db.query(
+                "UPDATE users SET isPro = 0 WHERE stripeCustomerId = ?",
+                [customerId]
+            );
+        } catch (err) {
+            console.error("DB Error:", err);
+        }         
+    }
+
+    //Når Betalling fejler
+    if (event.type === "invoice.payment_failed") {
+        const invoice = event.data.object;
+
+        const customerId = invoice.customer;
+
+        console.log("PAYMENT FAILED:", customerId);
+
+        try {
+            await db.query(
+                "UPDATE users SET isPro = 0 WHERE stripeCustomerId = ?",
+                [customerId]
+            );
+        } catch (err) {
+            console.error("DB Error:", err);
+        }
+    }
     res.json({ received: true });
 });
 
