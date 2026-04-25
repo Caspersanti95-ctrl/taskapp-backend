@@ -30,21 +30,21 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
 
         console.log("SESSION:", session);
 
-        const userId = session.metadata?.userId;
+        const orgId = session.metadata?.organizationId;
         
-        if (!userId) {
-            console.error("No userId in session metadata");
+        if (!orgId) {
+            console.error("No organizationId");
             return res.json({ received: true });
         }
 
         try {
             await db.query(
-                "UPDATE users SET isPro = 1 WHERE id = ?", 
-                [userId]
+                "UPDATE organizations SET isPro = 1, stripeCustomerId = ? WHERE id = ?", 
+                [orgId]
             );
 
             
-                console.log("User is now Pro:", userId);
+                console.log("Org is now Pro:", userId);
             } catch (err) {
                 console.error("DB Error:", err);        
                 }
@@ -60,7 +60,7 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
 
         try {
             await db.query(
-                "UPDATE users SET isPro = 0 WHERE stripeCustomerId = ?",
+                "UPDATE organizations SET isPro = 0 WHERE stripeCustomerId = ?",
                 [customerId]
             );
         } catch (err) {
@@ -78,7 +78,7 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
 
         try {
             await db.query(
-                "UPDATE users SET isPro = 0 WHERE stripeCustomerId = ?",
+                "UPDATE organizations SET isPro = 0 WHERE stripeCustomerId = ?",
                 [customerId]
             );
         } catch (err) {

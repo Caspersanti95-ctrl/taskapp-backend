@@ -23,7 +23,7 @@ router.post('/create-checkout-session', async (req, res) => {
         cancel_url: `https://lucache.com/cancel`,
 
         metadata: {
-            userId: String(userId),
+            organizationId: String(req.user.organization_id),
         },
 
         customer_email: user.email,

@@ -76,7 +76,7 @@ router.delete(
 router.get("/me", authMiddleware, async (req, res) => {
     try {
         const [rows] = await db.query(
-            "SELECT id, name, email, phone, role, organization_id, logo, isPro FROM users WHERE id = ? AND organization_id = ?",
+            "SELECT users.id, users.name, users.email, users.phone, users.role, users.organization_id, users.logo, organizations.isPro FROM users JOIN organizations ON users.organization_id = organization.id WHERE users.id = ? AND users.organization_id = ?",
             [req.user.id, req.user.organization_id]
         );
 
@@ -88,7 +88,7 @@ router.get("/me", authMiddleware, async (req, res) => {
             ...rows[0],
             isPro: Boolean(rows[0].isPro)
     });
-    
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server fejl" });
