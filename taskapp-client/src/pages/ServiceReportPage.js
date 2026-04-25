@@ -63,7 +63,13 @@ function ServiceReportPage() {
 
     const handleStatusChange = (index, value) => {
         const updated = [...controlPoints];
-        updated[index].status = value;
+
+        if (updated[index].status === value) {
+            updated[index].status = "";
+        } else {
+            updated[index].status = value;
+        }
+            
         setControlPoints(updated);
     };
 
@@ -429,7 +435,7 @@ console.log("CLICKED SAVE", payload);
                                style={{
                                         border: "none",
                                         borderBottom: "1px solid black",
-                                        width: "150px",
+                                        width: "170px",
                                         outline: "none",
                                         fontSize: "15px",
                                         fontFamily: "Times New Roman, serif"
@@ -472,7 +478,7 @@ console.log("CLICKED SAVE", payload);
             type="radio"
             name={`status-${index}`}
             checked={point.status === "ok"}
-            onChange={() => handleStatusChange(index, "ok")}
+            onClick={() => handleStatusChange(index, "ok")}
             disabled={isApproved}
           />
             )}
@@ -486,7 +492,7 @@ console.log("CLICKED SAVE", payload);
             type="radio"
             name={`status-${index}`}
             checked={point.status === "defect"}
-            onChange={() => handleStatusChange(index, "defect")}
+            onClick={() => handleStatusChange(index, "defect")}
             disabled={isApproved}
           />
         )}
@@ -501,7 +507,7 @@ console.log("CLICKED SAVE", payload);
             type="radio"
             name={`status-${index}`}
             checked={point.status === "replaced"}
-            onChange={() => handleStatusChange(index, "replaced")}
+            onClick={() => handleStatusChange(index, "replaced")}
             disabled={isApproved}
           />
           )}
@@ -515,7 +521,7 @@ console.log("CLICKED SAVE", payload);
             type="radio"
             name={`status-${index}`}
             checked={point.status === "not_relevant"}
-            onChange={() => handleStatusChange(index, "not_relevant")}
+            onClick={() => handleStatusChange(index, "not_relevant")}
             disabled={isApproved}
           />
           )}
