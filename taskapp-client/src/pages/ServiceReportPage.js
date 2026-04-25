@@ -467,6 +467,9 @@ console.log("CLICKED SAVE", payload);
     {controlPoints?.map((point, index) => (
       <tr key={index}>
         <td style={{ ...tdStyle, textAlign: "left" }}>
+            <span style={{ marginRight: "10px", display: "inline-block", width: "20px" }}>
+                {index + 1}.
+            </span>
           {point.name}
         </td>
 
@@ -586,7 +589,7 @@ console.log("CLICKED SAVE", payload);
                             name="equipment_approved"
                             value="yes"
                             checked={formData.equipment_approved === "yes"}
-                            onChange={handleInputChange} 
+                            onClick={handleInputChange} 
                             />
                         </span>
 
@@ -597,7 +600,7 @@ console.log("CLICKED SAVE", payload);
                             name="equipment_approved"
                             value="no"
                             checked={formData.equipment_approved === "no"}
-                            onChange={handleInputChange}
+                            onClick={handleInputChange}
                             />
                         </span>
                         </>
