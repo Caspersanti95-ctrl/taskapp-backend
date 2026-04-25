@@ -45,12 +45,12 @@ function ServiceReportPage() {
 
 
     const controlPointsList = useMemo(() => [
-        "Funktions test af betjeningspanel / håndtag",
         "Visuel kontrol af Produktet",
+        "Funktions test af betjeningspanel / håndtag",        
         "Kontrol af Hydraulik, Luft og El-forbindelser",
         "Kontrol af nødstop & sikkerhedsfunktioner",
         "Smøring af bevægelige dele",
-        "Søjler står i lod",
+        "Udstyr står i lod og plan",
         "Afsluttende funktionskontrol"
     ], []);
 
@@ -429,7 +429,7 @@ console.log("CLICKED SAVE", payload);
                                style={{
                                         border: "none",
                                         borderBottom: "1px solid black",
-                                        width: "200px",
+                                        width: "150px",
                                         outline: "none",
                                         fontSize: "15px",
                                         fontFamily: "Times New Roman, serif"
