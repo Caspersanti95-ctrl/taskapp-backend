@@ -40,7 +40,7 @@ router.post('/', exspress.raw({ type: 'application/json' }), async (req, res) =>
         try {
             await db.query(
                 "UPDATE organizations SET isPro = 1, stripeCustomerId = ? WHERE id = ?", 
-                [orgId]
+                [session.customer, orgId]
             );
 
             
