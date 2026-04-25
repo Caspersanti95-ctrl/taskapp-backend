@@ -75,9 +75,26 @@ router.delete(
 
 router.get("/me", authMiddleware, async (req, res) => {
     try {
+
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ error: "Ugyldig token" });
+        }
+        
         const [rows] = await db.query(
-            "SELECT users.id, users.name, users.email, users.phone, users.role, users.organization_id, users.logo, organizations.isPro FROM users JOIN organizations ON users.organization_id = organization.id WHERE users.id = ? AND users.organization_id = ?",
-            [req.user.id, req.user.organization_id]
+            `SELECT 
+                users.id, 
+                users.name, 
+                users.email, 
+                users.phone, 
+                users.role, 
+                users.organization_id, 
+                users.logo, 
+                organizations.isPro 
+                FROM users 
+                JOIN organizations ON users.organization_id = organizations.id 
+                WHERE users.id = ?
+                `,
+            [req.user.id]
         );
 
         if (rows.length === 0) {
