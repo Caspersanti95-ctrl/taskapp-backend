@@ -987,6 +987,13 @@ function Dashboard() {
                     background: statusColor[task.status]
                 }} />
           <strong>{task.status}</strong>
+          <div style={{
+            fontSize: "16px",
+            fontWeight: "700",
+            marginTop: "5px"
+          }}>
+            {task.order_number || "-"}
+            </div>
           </div>
           <br />
 
