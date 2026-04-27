@@ -203,7 +203,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
                 assigned_to,
                 order_number
                 )
-       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [ 
         req.body.customer || "", 
         req.body.address || "", 
