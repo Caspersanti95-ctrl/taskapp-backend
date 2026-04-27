@@ -988,9 +988,12 @@ function Dashboard() {
                 }} />
           <strong>{task.status}</strong>
           <div style={{
-            fontSize: "16px",
+            fontSize: "13px",
             fontWeight: "700",
-            marginTop: "5px"
+            background: "rgba(255,255,255,0.1)",
+            padding: "4px 10px",
+            borderRadius: "6px",
+            letterSpacing: "1px"
           }}>
             {task.order_number || "-"}
             </div>
