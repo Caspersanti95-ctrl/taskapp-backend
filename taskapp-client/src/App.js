@@ -146,6 +146,7 @@ function Dashboard() {
   const [originalUser, setOriginalUser] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   //Selected
@@ -678,9 +679,19 @@ function Dashboard() {
   const open = tasks.filter(t => t.status === "Oprettet").length;
   const done = tasks.filter(t => t.status === "Afsluttet").length;
   const approved = tasks.filter(t => t.status === "Godkendt").length;
+
   const filteredTasks = tasks.filter(task  => {
-    if (statusFilter === "Alle") return true;
-    return task.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "Alle" ||task.status === statusFilter;
+    
+    const searchLower = search.toLowerCase();
+
+    const matchesSearch =
+      (task.customer || "").toLowerCase().includes(searchLower) ||
+      (task.address || "").toLowerCase().includes(searchLower) ||
+      (task.order_number || "").toLowerCase().includes(searchLower);
+
+    return matchesStatus && matchesSearch;
   });
 
   if (!user) {
@@ -923,6 +934,38 @@ function Dashboard() {
         </div>
       )}
 
+    <div style={{ position: "relative", width: "300px" }}>
+      <input
+        type="text"
+        placeholder="Søg..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          padding: "10px",
+          width: "300px",
+          borderRadius: "8px",
+          border: "none",
+          marginBottom: "20px",
+          outline: "none"
+        }}
+        />
+
+      {search && (
+        <span onClick={() => setSearch("")}
+          style={{
+            position: "absolute",
+            right: "8px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            cursor: "pointer",
+            fontSize: "14px",
+            opacity: 0.6
+          }}
+        >
+          X
+        </span>
+      )}
+      </div>
       
       <div style={{ marginBottom: "30px"}}>
 
@@ -962,8 +1005,20 @@ function Dashboard() {
               )}  
       </div>
       <div style={taskGrid}>
-
-      {filteredTasks.map((task) => (
+      
+      {filteredTasks.length === 0 && search ? (
+        <div style={{
+          gridColumn: "1 / -1",
+          textAlign: "center",
+          marginTop: "40px",
+          opacity: 0.7,
+          fontSize: "16px"
+        }}>
+          Ingen resultater for "{search}"
+        </div>
+      ) : (
+      
+      filteredTasks.map((task) => (
        <div 
           key={task.id} 
             style={taskCard}
@@ -1103,7 +1158,8 @@ function Dashboard() {
           )}
 
         </div>
-      ))}
+      ))
+    )}
 
       
     </div>
