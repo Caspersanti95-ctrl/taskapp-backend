@@ -164,6 +164,22 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
         console.log("BODY:", req.body);
 
+        const [rows] = await db.query(`
+            SELECT order_number 
+            FROM tasks
+            WHERE organization_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+            `, [req.user.organization_id]);
+
+        let nextNumber = 1;
+        if (rows.length && rows[0].order_number) {
+            const last =rows[0].order_number.split("-")[1];
+            nextNumber = parseInt(last) + 1;
+        }
+
+        const orderNumber = `ORD-${String(neztNumber).padStart(4, "0")}`;
+
         const rawDate = req.body.date;
         const formattedDate = req.body.date && req.body.date !== "" 
             ? new Date(rawDate).toISOString().split("T")[0] 
@@ -184,7 +200,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
                 status, 
                 organization_id,
                 approved_by,
-                assigned_to
+                assigned_to,
+                order_number
                 )
        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [ 
@@ -205,7 +222,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         "Oprettet",
         req.user.organization_id,
         null,
-        req.user.id 
+        req.user.id,
+        orderNumber 
       ]
     );
 
@@ -257,7 +275,7 @@ console.log("equipment approved:", req.body.equipment_approved);
             technician = ?,
             control_points = ?,
             equipment_approved = ?
-        WHERE id = ?`,
+        WHERE id = ? AND organization_id = ?`,
     [
         req.body.customer || "",
         req.body.address ?? null,
@@ -274,6 +292,7 @@ console.log("equipment approved:", req.body.equipment_approved);
 
         req.body.equipment_approved ?? null,
         id,
+        req.user.organization_id
     ]);
 
     res.json({ success: true });
