@@ -178,7 +178,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
             nextNumber = parseInt(last) + 1;
         }
 
-        const orderNumber = `ORD-${String(neztNumber).padStart(4, "0")}`;
+        const orderNumber = `ORD-${String(nextNumber).padStart(4, "0")}`;
 
         const rawDate = req.body.date;
         const formattedDate = req.body.date && req.body.date !== "" 
