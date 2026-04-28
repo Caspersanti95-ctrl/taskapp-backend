@@ -718,118 +718,118 @@ function Dashboard() {
     return (
   <>
     <Toaster position="center" />
+
+      <div style={dashboardWrapper}>
         {/* Topbar */}
-        <div style={topbarStyle}>
+      <div style={topbarStyle}>
 
-<div style={{ flex: 1, justifyContent: "start" }}>
-  <h2 style={{
-          margin: 0,
-        }}
-       >
-          Velkommen {username ? `- ${username}` : ""} 👋
-        </h2>
-  </div>
-  
-  <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>        
-    {logo && logo !== "null" ? (
-      
-      <img 
-        src={logo}  
-        alt="Logo"
-        style={{ height: "100px", objectFit: "contain" }} 
-        onError={(e) => {
-          e.target.style.display = "none";
-        }}
-      /> 
-    ) : (
-      <div 
-        style={{
-          width: "100px",
-          height: "100px",
-          border: "2px dashed #334155",
-          borderRadius: "12px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#64748b",
-          fontSize: "12px",
-          gap: "4px"
-        }}
-      >              
-      📷 Intet logo
-      </div>
-    )}
-    </div>
-   
- 
+      <div style={{ flex: 1, justifyContent: "start" }}>
+        <h2 style={{
+                margin: 0,
+              }}
+             >
+                Velkommen {username ? `- ${username}` : ""} 👋
+              </h2>
+        </div>
+        
+        <div style ={{ flex: 1, display: "flex", justifyContent: "center" }}>        
+          {logo && logo !== "null" ? (
+            
+            <img 
+              src={logo}  
+              alt="Logo"
+              style={{ height: "100px", objectFit: "contain" }} 
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+            /> 
+          ) : (
+            <div 
+              style={{
+                width: "100px",
+                height: "100px",
+                border: "2px dashed #334155",
+                borderRadius: "12px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#64748b",
+                fontSize: "12px",
+                gap: "4px"
+              }}
+            >              
+            📷 Intet logo
+            </div>
+          )}
+          </div>
+         
+       
 
-  <div style={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ flex: 1, justifyContent: "flex-end", display: "flex", alignItems: "center", gap: "12px" }}>
 
-    <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
-    </span>
+          <span style={{ marginRight: "15px" }}>Rolle: <strong>{role}</strong>
+          </span>
 
-    {role === "admin" && (
-      <button onClick={buyPro}
-        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-        style={{
-          padding: "8px 12px",
-          background: "#10b981",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}>
-          Upgrade til Pro
-      </button>
-      )}
+          {role === "admin" && (
+            <button onClick={buyPro}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+              style={{
+                padding: "8px 12px",
+                background: "#10b981",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}>
+                Upgrade til Pro
+            </button>
+            )}
 
-    {role === "admin" && (
-      <button onClick={() => setShowSettings(true)}
-        onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-        onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-        style={{
-          padding: "8px 12px",
-          background: "#3498db",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}
-      >
-        ⚙️ Indstillinger
-      </button> 
-    )}
+          {role === "admin" && (
+            <button onClick={() => setShowSettings(true)}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+              style={{
+                padding: "8px 12px",
+                background: "#3498db",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}
+            >
+              ⚙️ Indstillinger
+            </button> 
+          )}
 
-    <button
-          onClick={() => setDarkMode(!darkMode)}
+          <button
+                onClick={() => setDarkMode(!darkMode)}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                style={{
+                  marginRight: "10px",
+                  padding: "6px 12px",
+                  borderRadius: "6px",
+                  border: "none",
+                  cursor: "pointer",
+                  backgroundColor: darkMode ? "#f1f1f1" : "#222",
+                  color: darkMode ? "#222" : "#fff",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                {darkMode ? "☀️ Light" : "🌙 Dark"}
+          </button>
+
+          <button onClick={logout} style={logoutButton}
           onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
           onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-          style={{
-            marginRight: "10px",
-            padding: "6px 12px",
-            borderRadius: "6px",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: darkMode ? "#f1f1f1" : "#222",
-            color: darkMode ? "#222" : "#fff",
-            transition: "all 0.2s ease"
-          }}
-        >
-          {darkMode ? "☀️ Light" : "🌙 Dark"}
-    </button>
-
-    <button onClick={logout} style={logoutButton}
-    onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-    onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-    >
-      Log ud
-    </button>
-       
-  </div>
-      <div style={dashboardWrapper}>
-
+          >
+            Log ud
+          </button>
+             
+        </div>
       </div> 
 
       {userPermissions.canViewSettings && showSettings && (
