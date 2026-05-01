@@ -468,7 +468,7 @@ function Dashboard() {
   const dashboardWrapper = {
     
     padding: "40px",
-    paddingTop: "80px",
+    paddingTop: "100px",
     fontFamily: "Arial",
     background: theme.background,
     minHeight: "100vh",
