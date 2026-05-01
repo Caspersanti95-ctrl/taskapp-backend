@@ -468,7 +468,7 @@ function Dashboard() {
   const dashboardWrapper = {
     
     padding: "40px",
-    paddingTop: "120px",
+    paddingTop: "80px",
     fontFamily: "Arial",
     background: theme.background,
     minHeight: "100vh",
@@ -477,7 +477,7 @@ function Dashboard() {
   };
 
   const topbarStyle = {
-    position: "sticky",
+    position: "fixed",
     top: 0,
     left: 0,
     width: "100%",

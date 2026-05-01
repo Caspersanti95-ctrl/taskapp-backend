@@ -145,7 +145,16 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
             params.push(status);
         }
 
-        query += ' ORDER BY status, created_at DESC';
+        query += `
+            ORDER BY 
+                CASE status
+                    WHEN 'Oprettet' THEN 1
+                    WHEN 'I gang' THEN 2
+                    WHEN 'Afsluttet' THEN 3
+                    WHEN 'Godkendt' THEN 4
+                END, 
+                created_at DESC 
+                `;
 
     const [rows] = await db.query(query, params);
 
