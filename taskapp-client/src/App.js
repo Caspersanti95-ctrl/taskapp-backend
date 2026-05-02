@@ -15,6 +15,7 @@ import RequirePro from './components/RequirePro';
 import CreateTaskModal from './components/CreateTaskModal';
 import Upgrade from './pages/Upgrade';
 import ProModal from './components/ProModal';
+import TaskDetailPage from './pages/TaskDetailPage';
 
 const StatCard = ({ title, value, theme, color, icon, onClick }) => (
   <div
@@ -1312,19 +1313,19 @@ function App() {
           <Route 
             path="/tasks/new" 
             element={
-                <ServiceReportPage />              
+                <TaskDetailPage />              
             } 
           />
 
           <Route 
             path="/tasks/:id" 
-            element={
-              
-                <ServiceReportPage />
-              
+            element={              
+                <TaskDetailPage />              
              } 
           />
         </Route>
+
+        <Route path="/tasks/:taskId/report" element={<ServiceReportPage />} />
 
       </Routes>
     </BrowserRouter>

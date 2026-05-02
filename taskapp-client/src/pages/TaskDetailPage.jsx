@@ -1,0 +1,143 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./TaskDetailPage.css";
+import { useParams } from "react-router-dom";
+import ServiceReportPage from "./ServiceReportPage";
+
+export default function TaskDetailPage({ taskId }) {
+  const [task, setTask] = useState(null);
+  const [activeTab, setActiveTab] = useState("report");
+  const [remarks, setRemarks] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  // 🔹 Hent task fra backend
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const res = await fetch(`/api/tasks/${taskId}`);
+        const data = await res.json();
+
+        setTask(data);
+        setRemarks(data.remarks || "");
+      } catch (err) {
+        console.error("Fejl ved hentning af task", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTask();
+  }, [taskId]);
+
+  // 🔹 Opdater status
+  const updateStatus = async (newStatus) => {
+    try {
+      await fetch(`/api/tasks/${taskId}/status`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      setTask((prev) => ({ ...prev, status: newStatus }));
+    } catch (err) {
+      console.error("Fejl ved status update", err);
+    }
+  };
+
+  // 🔹 Gem remarks
+  const saveRemarks = async () => {
+    try {
+      await fetch(`/api/tasks/${taskId}/remarks`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ remarks }),
+      });
+    } catch (err) {
+      console.error("Fejl ved gem", err);
+    }
+  };
+
+  if (loading) return <div className="p-6">Loader...</div>;
+  if (!task) return <div className="p-6">Opgave ikke fundet</div>;
+
+  return (
+    <div className="task-page">
+      <div className="task-container">
+
+        {/* VENSTRE */}
+        <div className="task-left">
+          <h2>Opgave oplysninger</h2>
+
+          <p><strong>Ordre:</strong> {task.order_number}</p>
+          <p><strong>Kunde:</strong> {task.customer}</p>
+          <p><strong>Adresse:</strong> {task.address}</p>
+
+          <p><strong>Start dato:</strong> {task.start_date}</p>
+          <p><strong>Slut dato:</strong> {task.end_date}</p>
+
+          <p><strong>Tekniker:</strong> {task.technician}</p>
+
+          <textarea
+            className="textarea"
+            placeholder="Beskrivelse af opgaven"
+            value={remarks}
+            onChange={(e) => setRemarks(e.target.value)}
+            onBlur={saveRemarks}
+          />
+        </div>
+
+        {/* HØJRE */}
+        <div className="task-right">
+          <h3>Skemaer</h3>
+
+          <button
+            className={activeTab === "report" ? "tab active" : "tab"}
+            onClick={() => navigate(`/tasks/${taskId}/report`)}
+          >
+            📄 Service rapport
+          </button>
+
+          <button
+            className={activeTab === "images" ? "tab active" : "tab"}
+            onClick={() => setActiveTab("images")}
+          >
+            📸 Billed dokumentation
+          </button>
+        </div>
+
+      </div>
+
+      {/* INDHOLD */}
+      <div className="task-content">
+        {activeTab === "report" && <div>Service Report component her</div>}
+        {activeTab === "images" && <div>Billeder component her</div>}
+      </div>
+
+      {/* STATUS */}
+      <div className="task-footer">
+        <p>Status: <strong>{task.status}</strong></p>
+
+        {task.status === "Oprettet" && (
+          <button onClick={() => updateStatus("I gang")}>
+            Start opgave
+          </button>
+        )}
+
+        {task.status === "I gang" && (
+          <button onClick={() => updateStatus("Afsluttet")}>
+            Afslut opgave
+          </button>
+        )}
+
+        {task.status === "Afsluttet" && (
+          <button onClick={() => updateStatus("Godkendt")}>
+            Godkend
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
