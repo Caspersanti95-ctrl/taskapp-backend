@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./TaskDetailPage.css";
 import { useParams } from "react-router-dom";
 import ServiceReportPage from "./ServiceReportPage";
+import api from "../api";
 
 export default function TaskDetailPage() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ export default function TaskDetailPage() {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await fetch(`/api/tasks/${id}`);
+        const res = await api.get(`/tasks/${id}`);
         const data = await res.json();
 
         setTask(data);
