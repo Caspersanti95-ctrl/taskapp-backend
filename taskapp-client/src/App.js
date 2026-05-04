@@ -1269,14 +1269,14 @@ function Dashboard() {
     )}
 
     {createModalOpen && (
-      <CreateTaskModal 
+      <TaskDetailPage 
         onClose={() => setCreateModalOpen(false)}
         fetchTasks={fetchTasks}
       />
      )}
 
      {showProModal && (
-      <ProModal
+      <TaskDetailPage
         onClose={() => setShowProModal(false)}
         onUpgrade={() => navigate("/upgrade")}
       />
