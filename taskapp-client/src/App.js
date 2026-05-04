@@ -343,8 +343,8 @@ function Dashboard() {
       technician: "",
       status: "Oprettet",
     });
-    
-  navigate("/tasks/new");
+
+  navigate(`/tasks/${res.data.id}`);
  };
 
   const completeTask = async (id) => {
