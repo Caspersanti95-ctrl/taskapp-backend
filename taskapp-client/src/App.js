@@ -912,13 +912,7 @@ function Dashboard() {
         <div style={{ marginBottom: "30px" }}>
           
           {userPermissions.canCreateTask && (
-          <button onClick={() => {
-                    if (!user?.isPro) {
-                      setShowProModal(true);
-                      return;
-                    }
-                      setCreateModalOpen(true);
-                    }} 
+          <button onClick={() => { navigate("/tasks/new") }} 
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
               onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             style={{ 
