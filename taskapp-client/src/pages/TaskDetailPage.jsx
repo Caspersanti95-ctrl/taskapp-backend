@@ -4,7 +4,8 @@ import "./TaskDetailPage.css";
 import { useParams } from "react-router-dom";
 import ServiceReportPage from "./ServiceReportPage";
 
-export default function TaskDetailPage({ taskId }) {
+export default function TaskDetailPage() {
+  const { id } = useParams();
   const [task, setTask] = useState(null);
   const [activeTab, setActiveTab] = useState("report");
   const [remarks, setRemarks] = useState("");
@@ -16,7 +17,7 @@ export default function TaskDetailPage({ taskId }) {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await fetch(`/api/tasks/${taskId}`);
+        const res = await fetch(`/api/tasks/${id}`);
         const data = await res.json();
 
         setTask(data);
@@ -29,12 +30,12 @@ export default function TaskDetailPage({ taskId }) {
     };
 
     fetchTask();
-  }, [taskId]);
+  }, [id]);
 
   // 🔹 Opdater status
   const updateStatus = async (newStatus) => {
     try {
-      await fetch(`/api/tasks/${taskId}/status`, {
+      await fetch(`/api/tasks/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -49,7 +50,7 @@ export default function TaskDetailPage({ taskId }) {
   // 🔹 Gem remarks
   const saveRemarks = async () => {
     try {
-      await fetch(`/api/tasks/${taskId}/remarks`, {
+      await fetch(`/api/tasks/${id}/remarks`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ remarks }),
@@ -94,7 +95,7 @@ export default function TaskDetailPage({ taskId }) {
 
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
-            onClick={() => navigate(`/tasks/${taskId}/report`)}
+            onClick={() => navigate(`/tasks/${id}/report`)}
           >
             📄 Service rapport
           </button>

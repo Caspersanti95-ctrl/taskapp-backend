@@ -1309,23 +1309,24 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
-
+          
           <Route 
             path="/tasks/new" 
             element={
-                <ServiceReportPage />              
+                <TaskDetailPage />              
             } 
           />
 
           <Route 
             path="/tasks/:id" 
             element={              
-                <ServiceReportPage />              
+                <TaskDetailPage />              
              } 
           />
-        </Route>
 
-        <Route path="/tasks/:taskId/report" element={<ServiceReportPage />} />
+        <Route path="/tasks/:taskId/report" element={<ServiceReportPage />} /> 
+
+        </Route>
 
       </Routes>
     </BrowserRouter>
