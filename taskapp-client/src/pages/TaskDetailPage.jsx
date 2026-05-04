@@ -19,7 +19,7 @@ export default function TaskDetailPage() {
     const fetchTask = async () => {
       try {
         const res = await api.get(`/tasks/${id}`);
-        const data = await res.json();
+        const data =res.data;
 
         setTask(data);
         setRemarks(data.remarks || "");
