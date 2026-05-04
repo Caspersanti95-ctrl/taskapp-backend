@@ -1307,7 +1307,7 @@ function App() {
           <Route 
             path="/tasks/new" 
             element={
-                <ServiceReportPage />              
+                <TaskDetailPage />              
             } 
           />
 
