@@ -18,6 +18,21 @@ export default function TaskDetailPage() {
   useEffect(() => {
     const fetchTask = async () => {
       try {
+        if (id === "new") {
+            setTask({
+                order_number: "",
+                customer: "",
+                address: "",
+                start_date: "",
+                end_date: "",
+                technician: "",
+                status: "Oprettet",
+                remarks: ""
+            });
+            setRemarks("");
+            return;
+        }
+        
         const res = await api.get(`/tasks/${id}`);
         const data =res.data;
 

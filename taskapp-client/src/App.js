@@ -912,7 +912,7 @@ function Dashboard() {
         <div style={{ marginBottom: "30px" }}>
           
           {userPermissions.canCreateTask && (
-          <button onClick={() => { navigate("/tasks/new") }} 
+          <button onClick={openNewTask} 
               onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
               onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
             style={{ 
@@ -1314,7 +1314,7 @@ function App() {
           <Route 
             path="/tasks/:id" 
             element={              
-                <ServiceReportPage />              
+                <TaskDetailPage />              
              } 
           />
 
