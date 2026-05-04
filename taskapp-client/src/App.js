@@ -1313,14 +1313,14 @@ function App() {
           <Route 
             path="/tasks/new" 
             element={
-                <TaskDetailPage />              
+                <ServiceReportPage />              
             } 
           />
 
           <Route 
             path="/tasks/:id" 
             element={              
-                <TaskDetailPage />              
+                <ServiceReportPage />              
              } 
           />
 
