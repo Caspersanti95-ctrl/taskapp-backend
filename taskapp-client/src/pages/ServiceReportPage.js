@@ -101,20 +101,10 @@ function ServiceReportPage() {
                 control_points: JSON.stringify(controlPoints || [])
             };
 console.log("CLICKED SAVE", payload);
-        if (!id || id === "new") {
-             const res = await api.post("/tasks", payload);
-
-                console.log("Opgave Oprettet", res.data);
-
-            navigate(`/tasks/${res.data.id}`);
-
-            
-            
-        } else {
             
             await api.put(`/tasks/${id}`, payload);
             
-        }
+       
         
         
      } catch (err) {

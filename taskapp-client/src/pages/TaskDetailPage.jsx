@@ -14,6 +14,25 @@ export default function TaskDetailPage() {
 
   const navigate = useNavigate();
 
+  const saveTask = async () => {
+    try {
+        const res = await api.post("/tasks", {
+            order_number: task.order_number,
+            customer: task.customer,
+            address: task.address,
+            start_date: task.start_date,
+            end_date: task.end_date,
+            technician: task.technician,
+            status: task.status,
+            remarks
+        });
+
+        navigate(`/tasks/${res.data.id}`);
+    } catch (err) {
+        console.error(err);
+    }
+    };
+
   // 🔹 Hent task fra backend
   useEffect(() => {
     const fetchTask = async () => {
@@ -32,7 +51,7 @@ export default function TaskDetailPage() {
             setRemarks("");
             return;
         }
-        
+
         const res = await api.get(`/tasks/${id}`);
         const data =res.data;
 
@@ -111,6 +130,7 @@ export default function TaskDetailPage() {
 
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
+            disabled={id === "new"}
             onClick={() => navigate(`/tasks/${id}/report`)}
           >
             📄 Service rapport
@@ -135,6 +155,12 @@ export default function TaskDetailPage() {
       {/* STATUS */}
       <div className="task-footer">
         <p>Status: <strong>{task.status}</strong></p>
+
+        {id === "new" && (
+            <button onClick={saveTask}>
+            Opret Opgave
+          </button>
+        )}
 
         {task.status === "Oprettet" && (
           <button onClick={() => updateStatus("I gang")}>
