@@ -232,14 +232,14 @@ const statusColors = {
 
       {/* STATUS */}
       <div className="task-footer">
-        
+
         <p>
             status: <strong>{task?.status || "Oprettet"}</strong>
         </p>
-         
+            
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
-        {task.status === "Oprettet" && (
+        {(task?.status || "Oprettet") === "Oprettet" && (
           <button onClick={() => startTask(task.id)}>
             Start opgave
           </button>
