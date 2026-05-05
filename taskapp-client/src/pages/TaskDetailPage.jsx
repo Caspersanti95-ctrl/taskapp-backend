@@ -7,7 +7,13 @@ import api from "../api";
 
 export default function TaskDetailPage() {
   const { id } = useParams();
-  const [task, setTask] = useState(null);
+  const isNew = id === "new";
+  
+  const [task, setTask] = useState({
+    customer: "",
+    address: "",
+    technician: "",
+  });
   const [activeTab, setActiveTab] = useState("report");
   const [remarks, setRemarks] = useState("");
   const [loading, setLoading] = useState(true);
@@ -123,6 +129,23 @@ export default function TaskDetailPage() {
             onChange={(e) => setRemarks(e.target.value)}
             onBlur={saveRemarks}
           />
+
+          {isNew && (
+            <button 
+                onClick={saveTask}
+                style={{
+                    marginTop: "20px",
+                    padding: "10px 16px",
+                    background: "#3498db",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: "pointer"
+                }}
+                >
+                    Opret Opgave
+                </button>
+          )}
         </div>
 
         {/* HØJRE */}
