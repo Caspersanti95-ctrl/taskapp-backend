@@ -675,25 +675,6 @@ console.log("CLICKED SAVE", payload);
             </button>  
             )}
 
-            {(!id || id === "new") && (
-            <button 
-                type="button"
-                onClick={async () => {
-                    console.log("BUTTON CLICKED");
-                    await saveTask();
-                    navigate("/dashboard");
-                }}
-                style={{
-                    padding: "10px 16px",
-                    background: "#3498db",
-                    color: "white",
-                    borderRadius: "6px",
-                    cursor: "pointer"
-                }}
-            >
-                Opret Opgave
-            </button>
-            )}
         </div>
     </div> 
     

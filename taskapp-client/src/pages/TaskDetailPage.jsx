@@ -49,6 +49,7 @@ export default function TaskDetailPage() {
                 remarks: ""
             });
             setRemarks("");
+            setLoading(false);
             return;
         }
 
@@ -131,7 +132,7 @@ export default function TaskDetailPage() {
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
             disabled={id === "new"}
-            onClick={() => navigate(`/tasks/${id}/report`)}
+            onClick={() => setActiveTab("report")}
           >
             📄 Service rapport
           </button>
@@ -152,12 +153,6 @@ export default function TaskDetailPage() {
         {activeTab === "images" && <div>Billeder component her</div>}
       </div>
 
-      {id === "new" && (
-            <button onClick={saveTask}>
-            Opret Opgave
-          </button>
-        )}
-        
       {/* STATUS */}
       <div className="task-footer">
         <p>Status: <strong>{task.status}</strong></p>
