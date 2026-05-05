@@ -232,6 +232,7 @@ const statusColors = {
 
       {/* STATUS */}
       <div className="task-footer">
+        
         <p>
             status: <strong>{task?.status || "Oprettet"}</strong>
         </p>
