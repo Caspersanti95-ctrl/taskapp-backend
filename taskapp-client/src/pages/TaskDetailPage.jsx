@@ -41,6 +41,28 @@ export default function TaskDetailPage() {
     }
     };
 
+    const startTask = async (id) => {
+        await api.put(`/tasks/${id}/start`);
+        window.location.reload();
+    };
+
+    const completeTask = async (id) => {
+        await api.put(`/tasks/${id}/complete`);
+        window.location.reload();
+    };
+
+    const approveTask = async (id) => {
+        await api.put(`/tasks/${id}/approve`);
+        window.location.reload();
+    };
+
+const statusColors = {
+    "Oprettet": "#e74c3c",
+    "I gang": "#f1c40f",
+    "Afsluttet": "#2ecc71",
+    "Godkendt": "#3498db"
+};
+
   // 🔹 Hent task fra backend
   useEffect(() => {
     const fetchTask = async () => {
@@ -223,10 +245,12 @@ export default function TaskDetailPage() {
 
       {/* STATUS */}
       <div className="task-footer">
-        <p>Status: <strong>{task.status}</strong></p>
-
+        <span style ={{ color: statusColors[task.status] }}>
+        {task.status}
+        </span>
+        
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-          
+
         {task.status === "Oprettet" && (
           <button onClick={() => startTask(task.id)}>
             Start opgave
