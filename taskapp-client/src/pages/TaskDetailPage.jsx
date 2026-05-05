@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useLocation } from "react-router-dom";
 import "./TaskDetailPage.css";
 import { useParams } from "react-router-dom";
 import ServiceReportPage from "./ServiceReportPage";
@@ -7,7 +9,8 @@ import api from "../api";
 
 export default function TaskDetailPage() {
   const { id } = useParams();
-  
+  const location = useLocation();
+  const isNew = location.pathname === "/tasks/new";
   
   const [task, setTask] = useState({
     customer: "",
@@ -23,7 +26,6 @@ export default function TaskDetailPage() {
   const saveTask = async () => {
     try {
         const res = await api.post("/tasks", {
-            order_number: task.order_number,
             customer: task.customer,
             address: task.address,
             start_date: task.start_date,
@@ -135,7 +137,7 @@ export default function TaskDetailPage() {
             onBlur={saveRemarks}
           />
 
-          {id === "new" && (
+          {isNew && (
             <button 
                 onClick={saveTask}
                 style={{
