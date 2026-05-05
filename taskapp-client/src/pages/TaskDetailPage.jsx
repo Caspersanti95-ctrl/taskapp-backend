@@ -135,7 +135,7 @@ export default function TaskDetailPage() {
             onBlur={saveRemarks}
           />
 
-          {isNew && (
+          {id === "new" && (
             <button 
                 onClick={saveTask}
                 style={{
