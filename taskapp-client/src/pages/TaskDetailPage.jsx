@@ -160,7 +160,7 @@ export default function TaskDetailPage() {
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
             disabled={id === "new"}
-            onClick={() => navigate(`/tasks/${id}/ServiceRapportPage`)}
+            onClick={() => navigate(ServiceReportPage)}
           >
             📄 Service rapport
           </button>
