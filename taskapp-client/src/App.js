@@ -334,17 +334,7 @@ function Dashboard() {
   };
 
  const openNewTask = async () => {
-    const res = await api.post("/tasks", {
-      customer: "",
-      address: "",
-      order_number: "",
-      start_date: "",
-      end_date: "",
-      technician: "",
-      status: "Oprettet",
-    });
-
-  navigate(`/tasks/${res.data.id}`);
+  navigate(`/tasks/new`);
  };
 
   const completeTask = async (id) => {

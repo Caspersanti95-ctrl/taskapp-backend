@@ -115,6 +115,8 @@ export default function TaskDetailPage() {
 
           <p><strong>Ordre:</strong> {task.order_number}</p>
           <input
+            className="input"
+                placeholder="Kunde:"
                 value={task.customer}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
             />
