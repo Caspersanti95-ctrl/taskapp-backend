@@ -114,22 +114,29 @@ export default function TaskDetailPage() {
         {/* VENSTRE */}
         <div className="task-left">
           <h2>Opgave oplysninger</h2>
-
+        <div style={{ marginBottom: "20px" }}>
           <p><strong>Ordre:</strong> {task.order_number}</p>
+        </div>
+
+        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
           <input
             className="input"
                 placeholder="Kunde:"
                 value={task.customer}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
             />
-          
+        </div>  
+
+        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
             <input
             className="input"
                 placeholder="Adresse:"
                 value={task.address}
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
             />
+        </div>
 
+        <div style={{ display: "flex", gap: "20px", marginTop: "20px", marginBottom: "20px" }}>
           <input 
             className="input"
             type="date"
@@ -137,7 +144,9 @@ export default function TaskDetailPage() {
             value={task.start_date}
             onChange={(e) => setTask({ ...task, start_date: e.target.value })}
             />
-          
+        </div>
+
+        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}> 
           <input
             className="input"
             type="date"
@@ -145,7 +154,9 @@ export default function TaskDetailPage() {
             value={task.end_date}
             onChange={(e) => setTask({ ...task, end_date: e.target.value })}
             />
+        </div>
 
+        <div style={{ display: "flex", gap: "20px", marginBottom: "20px"}}>
           <input 
             className="input"
             type="technician"
@@ -153,7 +164,9 @@ export default function TaskDetailPage() {
             value={task.technician}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
             />
+        </div>
 
+        
           <textarea
             className="textarea"
             placeholder="Beskrivelse af opgaven"

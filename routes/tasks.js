@@ -95,7 +95,22 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     try {
 
         const [rows] = await db.query(
-            "SELECT id, customer, address, service_date AS date, equipment_type AS type, fabrikat, serienr, remarks, technician, approved, equipment_approved, control_points FROM tasks WHERE id = ? AND organization_id = ?",
+            `SELECT id, 
+                order_number,
+                customer, 
+                address, 
+                service_date AS date, 
+                equipment_type AS type, 
+                fabrikat, 
+                serienr, 
+                remarks, 
+                technician, 
+                approved, 
+                equipment_approved, 
+                control_points 
+                FROM tasks 
+                WHERE id = ? 
+                AND organization_id = ?`,
             [id, req.user.organization_id]
         );
 
