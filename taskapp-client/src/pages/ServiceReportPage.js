@@ -7,7 +7,7 @@ import { getRole } from "../utils/auth";
 
 
 function ServiceReportPage() {
-    const {id} = useParams();
+    const { taskId: id} = useParams();
     const navigate = useNavigate();
     const isAdmin = getRole() === "admin";
     const [isSavingDisabled, setIsSavingDisabled] = useState(false);
