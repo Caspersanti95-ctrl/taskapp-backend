@@ -177,7 +177,7 @@ export default function TaskDetailPage() {
 
       {/* INDHOLD */}
       <div className="task-content">
-        {activeTab === "report" && <ServiceReportPage />}
+        {activeTab === "report" && <ServiceReportPage task={task} />}
         {activeTab === "images" && <div>Billeder component her</div>}
       </div>
 
