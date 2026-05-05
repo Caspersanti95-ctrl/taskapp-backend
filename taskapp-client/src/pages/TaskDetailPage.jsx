@@ -152,6 +152,12 @@ export default function TaskDetailPage() {
         {activeTab === "images" && <div>Billeder component her</div>}
       </div>
 
+      {id === "new" && (
+            <button onClick={saveTask}>
+            Opret Opgave
+          </button>
+        )}
+        
       {/* STATUS */}
       <div className="task-footer">
         <p>Status: <strong>{task.status}</strong></p>
