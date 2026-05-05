@@ -41,6 +41,8 @@ export default function TaskDetailPage() {
     }
     };
 
+    const status = task.status || "Oprettet";
+
     const startTask = async (id) => {
         await api.put(`/tasks/${id}/start`);
         window.location.reload();
@@ -98,22 +100,7 @@ const statusColors = {
     fetchTask();
   }, [id]);
 
-  // 🔹 Opdater status
-  const updateStatus = async (newStatus) => {
-    try {
-      await fetch(`/api/tasks/${id}/status`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
 
-      setTask((prev) => ({ ...prev, status: newStatus }));
-    } catch (err) {
-      console.error("Fejl ved status update", err);
-    }
-  };
-
-  // 🔹 Gem remarks
   const saveRemarks = async () => {
     try {
       await fetch(`/api/tasks/${id}/remarks`, {
@@ -245,9 +232,9 @@ const statusColors = {
 
       {/* STATUS */}
       <div className="task-footer">
-        <span style ={{ color: statusColors[task.status] }}>
-        {task.status}
-        </span>
+        <p>
+            status: <strong>{task?.status || "Oprettet"}</strong>
+        </p>
          
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
