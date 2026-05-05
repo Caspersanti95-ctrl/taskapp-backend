@@ -122,12 +122,37 @@ export default function TaskDetailPage() {
                 value={task.customer}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
             />
-          <p><strong>Adresse:</strong> {task.address}</p>
+          
+            <input
+            className="input"
+                placeholder="Adresse:"
+                value={task.address}
+                onChange={(e) => setTask({ ...task, address: e.target.value })}
+            />
 
-          <p><strong>Start dato:</strong> {task.start_date}</p>
-          <p><strong>Slut dato:</strong> {task.end_date}</p>
+          <input 
+            className="input"
+            type="date"
+            placeholder="Start dato"
+            value={task.start_date}
+            onChange={(e) => setTask({ ...task, start_date: e.target.value })}
+            />
+          
+          <input
+            className="input"
+            type="date"
+            placeholder="Slut dato"
+            value={task.end_date}
+            onChange={(e) => setTask({ ...task, end_date: e.target.value })}
+            />
 
-          <p><strong>Tekniker:</strong> {task.technician}</p>
+          <input 
+            className="input"
+            type="technician"
+            placeholder="Tekniker:"
+            value={task.technician}
+            onChange={(e) => setTask({ ...task, technician: e.target.value })}
+            />
 
           <textarea
             className="textarea"
