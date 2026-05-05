@@ -226,7 +226,7 @@ export default function TaskDetailPage() {
         <p>Status: <strong>{task.status}</strong></p>
 
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-
+          
         {task.status === "Oprettet" && (
           <button onClick={() => startTask(task.id)}>
             Start opgave
