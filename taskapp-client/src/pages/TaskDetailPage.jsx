@@ -180,11 +180,6 @@ export default function TaskDetailPage() {
       <div className="task-footer">
         <p>Status: <strong>{task.status}</strong></p>
 
-        {id === "new" && (
-            <button onClick={saveTask}>
-            Opret Opgave
-          </button>
-        )}
 
         {task.status === "Oprettet" && (
           <button onClick={() => updateStatus("I gang")}>
