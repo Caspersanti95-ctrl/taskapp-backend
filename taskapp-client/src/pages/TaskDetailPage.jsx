@@ -7,7 +7,7 @@ import api from "../api";
 
 export default function TaskDetailPage() {
   const { id } = useParams();
-  const isNew = id === "new";
+  
   
   const [task, setTask] = useState({
     customer: "",
