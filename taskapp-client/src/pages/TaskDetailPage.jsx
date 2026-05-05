@@ -160,7 +160,7 @@ export default function TaskDetailPage() {
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
             disabled={id === "new"}
-            onClick={() => setActiveTab("report")}
+            onClick={() => navigate(`/tasks/${id}/report`)}
           >
             📄 Service rapport
           </button>
@@ -177,7 +177,7 @@ export default function TaskDetailPage() {
 
       {/* INDHOLD */}
       <div className="task-content">
-        {activeTab === "report" && <ServiceReportPage task={task} />}
+        
         {activeTab === "images" && <div>Billeder component her</div>}
       </div>
 
