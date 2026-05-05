@@ -248,7 +248,7 @@ const statusColors = {
         <span style ={{ color: statusColors[task.status] }}>
         {task.status}
         </span>
-        
+         
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
         {task.status === "Oprettet" && (
