@@ -218,8 +218,39 @@ console.log("CLICKED SAVE", payload);
         if (!id || id === "new") return;
 
         const fetchTasks = async () => {
+        const res = await api.get(`/tasks/${id}`);
+        const data = res.data;
+        setFormData(mapTask(data));
 
-            const res = await api.get(`/tasks/${id}`);
+        if (data.control_points) {
+            try {
+                const parsed =
+                typeof data.control_points === "string"
+                ? JSON.parse(data.control_points)
+                : data.control_points;
+
+                if (parsed.length > 0) {
+                    setControlPoints(parsed);
+                } else {
+                    throw new Error("Empty");
+                }
+                } catch {
+                    setControlPoints(
+                        controlPointsList.map(point => ({
+                            name: point,
+                            status: ""
+                        }))
+                    );
+                }
+        } else {
+
+            setControlPoints(
+                controlPointsList.map(point => ({
+                    name: point,
+                    status: ""
+                }))
+                    );
+                }
 
         };
 
