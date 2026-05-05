@@ -114,7 +114,10 @@ export default function TaskDetailPage() {
           <h2>Opgave oplysninger</h2>
 
           <p><strong>Ordre:</strong> {task.order_number}</p>
-          <p><strong>Kunde:</strong> {task.customer}</p>
+          <input
+                value={task.customer}
+                onChange={(e) => setTask({ ...task, customer: e.target.value })}
+            />
           <p><strong>Adresse:</strong> {task.address}</p>
 
           <p><strong>Start dato:</strong> {task.start_date}</p>
