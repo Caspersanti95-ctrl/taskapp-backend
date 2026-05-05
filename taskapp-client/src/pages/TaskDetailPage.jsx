@@ -225,24 +225,26 @@ export default function TaskDetailPage() {
       <div className="task-footer">
         <p>Status: <strong>{task.status}</strong></p>
 
+    <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
         {task.status === "Oprettet" && (
-          <button onClick={() => updateStatus("I gang")}>
+          <button onClick={() => startTask(task.id)}>
             Start opgave
           </button>
         )}
 
         {task.status === "I gang" && (
-          <button onClick={() => updateStatus("Afsluttet")}>
+          <button onClick={() => completeTask(task.id)}>
             Afslut opgave
           </button>
         )}
 
         {task.status === "Afsluttet" && (
-          <button onClick={() => updateStatus("Godkendt")}>
+          <button onClick={() => approveTask(task.id)}>
             Godkend
           </button>
         )}
+        </div>
       </div>
     </div>
   );
