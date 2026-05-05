@@ -102,7 +102,7 @@ export default function TaskDetailPage() {
     }
   };
 
-  if (loading) return <div className="p-6">Loader...</div>;
+  if (loading && id !== "new") return <div className="p-6">Loader...</div>;
   if (!task) return <div className="p-6">Opgave ikke fundet</div>;
 
   return (
@@ -160,7 +160,7 @@ export default function TaskDetailPage() {
           <button
             className={activeTab === "report" ? "tab active" : "tab"}
             disabled={id === "new"}
-            onClick={() => ServiceReportPage(task) = setActiveTab("report")}
+            onClick={() => setActiveTab("report")}
           >
             📄 Service rapport
           </button>
@@ -177,7 +177,7 @@ export default function TaskDetailPage() {
 
       {/* INDHOLD */}
       <div className="task-content">
-        {activeTab === "report" && <div>Service Report component her</div>}
+        {activeTab === "report" && <ServiceReportPage />}
         {activeTab === "images" && <div>Billeder component her</div>}
       </div>
 
