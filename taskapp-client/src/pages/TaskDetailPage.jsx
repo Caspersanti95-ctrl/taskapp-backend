@@ -35,7 +35,7 @@ export default function TaskDetailPage() {
             remarks
         });
 
-        navigate(`/tasks/${res.data.id}`);
+        navigate(`/dashboard`);
     } catch (err) {
         console.error(err);
     }
