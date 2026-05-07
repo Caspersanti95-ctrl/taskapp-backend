@@ -239,23 +239,23 @@ const statusColors = {
             
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
-        {(task?.status || "Oprettet") === "Oprettet" && (
+        
           <button onClick={() => startTask(task.id)}>
             Start opgave
           </button>
-        )}
+        
 
-        {task.status === "I gang" && (
+        
           <button onClick={() => completeTask(task.id)}>
             Afslut opgave
           </button>
-        )}
+       
 
-        {task.status === "Afsluttet" && (
+       
           <button onClick={() => approveTask(task.id)}>
             Godkend
           </button>
-        )}
+      
         </div>
       </div>
     </div>
