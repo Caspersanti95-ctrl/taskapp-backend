@@ -265,67 +265,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
   }
 });
 
-  router.put('/:id', authMiddleware, async (req, res) => {
-   try {
-    const { id } = req.params;
 
-    const [rows] = await db.query(
-        "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-        [id, req.user.organization_id]
-    );
-
-    if (!rows.length) {
-        return res.status(404).json({ error: "Opgave ikke fundet"});
-    }
-
-    if (rows[0].approved === 1) {
-        return res.status(403).json({ error: "Skemaet er låst" });
-    }
-console.log("equipment approved:", req.body.equipment_approved);
-
-    const formattedDate = req.body.date
-        ? new Date(req.body.date).toISOString().split("T")[0]
-        : null;
-        console.log("BODY:", req.body);
-    await db.query(
-        `UPDATE tasks SET
-            customer = ?,
-            address = ?,
-            service_date = ?,
-            equipment_type = ?,
-            fabrikat = ?,
-            serienr = ?,
-            remarks = ?,
-            technician = ?,
-            control_points = ?,
-            equipment_approved = ?
-        WHERE id = ? AND organization_id = ?`,
-    [
-        req.body.customer || "",
-        req.body.address ?? null,
-        formattedDate,
-        req.body.type ?? null,
-        req.body.fabrikat ?? null,
-        req.body.serienr ?? null,
-        req.body.remarks ?? null,
-        req.body.technician ?? null,
-
-        typeof req.body.control_points === "string" 
-        ? req.body.control_points
-        :JSON.stringify(req.body.control_points || []),
-
-        req.body.equipment_approved ?? null,
-        id,
-        req.user.organization_id
-    ]);
-
-    res.json({ success: true });
-    } catch (err) {
-    console.error("DB ERROR:", err);
-    res.status(500).json({ error: "Kunne ikke opdatere opgave" });
-    }
-
-  });
 
   router.put('/:id/start', authMiddleware, async (req, res) => {
         const taskId = req.params.id;
@@ -480,6 +420,68 @@ console.log("equipment approved:", req.body.equipment_approved);
                 res.status(500).json({ error: "Server fejl" });
             }
         });
+
+        router.put('/:id', authMiddleware, async (req, res) => {
+            try {
+             const { id } = req.params;
+         
+             const [rows] = await db.query(
+                 "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
+                 [id, req.user.organization_id]
+             );
+         
+             if (!rows.length) {
+                 return res.status(404).json({ error: "Opgave ikke fundet"});
+             }
+         
+             if (rows[0].approved === 1) {
+                 return res.status(403).json({ error: "Skemaet er låst" });
+             }
+         console.log("equipment approved:", req.body.equipment_approved);
+         
+             const formattedDate = req.body.date
+                 ? new Date(req.body.date).toISOString().split("T")[0]
+                 : null;
+                 console.log("BODY:", req.body);
+             await db.query(
+                 `UPDATE tasks SET
+                     customer = ?,
+                     address = ?,
+                     service_date = ?,
+                     equipment_type = ?,
+                     fabrikat = ?,
+                     serienr = ?,
+                     remarks = ?,
+                     technician = ?,
+                     control_points = ?,
+                     equipment_approved = ?
+                 WHERE id = ? AND organization_id = ?`,
+             [
+                 req.body.customer || "",
+                 req.body.address ?? null,
+                 formattedDate,
+                 req.body.type ?? null,
+                 req.body.fabrikat ?? null,
+                 req.body.serienr ?? null,
+                 req.body.remarks ?? null,
+                 req.body.technician ?? null,
+         
+                 typeof req.body.control_points === "string" 
+                 ? req.body.control_points
+                 :JSON.stringify(req.body.control_points || []),
+         
+                 req.body.equipment_approved ?? null,
+                 id,
+                 req.user.organization_id
+             ]);
+         
+             res.json({ success: true });
+             } catch (err) {
+             console.error("DB ERROR:", err);
+             res.status(500).json({ error: "Kunne ikke opdatere opgave" });
+             }
+         
+           });
 
         
         //Opret Task
