@@ -273,7 +273,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
         const [rows] = await db.query(
             "SELECT approved FROM tasks WHERE id = ?",
-            [taskId,]
+            [taskId]
         );
 
         if(!rows.length) {
@@ -290,9 +290,9 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     );
     io.emit('taskUpdated');
     res.sendStatus(200);
-    
+
         } catch (err) {
-            console.error(err);
+            console.error("START ERROR:", err);
             res.status(500).json({ error: "Server Fejl" });
         }
   });
