@@ -331,8 +331,8 @@ console.log("equipment approved:", req.body.equipment_approved);
         const taskId = req.params.id;
 
         const [rows] = await db.query(
-            "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-            [taskId, req.user.organization_id]
+            "SELECT approved FROM tasks WHERE id = ?",
+            [taskId,]
         );
 
         if(!rows.length) {
@@ -344,8 +344,8 @@ console.log("equipment approved:", req.body.equipment_approved);
         }
 
     await db.query(
-      `UPDATE tasks SET status='I gang', started_at=NOW() WHERE id=? AND organization_id = ?`,
-      [req.params.id, req.user.organization_id]
+      `UPDATE tasks SET status='I gang', started_at=NOW() WHERE id=?`,
+      [req.params.id]
     );
     io.emit('taskUpdated');
     res.sendStatus(200);
