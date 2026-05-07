@@ -285,7 +285,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         }
 
     await db.query(
-      `UPDATE tasks SET status='I gang', started_at=NOW() WHERE id=?`,
+      `UPDATE tasks SET status='I gang' WHERE id=?`,
       [req.params.id]
     );
     io.emit('taskUpdated');
