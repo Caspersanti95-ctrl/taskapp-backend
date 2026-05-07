@@ -356,8 +356,8 @@ console.log("equipment approved:", req.body.equipment_approved);
         const taskId = req.params.id;
 
         const [rows] = await db.query(
-            "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-            [taskId, req.user.organization_id]
+            "SELECT approved FROM tasks WHERE id = ?",
+            [taskId]
         );
 
         if(!rows.length) {
@@ -369,8 +369,8 @@ console.log("equipment approved:", req.body.equipment_approved);
         }
 
         await db.query(
-        `UPDATE tasks SET status='Afsluttet', complete_at = NOW() WHERE id=? AND organization_id = ?`,
-        [req.params.id, req.user.organization_id]
+        `UPDATE tasks SET status='Afsluttet', complete_at = NOW() WHERE id=?`,
+        [req.params.id]
         );
 
         io.emit('taskUpdated');
@@ -392,8 +392,8 @@ console.log("equipment approved:", req.body.equipment_approved);
                 : null;
 
             const [rows] = await db.query(
-                "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
-                [taskId, req.user.organization_id]
+                "SELECT approved FROM tasks WHERE id = ?",
+                [taskId]
             );
 
             if(!rows.length) {
@@ -412,14 +412,14 @@ console.log("equipment approved:", req.body.equipment_approved);
                 equipment_type = COALESCE(?, equipment_type),
                 approved_by = ?,
                 approved_at = NOW()
-            WHERE id=? AND organization_id = ?
+            WHERE id=?
             `,
             [
             formattedDate,
             req.body.type || null,
             userId, 
             taskId,
-            req.user.organization_id
+            
         ]
         );
 
