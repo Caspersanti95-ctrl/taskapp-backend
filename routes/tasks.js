@@ -268,6 +268,7 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
 
 
   router.put('/:id/start', authMiddleware, async (req, res) => {
+    try {
         const taskId = req.params.id;
 
         const [rows] = await db.query(
@@ -289,6 +290,11 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     );
     io.emit('taskUpdated');
     res.sendStatus(200);
+    
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "Server Fejl" });
+        }
   });
 
   router.put('/:id/complete',authMiddleware, async (req, res) => {
