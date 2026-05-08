@@ -135,6 +135,7 @@ const statusColors = {
                 placeholder="Kunde:"
                 value={task.customer}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
+                onBlur={saveRemarks}
             />
         </div>  
 
@@ -144,6 +145,7 @@ const statusColors = {
                 placeholder="Adresse:"
                 value={task.address}
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
+                onBlur={saveRemarks}
             />
         </div>
 
@@ -154,6 +156,7 @@ const statusColors = {
             placeholder="Start dato"
             value={task.start_date}
             onChange={(e) => setTask({ ...task, start_date: e.target.value })}
+            onBlur={saveRemarks}
             />
         </div>
 
@@ -164,6 +167,7 @@ const statusColors = {
             placeholder="Slut dato"
             value={task.end_date}
             onChange={(e) => setTask({ ...task, end_date: e.target.value })}
+            onBlur={saveRemarks}
             />
         </div>
 
@@ -174,6 +178,7 @@ const statusColors = {
             placeholder="Tekniker:"
             value={task.technician}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
+            onBlur={saveRemarks}
             />
         </div>
 
