@@ -41,7 +41,7 @@ export default function TaskDetailPage() {
     }
     };
 
-    const status = task.status || "Oprettet";
+    const status = task?.status || "Oprettet";
 
     const startTask = async (id) => {
         await api.put(`/tasks/${id}/start`);
@@ -233,7 +233,7 @@ const statusColors = {
       <div className="task-footer">
 
         <p>
-            status: <strong>{task?.status || "Oprettet"}</strong>
+            status: <strong>{status}</strong>
         </p>
             
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
