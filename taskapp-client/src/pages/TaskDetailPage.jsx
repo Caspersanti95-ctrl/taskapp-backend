@@ -54,7 +54,7 @@ export default function TaskDetailPage() {
     };
 
     const approveTask = async (id) => {
-        await api.put(`/tasks/${id}/approve`);
+        await api.post(`/tasks/${id}/approve`);
         await fetchTask();
     };
 
@@ -255,7 +255,7 @@ const statusColors = {
             Godkend
           </button>
         )}
-        
+
         </div>
       </div>
     </div>
