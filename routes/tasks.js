@@ -95,7 +95,9 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
     try {
 
         const [rows] = await db.query(
-            `SELECT id, 
+            `SELECT 
+                id,
+                status, 
                 order_number,
                 customer, 
                 address, 
@@ -272,8 +274,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         const taskId = req.params.id;
 
         const [rows] = await db.query(
-            "SELECT approved FROM tasks WHERE id = ?",
-            [taskId]
+            "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
+            [taskId, req.user.organization_id]
         );
 
         if(!rows.length) {
@@ -302,8 +304,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
         const taskId = req.params.id;
 
         const [rows] = await db.query(
-            "SELECT approved FROM tasks WHERE id = ?",
-            [taskId]
+            "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
+            [taskId, req.user.organization_id]
         );
 
         if(!rows.length) {
@@ -338,8 +340,8 @@ router.get("/:id/pdf", authMiddleware, async (req, res) => {
                 : null;
 
             const [rows] = await db.query(
-                "SELECT approved FROM tasks WHERE id = ?",
-                [taskId]
+                "SELECT approved FROM tasks WHERE id = ? AND organization_id = ?",
+                [taskId, req.user.organization_id]
             );
 
             if(!rows.length) {
