@@ -49,7 +49,7 @@ const statusColors = {
 };
     const fetchTask = async () => {
       try {
-        if (id === "new") {
+        if (isNew) {
             setTask({
                 order_number: "",
                 customer: "",
@@ -248,13 +248,13 @@ const statusColors = {
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
         {status === "Oprettet" && (
-          <button onClick={() => startTask(task.task_id)}>
+          <button onClick={() => startTask(task.id)}>
             Start opgave
           </button>
         )}
 
         {status === "I gang" && (
-          <button onClick={() => completeTask(task.task_id)}>
+          <button onClick={() => completeTask(task.id)}>
             Afslut opgave
           </button>
         )}
