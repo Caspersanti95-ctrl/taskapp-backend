@@ -98,18 +98,21 @@ const statusColors = {
     const status = task?.status || "Oprettet";
 
     const startTask = async (id) => {
-        await api.put(`/tasks/${id}/start`);
-        await fetchTask();
+        try {    
+            await api.put(`/tasks/${id}/start`);
+            setTask((prev) => ({ ...prev, status: "I gang" }));
+        } catch (err) {
+            console.error("Fejl ved start af task", err);
+        }
     };
 
     const completeTask = async (id) => {
-        await api.put(`/tasks/${id}/complete`);
-        await fetchTask();
-    };
-
-    const approveTask = async (id) => {
-        await api.post(`/tasks/${id}/approve`);
-        await fetchTask();
+        try {
+            await api.put(`/tasks/${id}/complete`);
+            setTask((prev) => ({ ...prev, status: "Afsluttet" }));
+        } catch (err) {
+            console.error("Fejl ved afslutning af task", err);
+        }
     };
 
   if (loading && id !== "new") return <div className="p-6">Loader...</div>;
@@ -253,12 +256,6 @@ const statusColors = {
         {status === "I gang" && (
           <button onClick={() => completeTask(task.task_id)}>
             Afslut opgave
-          </button>
-        )}
-
-        {status === "Afsluttet" && (
-          <button onClick={() => approveTask(task.task_id)}>
-            Godkend
           </button>
         )}
 
