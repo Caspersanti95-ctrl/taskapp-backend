@@ -64,9 +64,6 @@ const statusColors = {
     "Afsluttet": "#2ecc71",
     "Godkendt": "#3498db"
 };
-
-  // 🔹 Hent task fra backend
-  useEffect(() => {
     const fetchTask = async () => {
       try {
         if (id === "new") {
@@ -97,6 +94,8 @@ const statusColors = {
       }
     };
 
+  // 🔹 Hent task fra backend
+  useEffect(() => {    
     fetchTask();
   }, [id]);
 
