@@ -45,17 +45,17 @@ export default function TaskDetailPage() {
 
     const startTask = async (id) => {
         await api.put(`/tasks/${id}/start`);
-        window.location.reload();
+        await fetchTask();
     };
 
     const completeTask = async (id) => {
         await api.put(`/tasks/${id}/complete`);
-        window.location.reload();
+        await fetchTask();
     };
 
     const approveTask = async (id) => {
         await api.put(`/tasks/${id}/approve`);
-        window.location.reload();
+        await fetchTask();
     };
 
 const statusColors = {
@@ -74,7 +74,7 @@ const statusColors = {
                 start_date: "",
                 end_date: "",
                 technician: "",
-                status: "Oprettet",
+                status: "",
                 remarks: ""
             });
             setRemarks("");
