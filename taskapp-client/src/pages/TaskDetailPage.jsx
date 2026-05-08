@@ -233,25 +233,31 @@ const statusColors = {
       <div className="task-footer">
 
         <p>
-            status: <strong>{status}</strong>
+            status: 
+                <strong 
+                    style={{
+                        color: statusColors[status] 
+                    }}>
+                    {status}
+                </strong>
         </p>
             
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
         {status === "Oprettet" && (
-          <button onClick={() => startTask(task.id)}>
+          <button onClick={() => startTask(task.task_id)}>
             Start opgave
           </button>
         )}
 
         {status === "I gang" && (
-          <button onClick={() => completeTask(task.id)}>
+          <button onClick={() => completeTask(task.task_id)}>
             Afslut opgave
           </button>
         )}
 
         {status === "Afsluttet" && (
-          <button onClick={() => approveTask(task.id)}>
+          <button onClick={() => approveTask(task.task_id)}>
             Godkend
           </button>
         )}
