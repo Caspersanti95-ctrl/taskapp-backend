@@ -41,23 +41,6 @@ export default function TaskDetailPage() {
     }
     };
 
-    const status = task?.status || "Oprettet";
-
-    const startTask = async (id) => {
-        await api.put(`/tasks/${id}/start`);
-        await fetchTask();
-    };
-
-    const completeTask = async (id) => {
-        await api.put(`/tasks/${id}/complete`);
-        await fetchTask();
-    };
-
-    const approveTask = async (id) => {
-        await api.post(`/tasks/${id}/approve`);
-        await fetchTask();
-    };
-
 const statusColors = {
     "Oprettet": "#e74c3c",
     "I gang": "#f1c40f",
@@ -111,6 +94,23 @@ const statusColors = {
       console.error("Fejl ved gem", err);
     }
   };
+
+    const status = task?.status || "Oprettet";
+
+    const startTask = async (id) => {
+        await api.put(`/tasks/${id}/start`);
+        await fetchTask();
+    };
+
+    const completeTask = async (id) => {
+        await api.put(`/tasks/${id}/complete`);
+        await fetchTask();
+    };
+
+    const approveTask = async (id) => {
+        await api.post(`/tasks/${id}/approve`);
+        await fetchTask();
+    };
 
   if (loading && id !== "new") return <div className="p-6">Loader...</div>;
   if (!task) return <div className="p-6">Opgave ikke fundet</div>;
