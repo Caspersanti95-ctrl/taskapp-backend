@@ -100,20 +100,8 @@ export default function TaskDetailPage() {
     fetchTask();
   }, [id]);
 
-
-  const saveRemarks = async () => {
-    try {
-      await fetch(`/api/tasks/${id}/remarks`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ remarks }),
-      });
-    } catch (err) {
-      console.error("Fejl ved gem", err);
-    }
-  };
-
     const status = task?.status || "Oprettet";
+    const isLocked = task?.approved === 1;
 
     const startTask = async (id) => {
         try {    
@@ -152,6 +140,7 @@ export default function TaskDetailPage() {
             className="input"
                 placeholder="Kunde:"
                 value={task.customer}
+                disabled={isLocked}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
                 onBlur={updateTask}
             />
@@ -162,6 +151,7 @@ export default function TaskDetailPage() {
             className="input"
                 placeholder="Adresse:"
                 value={task.address}
+                disabled={isLocked}
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
                 onBlur={updateTask}
             />
@@ -173,6 +163,7 @@ export default function TaskDetailPage() {
             type="date"
             placeholder="Start dato"
             value={task.start_date}
+            disabled={isLocked}
             onChange={(e) => setTask({ ...task, start_date: e.target.value })}
             onBlur={updateTask}
             />
@@ -184,6 +175,7 @@ export default function TaskDetailPage() {
             type="date"
             placeholder="Slut dato"
             value={task.end_date}
+            disabled={isLocked}
             onChange={(e) => setTask({ ...task, end_date: e.target.value })}
             onBlur={updateTask}
             />
@@ -195,6 +187,7 @@ export default function TaskDetailPage() {
             type="technician"
             placeholder="Tekniker:"
             value={task.technician}
+            disabled={isLocked}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
             onBlur={updateTask}
             />
@@ -205,6 +198,7 @@ export default function TaskDetailPage() {
             className="textarea"
             placeholder="Beskrivelse af opgaven"
             value={remarks}
+            disabled={isLocked}
             onChange={(e) => setRemarks(e.target.value)}
             onBlur={updateTask}
           />
