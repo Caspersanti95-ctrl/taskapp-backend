@@ -22,6 +22,12 @@ export default function TaskDetailPage() {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const statusColors = {
+      "Oprettet": "#e74c3c",
+      "I gang": "#f1c40f",
+      "Afsluttet": "#2ecc71",
+      "Godkendt": "#3498db"
+  };
 
   const saveTask = async () => {
     try {
@@ -41,12 +47,24 @@ export default function TaskDetailPage() {
     }
     };
 
-const statusColors = {
-    "Oprettet": "#e74c3c",
-    "I gang": "#f1c40f",
-    "Afsluttet": "#2ecc71",
-    "Godkendt": "#3498db"
-};
+    const updateTask = async () => {
+        try {
+            await api.put(`/tasks/${id}`, {
+                customer: task.customer,
+                address: task.address,
+                start_date: task.start_date,
+                end_date: task.end_date,
+                technician: task.technician,
+                status: task.status,
+                remarks
+            });
+
+            console.log("Task opdateret");
+        } catch (err) {
+            console.error("Fejl ved gem:", err);
+        }
+    };
+
     const fetchTask = async () => {
       try {
         if (isNew) {
@@ -135,7 +153,7 @@ const statusColors = {
                 placeholder="Kunde:"
                 value={task.customer}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
-                onBlur={saveRemarks}
+                onBlur={updateTask}
             />
         </div>  
 
@@ -145,7 +163,7 @@ const statusColors = {
                 placeholder="Adresse:"
                 value={task.address}
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
-                onBlur={saveRemarks}
+                onBlur={updateTask}
             />
         </div>
 
@@ -156,7 +174,7 @@ const statusColors = {
             placeholder="Start dato"
             value={task.start_date}
             onChange={(e) => setTask({ ...task, start_date: e.target.value })}
-            onBlur={saveRemarks}
+            onBlur={updateTask}
             />
         </div>
 
@@ -167,7 +185,7 @@ const statusColors = {
             placeholder="Slut dato"
             value={task.end_date}
             onChange={(e) => setTask({ ...task, end_date: e.target.value })}
-            onBlur={saveRemarks}
+            onBlur={updateTask}
             />
         </div>
 
@@ -178,7 +196,7 @@ const statusColors = {
             placeholder="Tekniker:"
             value={task.technician}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
-            onBlur={saveRemarks}
+            onBlur={updateTask}
             />
         </div>
 
@@ -188,7 +206,7 @@ const statusColors = {
             placeholder="Beskrivelse af opgaven"
             value={remarks}
             onChange={(e) => setRemarks(e.target.value)}
-            onBlur={saveRemarks}
+            onBlur={updateTask}
           />
 
           {isNew && (
