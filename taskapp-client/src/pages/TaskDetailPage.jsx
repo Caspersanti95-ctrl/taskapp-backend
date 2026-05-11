@@ -131,33 +131,36 @@ export default function TaskDetailPage() {
         {/* VENSTRE */}
         <div className="task-left">
           <h2>Opgave oplysninger</h2>
-        <div style={{ marginBottom: "20px" }}>
-          <p><strong>Ordre:</strong> {task.order_number}</p>
-        </div>
 
-        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+        <div className="order-box">
+          <span>Ordre:</span>
+          <div className="order-number">
+          {task.order_number}
+        </div>
+      </div>
+
+        <label>Kunde:</label>
           <input
-            className="input"
-                placeholder="Kunde:"
+                className="input"
                 value={task.customer}
                 disabled={isLocked}
                 onChange={(e) => setTask({ ...task, customer: e.target.value })}
                 onBlur={updateTask}
             />
-        </div>  
-
-        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+         
+        <label>Adresse:</label>
             <input
-            className="input"
-                placeholder="Adresse:"
+                className="input"
                 value={task.address}
                 disabled={isLocked}
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
                 onBlur={updateTask}
             />
-        </div>
 
-        <div style={{ display: "flex", gap: "20px", marginTop: "20px", marginBottom: "20px" }}>
+      <div className="date-row">
+
+        <div> 
+        <label>Start dato:</label>
           <input 
             className="input"
             type="date"
@@ -169,7 +172,7 @@ export default function TaskDetailPage() {
             />
         </div>
 
-        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}> 
+        <div> 
           <input
             className="input"
             type="date"
@@ -181,22 +184,20 @@ export default function TaskDetailPage() {
             />
         </div>
 
-        <div style={{ display: "flex", gap: "20px", marginBottom: "20px"}}>
+        </div>
+
+        <label>Tekniker:</label>
           <input 
             className="input"
-            type="technician"
-            placeholder="Tekniker:"
             value={task.technician}
             disabled={isLocked}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
             onBlur={updateTask}
             />
-        </div>
 
-        
+        <label>Beskrivelse af Opgaven:</label>
           <textarea
             className="textarea"
-            placeholder="Beskrivelse af opgaven"
             value={remarks}
             disabled={isLocked}
             onChange={(e) => setRemarks(e.target.value)}
@@ -251,16 +252,14 @@ export default function TaskDetailPage() {
 
       {/* STATUS */}
       <div className="task-footer">
-
-        <p>
-            status: 
-                <strong 
-                    style={{
-                        color: statusColors[status] 
-                    }}>
-                    {status}
-                </strong>
-        </p>
+          <div className="status-box">
+            Status:
+            <span className={`status ${status}`}>
+              {status}
+              </span> 
+              </div>
+          </div>
+        
             
     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
 
@@ -278,7 +277,9 @@ export default function TaskDetailPage() {
 
         </div>
       </div>
-    </div>
+    
+
+    
   );
 }
 
