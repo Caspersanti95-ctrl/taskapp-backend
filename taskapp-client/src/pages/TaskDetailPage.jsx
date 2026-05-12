@@ -172,7 +172,6 @@ export default function TaskDetailPage() {
           <input 
             className="input"
             type="date"
-            placeholder="Start dato"
             value={task.start_date}
             disabled={isLocked}
             onChange={(e) => setTask({ ...task, start_date: e.target.value })}
@@ -181,10 +180,10 @@ export default function TaskDetailPage() {
         </div>
 
         <div className="form-group"> 
+          <label>Slut dato:</label>
           <input
             className="input"
             type="date"
-            placeholder="Slut dato"
             value={task.end_date}
             disabled={isLocked}
             onChange={(e) => setTask({ ...task, end_date: e.target.value })}
@@ -277,7 +276,7 @@ export default function TaskDetailPage() {
           </div>
       )}
 
-      
+
         {status === "Oprettet" && (
           <button onClick={() => startTask(task.id)}>
             Start opgave
