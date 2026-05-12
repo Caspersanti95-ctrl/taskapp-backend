@@ -128,26 +128,33 @@ export default function TaskDetailPage() {
     <div className="task-page">
       <div className="task-container">
 
-        {/* VENSTRE */}
         <div className="task-left">
           <h2>Opgave oplysninger</h2>
 
         <div className="order-box">
-          <span>Ordre:</span>
+          <span className="order-label">Ordre:</span>
+
           <div className="order-number">
           {task.order_number}
         </div>
       </div>
 
+      <div className="form-group">
         <label>Kunde:</label>
           <input
                 className="input"
-                value={task.customer}
+                value={task.customer || ""}
                 disabled={isLocked}
-                onChange={(e) => setTask({ ...task, customer: e.target.value })}
+                onChange={(e) => setTask({ 
+                            ...task, 
+                            customer: e.target.value 
+                          })
+                        }
                 onBlur={updateTask}
             />
+          </div>
          
+      <div className="form-group">
         <label>Adresse:</label>
             <input
                 className="input"
@@ -156,10 +163,11 @@ export default function TaskDetailPage() {
                 onChange={(e) => setTask({ ...task, address: e.target.value })}
                 onBlur={updateTask}
             />
+      </div>
 
-      <div className="date-row">
+      <div className="date-grid">
 
-        <div> 
+        <div className="form-group"> 
         <label>Start dato:</label>
           <input 
             className="input"
@@ -172,7 +180,7 @@ export default function TaskDetailPage() {
             />
         </div>
 
-        <div> 
+        <div className="form-group"> 
           <input
             className="input"
             type="date"
@@ -185,16 +193,19 @@ export default function TaskDetailPage() {
         </div>
 
         </div>
-
+      
+      <div className="form-group">
         <label>Tekniker:</label>
           <input 
             className="input"
-            value={task.technician}
+            value={task.technician || ""}
             disabled={isLocked}
             onChange={(e) => setTask({ ...task, technician: e.target.value })}
             onBlur={updateTask}
             />
-
+          </div>
+      
+      <div className="form-group">
         <label>Beskrivelse af Opgaven:</label>
           <textarea
             className="textarea"
@@ -203,7 +214,8 @@ export default function TaskDetailPage() {
             onChange={(e) => setRemarks(e.target.value)}
             onBlur={updateTask}
           />
-
+        </div>
+      
           {isNew && (
             <button 
                 onClick={saveTask}
@@ -244,16 +256,13 @@ export default function TaskDetailPage() {
 
       </div>
 
-      {/* INDHOLD */}
-      <div className="task-content">
-        
-        {activeTab === "images" && <div>Billeder component her</div>}
-      </div>
-
       {/* STATUS */}
       <div className="task-footer">
-          <div className="status-box">
-            Status:
+
+          <div className="status-row">
+            <span>Status:</span>
+
+            <div className="status-pill godkendt">
             <span className={`status ${status}`}>
               {status}
               </span> 
@@ -261,8 +270,14 @@ export default function TaskDetailPage() {
           </div>
         
             
-    <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+    
+      {isLocked && (
+        <div className="lock-box">
+          Opgaven er Godkendt og kan ikke længere redigeres.
+          </div>
+      )}
 
+      
         {status === "Oprettet" && (
           <button onClick={() => startTask(task.id)}>
             Start opgave
