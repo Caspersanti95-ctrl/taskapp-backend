@@ -7,7 +7,7 @@
   .task-container {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: 24px;
+    gap: 18px;
     max-width: 1400px;
     margin: 0 auto;
   }
@@ -59,7 +59,7 @@
   }
 
   .form-group {
-    margin-bottom: 28px;
+    margin-bottom: 22px;
   }
 
   .form-group label {
@@ -84,7 +84,7 @@
   .date-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 22px;
+    gap: 18px;
   }
   
   .textarea {
