@@ -271,21 +271,25 @@ export default function TaskDetailPage() {
             
     
       {isLocked && (
-        <div className="lock-box">
+        <div className="locked-box">
           Opgaven er Godkendt og kan ikke længere redigeres.
           </div>
       )}
 
 
         {status === "Oprettet" && (
-          <button onClick={() => startTask(task.id)}>
-            Start opgave
+          <button 
+            className="action-button"
+            onClick={() => startTask(task.id)}>
+              Start opgave
           </button>
         )}
 
         {status === "I gang" && (
-          <button onClick={() => completeTask(task.id)}>
-            Afslut opgave
+          <button 
+            className="action-button"
+            onClick={() => completeTask(task.id)}>
+              Afslut opgave
           </button>
         )}
 
